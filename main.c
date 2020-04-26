@@ -30,9 +30,7 @@ int number1, number2;
 			// 아이디 및 비밀번호 찾기 함수
 			break;
 		case 4:
-			// 끝내기
-			break;
+			break; // 종료하기
 		}
-		//Sleep(1000);
 	} while (number1 != 4);
 }
