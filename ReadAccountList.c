@@ -82,8 +82,5 @@ void readAccountList(int line) {
 	printf("%d\n", a.lock);
 	printf("%d\n", a.admin);
 
-
-
-
 	fclose(fp);
 }
