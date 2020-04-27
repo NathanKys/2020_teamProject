@@ -1,38 +1,44 @@
-//#include <stdio.h>
+#include <stdio.h>
 #include "header.h"
 
 int main () {
 int number1, number2;
+int login_id_num = 2;	//2´Â Å×½ºÆ®¸¦ À§ÇÑ ÀÓ½Ã°ª
+//·Î±×ÀÎÇÑ ¾ÆÀÌµğ ¹øÈ£(= ·Î±×ÀÎÇÑ °èÁ¤ÀÌ DB »ó ¸î¹øÂ° ÁÙÀÎÁö. 1¹øºÎÅÍ ½ÃÀÛ)
+//ÀÌ °ªÀ» ³» Á¤º¸ º¸±â ÇÔ¼ö¿¡¼­ ÀÎÀÚ·Î ¹Ş¾Æ, DB »ó ÇØ´ç ÁÙ¿¡ Á¤º¸ Ãâ·Â
 	do {
 		number1 = menu1(1);
 		switch (number1) {
 		case 1:
-			// ë¡œê·¸ì¸ í•¨ìˆ˜
+			// ·Î±×ÀÎ ÇÔ¼ö
+			// return °ªÀ» login_id_num¿¡ º¹»ç
 			number2 = menu1(2);
 			do {
 				switch (number2) {
 				case 1:
-					// ë‚´ì •ë³´ ë³´ê¸° í•¨ìˆ˜
+					// ³»Á¤º¸ º¸±â ÇÔ¼ö
+					//readAccount(login_id_num);
+					
 					break;
 				case 2:
-					// ì‚¬ìš©ì ê²€ìƒ‰ í•¨ìˆ˜
+					// »ç¿ëÀÚ °Ë»ö ÇÔ¼ö
 					break;
 				case 3:
-					// ìª½ì§€í•¨ í•¨ìˆ˜
+					// ÂÊÁöÇÔ ÇÔ¼ö
 					break;
 				case 4:
-					break; //ë¡œê·¸ì•„ì›ƒ
+					break; //·Î±×¾Æ¿ô
 				}
 			}while (number2 != 4);
 			break;
 		case 2:
-			// íšŒì›ê°€ì… í•¨ìˆ˜
+			// È¸¿ø°¡ÀÔ ÇÔ¼ö
 			break;
 		case 3:
-			// ì•„ì´ë”” ë° ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° í•¨ìˆ˜
+			// ¾ÆÀÌµğ ¹× ºñ¹Ğ¹øÈ£ Ã£±â ÇÔ¼ö
 			break;
 		case 4:
-			break; // ì¢…ë£Œí•˜ê¸°
+			break; // Á¾·áÇÏ±â
 		}
 	} while (number1 != 4);
 }
