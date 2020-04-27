@@ -3,9 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <Windows.h>
+#include "ReadAccount.h"
 
-#define UP 72 // ë°©í–¥í‚¤ ìœ„ ì•„ìŠ¤í‚¤ì½”ë“œ
-#define DOWN 80 // ë°©í–¥í‚¤ ì•„ëž˜ ì•„ìŠ¤í‚¤ì½”ë“œ
+#define UP 72 // ¹æÇâÅ° À§ ¾Æ½ºÅ°ÄÚµå
+#define DOWN 80 // ¹æÇâÅ° ¾Æ·¡ ¾Æ½ºÅ°ÄÚµå
 
 void gotoxy(int x, int y);
 int menu1(int k);
