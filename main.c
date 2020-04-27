@@ -9,19 +9,21 @@ int number1, number2;
 		case 1:
 			// 로그인 함수
 			number2 = menu1(2);
-			switch (number2) {
-			case 1:
-				// 내정보 보기 함수
-				break;
-			case 2:
-				// 사용자 검색 함수
-				break;
-			case 3:
-				// 쪽지함 함수
-				break;
-			case 4:
-				break; //로그아웃
-			}
+			do {
+				switch (number2) {
+				case 1:
+					// 내정보 보기 함수
+					break;
+				case 2:
+					// 사용자 검색 함수
+					break;
+				case 3:
+					// 쪽지함 함수
+					break;
+				case 4:
+					break; //로그아웃
+				}
+			}while (number2 != 4);
 			break;
 		case 2:
 			// 회원가입 함수
