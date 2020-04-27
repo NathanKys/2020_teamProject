@@ -15,3 +15,12 @@ void gotoxy(int x, int y);
 int uiMainMenu();
 int uiAfterLogin(char * nick);
 int uiShowMyInfo(Account login);
+
+int checkPW(char * pw);
+int selectEdit(Account login);
+void editPW(char* pw);
+void editName(char* name);
+void editNick(char* nick);
+void editEmail(char* email);
+void editBirth(int* birth);
+void editPhone(int* phone);
