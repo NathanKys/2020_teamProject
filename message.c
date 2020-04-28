@@ -5,6 +5,8 @@
 //그 구조체의 receiver가 사용자 id와 같으면 크기가 10인 구조체 배열 message에 저장
 //구조체가 꽉차면 첫번째 구조체부터 밀어내는식으로 해서 배열 마지막이 가장 최신(텍스트파일에 가장 아래있는) message로 유지
 //message.txt파일의 마지막 줄을 읽으면 런타임에러가 발생
+//message.txt파일이 10줄 이하거나, 메세지함의 크기가 10이하인 경우 에러
+
 void showMessageList(char* id) {
 	FILE* fp;
 	fp = fopen("./message.txt", "r");
@@ -70,7 +72,16 @@ void showMessageList(char* id) {
 		count++;
 	}
 	for (int i = 0; i < 10; i++) {
-		printf("%s\n", message[i].content);
+		printf("발신자: %s	쪽지내용: ", message[i].sender);
+		for (int j = 0; j < 10; j++) {
+			printf("%c", message[i].content[j]);
+		}
+		if (strlen(message[i].content) > 10){
+			printf("...\n");
+		}
+		else {
+			printf("\n");
+		}
 	}
 	fclose(fp);
 }
