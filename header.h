@@ -3,13 +3,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <Windows.h>
+#include <regex.h> // ì •ê·œì‹ ë¼ì´ë¸ŒëŸ¬ë¦¬
+#include <string.h>
+#include <time.h>
 
-#include "ReadAccount.h"	//ÆÄÀÏ¿¡¼­ °èÁ¤ ÀĞ¾î¿Í¼­ ±¸Á¶Ã¼¿¡ ÀúÀå
+#include "ReadAccount.h"	//íŒŒì¼ì—ì„œ ê³„ì • ì½ì–´ì™€ì„œ êµ¬ì¡°ì²´ì— ì €ì¥
 
 #define LEFT 75
 #define RIGHT 77
-#define UP 72 // ¹æÇâÅ° À§ ¾Æ½ºÅ°ÄÚµå
-#define DOWN 80 // ¹æÇâÅ° ¾Æ·¡ ¾Æ½ºÅ°ÄÚµå
+#define UP 72 // ë°©í–¥í‚¤ ìœ„ ì•„ìŠ¤í‚¤ì½”ë“œ
+#define DOWN 80 // ë°©í–¥í‚¤ ì•„ë˜ ì•„ìŠ¤í‚¤ì½”ë“œ
 
 void gotoxy(int x, int y);
 int uiMainMenu();
@@ -24,3 +27,26 @@ void editNick(char* nick);
 void editEmail(char* email);
 void editBirth(int* birth);
 void editPhone(int* phone);
+
+// íšŒì›ê°€ì… ê´€ë ¨ í•¨ìˆ˜
+int pow(int, int);
+bool matchEmail(const char*);
+bool matchPassword(const char*);
+bool matchId(const char*);
+bool matchEngName(const char*);
+bool matchNickname(const char*);
+bool matchPhoneNumber(const char*);
+bool matchBirthday(const char*);
+bool matchKorean(const char*, int);
+bool kreng(const char*, int n);
+bool isCompleteKorean(const char*, int);
+bool isContainEng(const char*);
+bool isOnlyNumber(const char*);
+bool fileCheck();
+bool isRightDate(const char*);
+bool isInTheFuture(const char*);
+int getLength(const char*);
+void clearInputBuffer();
+void showUserInformation(Account);
+void signUp(Account);
+
