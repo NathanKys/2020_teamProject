@@ -1,6 +1,7 @@
 #include "header.h"
-
-
+// 해야할 일
+// 메뉴로 돌아가는 기능 추가
+// 디자인 통일
 int pow(int a, int b) {
 	if (b == 0) return 1;
 	int c;
@@ -20,13 +21,12 @@ bool matchEmail(const char* string) {
 	return regexec(&state, string, 0, NULL, 0) ? false : true;
 }
 
-// 미완성
 bool matchPassword(const char* string) {
 	// 8~16자
 	// 대소문자, 숫자 하나 이상 무조건 포함
-	// 허용하는 특수문자?
+	// 허용하는 특수문자: !@#$%^&*
 	regex_t state;
-	const char* pattern = "[A-Z]{1,}[a-z]{1,}[0-9]{1,}";
+	const char* pattern = "^[a-zA-Z0-9!@#$%^&\*]*$";
 
 	regcomp(&state, pattern, REG_EXTENDED);
 	return regexec(&state, string, 0, NULL, 0) ? false : true;
@@ -184,7 +184,7 @@ bool isRightDate(const char* string) {
 	month = 0;
 	day = 0;
 
-	
+
 
 	for (index;index < 4;index++) {
 		year += ((string[index] - '0') * pow(10, 3 - index));
@@ -211,7 +211,7 @@ bool isRightDate(const char* string) {
 	if (days[month - 1] < day) {
 		return false;
 	}
-	
+
 	return true;
 }
 
@@ -236,10 +236,10 @@ bool isInTheFuture(const char* string) {
 		day += ((string[index] - '0') * pow(10, 7 - index));
 	}
 
-	if (year > (tm.tm_year+1900)) {
+	if (year > (tm.tm_year + 1900)) {
 		return true;
 	}
-	else if (year == (tm.tm_year+1900)) {
+	else if (year == (tm.tm_year + 1900)) {
 		if (month > tm.tm_mon + 1) {
 			return true;
 		}
@@ -250,6 +250,30 @@ bool isInTheFuture(const char* string) {
 		}
 	}
 	return false;
+}
+
+bool isContainLowerCase(const char* string) {
+	regex_t state;
+	const char* pattern = "[a-z]";
+
+	regcomp(&state, pattern, REG_EXTENDED);
+	return regexec(&state, string, 0, NULL, 0) ? false : true;
+}
+
+bool isContainUpperCase(const char* string) {
+	regex_t state;
+	const char* pattern = "[A-Z]";
+
+	regcomp(&state, pattern, REG_EXTENDED);
+	return regexec(&state, string, 0, NULL, 0) ? false : true;
+}
+
+bool isContainNumber(const char* string) {
+	regex_t state;
+	const char* pattern = "[0-9]";
+
+	regcomp(&state, pattern, REG_EXTENDED);
+	return regexec(&state, string, 0, NULL, 0) ? false : true;
 }
 
 int getLength(const char* string) {
@@ -274,7 +298,7 @@ void Eliminate(char* string, char ch) {
 	int len = strlen(string) + 1;
 	for (;*string != '\0';string++, len--) {
 		if (*string == ch) {
-			strcpy_s(string, len,string + 1);
+			strcpy_s(string, len, string + 1);
 			string--;
 		}
 	}
@@ -291,10 +315,26 @@ void showUserInformation(Account a) {
 	printf("휴대폰 번호: %s\n", a.phone);
 }
 
+// 계정 구조체를 accountlist.txt에 저장
+void writeAccountInfo(Account user) {
+	FILE* fp;
+	fp = fopen("accountlist.txt", "a+");
+	if (fp == NULL) {
+		printf("파일지정 경로를 확인해주세요.\n");
+		exit(1);
+	}
+	else {
+		fprintf(fp, "%s,%s,%s,%s,%s,%s,%s,%d,%d,%d\n",
+			user.name, user.pw, user.name, user.nick, user.email, user.birth, user.phone, user.rec, user.lock, user.admin);
+		printf("위의 정보를 저장하였습니다.\n");
+	}
+	fclose(fp);
+}
+
 void signUp(Account u1) {
 	u1.admin = false;
 	u1.lock = false;
-	char tempPhoneNumber[PHONENUMBER_MAXSIZE+4];
+	char tempPhoneNumber[PHONENUMBER_MAXSIZE + 4];
 
 	// 아이디 입력
 	while (true) {
@@ -304,7 +344,7 @@ void signUp(Account u1) {
 		u1.id[strcspn(u1.id, "\n")] = 0;
 
 		// 메뉴로 이동
-		if (u1.id[0] == '~') {
+		if (u1.id[0] == '~' && strlen(u1.id) == 1) {
 			exit(1);
 		}
 
@@ -330,37 +370,96 @@ void signUp(Account u1) {
 		}
 		else {
 			printf("올바른 문자를 입력해주세요.\n");
+			continue;
 		}
 
 	}
 	// 비밀번호 입력 (미완성)
-	/*
+
 
 	while (true) {
-		break;
+		printf("생성할 계정의 비밀번호를 입력합니다.");
+		fgets(u1.pw, PASSWORD_MAXSIZE + 2, stdin);
+
+		u1.pw[strcspn(u1.pw, "\n")] = 0;
+
+		// 메뉴로 이동
+		if (u1.pw[0] == '~' && strlen(u1.pw) == 1) {
+			exit(1);
+		}
+		if (strlen(u1.pw) > PASSWORD_MAXSIZE) {
+			clearInputBuffer();
+		}
+
+		if (matchPassword(u1.pw)) {
+			if (strlen(u1.pw) < 8 || strlen(u1.pw) > 16){
+				printf("글자수 범위(최소 8자~최대 16자) 초과입니다.\n");
+				continue;
+			}
+			else {
+				// 대문자 하나 이상
+				// 소문자 하나 이상
+				// 숫자 하나 이상
+				if (!isContainUpperCase(u1.pw)) {
+					printf("알파벳 대문자를 하나 이상 포함해야 합니다.\n");
+				}
+				if (!isContainLowerCase(u1.pw)) {
+					printf("알파벳 소문자를 하나 이상 포함해야 합니다.\n");
+				}
+				if (!isContainNumber(u1.pw)) {
+					printf("인도-아라비아 숫자를 하나 이상 포함해야 합니다.\n");
+				}
+				
+				if (isContainNumber(u1.pw) && isContainUpperCase(u1.pw) && isContainLowerCase(u1.pw)) {
+					printf("비밀번호 입력이 완료되었습니다.\n");
+					break;
+				}
+
+				continue;
+			}
+
+		}
+		else {
+			printf("다음의 문자를 제외한 특수문자는 허용하지 않습니다.!@#$%^&*\n");
+			continue;
+		}
+
+		
 	}
-	*/
-	// 비밀번호 확인 (미완성)
-	/*while (true) {
-		char checkPassword[PASSWORD_MAXSIZE];
+	
+	//비밀번호 확인 (미완성)
+	while (true) {
+		char checkPassword[PASSWORD_MAXSIZE + 2] = {0,};
+		printf("비밀번호 확인을 위해 다시 입력해주세요.");
 		fgets(checkPassword, PASSWORD_MAXSIZE + 2, stdin);
+		checkPassword[strcspn(checkPassword, "\n")] = 0;
 		if (strlen(checkPassword) > PASSWORD_MAXSIZE) {
 			clearInputBuffer();
 		}
 
 		// 메뉴로 이동
-		if (checkPassword[0] == '~') {
+		if (checkPassword[0] == '~'&&strlen(checkPassword)==1) {
 			exit();
 		}
 
-		if (u1.pw != checkPassword) {
-			printf("비밀번호를 다시 확인해주세요!\n");
-			continue;
+		/* 
+		   비밀번호 확인을 저장하는 변수에서 입력받지 않은 뒤의 값들은 -52로 나와서
+		   checkPassword를 {0,}로 초기화해서 해결
+		for (int i = 0;i < PASSWORD_MAXSIZE + 2;i++) {
+			printf("\n\n비밀번호[%d]: %d\n비번확인[%d]: %d\n", i, u1.pw[i], i, checkPassword[i]);
+		}
+		*/
+		
+
+		if (!strcmp(checkPassword, u1.pw)) {
+			printf("비밀번호 확인이 완료되었습니다.\n");
+			break;
 		}
 		else {
-			printf("비밀번호 확인이 완료되었습니다.\n");
+			
+			continue;
 		}
-	}*/
+	}
 
 	// 이름 입력
 	while (true) {
@@ -369,7 +468,7 @@ void signUp(Account u1) {
 		u1.name[strcspn(u1.name, "\n")] = 0;
 
 		// 메뉴로 이동
-		if (u1.name[0] == '~') {
+		if (u1.name[0] == '~' && strlen(u1.name)==1) {
 			exit(1);
 		}
 		if (strlen(u1.name) > NAME_MAXSIZE) {
@@ -426,7 +525,7 @@ void signUp(Account u1) {
 		fgets(u1.nick, NICKNAME_MAXSIZE + 2, stdin);
 		u1.nick[strcspn(u1.nick, "\n")] = 0;
 
-		if (u1.nick[0] == '~') {
+		if (u1.nick[0] == '~' && strlen(u1.nick)==1) {
 			// 메뉴로 이동
 			exit(1);
 		}
@@ -462,7 +561,7 @@ void signUp(Account u1) {
 		u1.email[strcspn(u1.email, "\n")] = 0;
 
 		// 메뉴로 이동
-		if (u1.email[0] == '~') {
+		if (u1.email[0] == '~' && strlen(u1.email)==1) {
 			exit(1);
 		}
 		if (strlen(u1.email) > EMAILADDRESS_MAXSIZE) {
@@ -497,14 +596,14 @@ void signUp(Account u1) {
 		u1.birth[strcspn(u1.birth, "\n")] = 0;
 
 		// 메뉴로 이동
-		if (u1.birth[0] == '~') {
+		if (u1.birth[0] == '~' && strlen(u1.birth)==1) {
 			exit(1);
 		}
 		if (strlen(u1.birth) > BIRTHDAY_MAXSIZE) {
 			clearInputBuffer();
 		}
 		if (isOnlyNumber(u1.birth)) {
-			if (strlen(u1.birth)>8) {
+			if (strlen(u1.birth) > 8) {
 				printf("글자수 범위(숫자 8자) 초과입니다.\n");
 				continue;
 			}
@@ -530,7 +629,7 @@ void signUp(Account u1) {
 			break;
 		}
 		else {
-			
+
 			printf("숫자로만 이루어진 8자를 입력해주세요.\n");
 			continue;
 		}
@@ -547,10 +646,10 @@ void signUp(Account u1) {
 		tempPhoneNumber[strcspn(tempPhoneNumber, "\n")] = 0;
 
 		// 메뉴로 이동
-		if (tempPhoneNumber[0] == '~'&&strlen(tempPhoneNumber)==1) {
+		if (tempPhoneNumber[0] == '~' && strlen(tempPhoneNumber) == 1) {
 			exit(1);
 		}
-		if (strlen(tempPhoneNumber) > PHONENUMBER_MAXSIZE+2) {
+		if (strlen(tempPhoneNumber) > PHONENUMBER_MAXSIZE + 2) {
 			clearInputBuffer();
 		}
 		// fileCheck: 중복된 번호가 있는지 검사하는 함수
@@ -562,7 +661,7 @@ void signUp(Account u1) {
 
 		if (matchPhoneNumber(tempPhoneNumber)) {
 			Eliminate(tempPhoneNumber, '-');
-			strcpy_s(u1.phone, PHONENUMBER_MAXSIZE+2, tempPhoneNumber);
+			strcpy_s(u1.phone, PHONENUMBER_MAXSIZE + 2, tempPhoneNumber);
 			printf("전화번호 등록이 완료되었습니다.\n");
 			break;
 		}
@@ -582,21 +681,21 @@ void signUp(Account u1) {
 	// 추천인 아이디 입력
 	while (true) {
 		// 파일에 
-		char* retId = malloc(sizeof(char)*ID_MAXSIZE+2);
+		char* retId = malloc(sizeof(char) * ID_MAXSIZE + 2);
 		printf("추천인 아이디를 입력합니다.");
 		fgets(retId, ID_MAXSIZE + 2, stdin);
 
 		retId[strcspn(retId, "\n")] = 0;
 
 		// 메뉴로 이동
-		if (retId[0] == '~') {
+		if (retId[0] == '~'&&strlen(retId)==1) {
 			exit(1);
 		}
 
 		if (strlen(retId) > ID_MAXSIZE) {
 			clearInputBuffer();
 		}
-		if (matchId(retId)&& getLength(retId) >= 6 && getLength(retId) <= 12&& fileCheck(retId)) {
+		if (matchId(retId) && getLength(retId) >= 6 && getLength(retId) <= 12 && fileCheck(retId)) {
 			// 해당 아이디의 추천 횟수 증가
 			break;
 		}
@@ -605,7 +704,7 @@ void signUp(Account u1) {
 
 	printf("회원가입이 완료되었습니다.\n");
 	showUserInformation(u1);
-	// 파일에 구조체 쓰기
+	writeAccountInfo(u1);
 	// 초기 메뉴로 이동
 
 }
