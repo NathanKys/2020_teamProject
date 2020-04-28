@@ -1,0 +1,20 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int  main()
+{
+	FILE* list;
+	int num;
+	scanf("%d", &num);
+
+	list = fopen("list.txt", "wt"); //동일한 디렉토리에 list.txt 존재할경우 입력됨
+	if (list == NULL) {
+		printf("실패");
+		return 1;
+	}
+	fprintf(list, "%d", num);
+
+	fclose(list);
+}
