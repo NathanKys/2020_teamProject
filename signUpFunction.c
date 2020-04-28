@@ -270,6 +270,16 @@ void clearInputBuffer()
 	while (getchar() != '\n');
 }
 
+void Eliminate(char* string, char ch) {
+	int len = strlen(string) + 1;
+	for (;*string != '\0';string++, len--) {
+		if (*string == ch) {
+			strcpy_s(string, len,string + 1);
+			string--;
+		}
+	}
+}
+
 // 제대로 입력이 되었는지 확인하는 임시 함수
 void showUserInformation(Account a) {
 	printf("아이디: %s\n", a.id);
@@ -284,7 +294,7 @@ void showUserInformation(Account a) {
 void signUp(Account u1) {
 	u1.admin = false;
 	u1.lock = false;
-
+	char tempPhoneNumber[PHONENUMBER_MAXSIZE+4];
 
 	// 아이디 입력
 	while (true) {
@@ -426,7 +436,7 @@ void signUp(Account u1) {
 
 		// fileCheck: 중복된 아이디가 있는지 검사하는 함수
 		if (fileCheck(u1.nick)) {
-			printf("입력하신 닉네임는 이미 사용 중인 아이디입니다.\n");
+			printf("입력하신 닉네임는 이미 사용 중인 닉네임입니다.\n");
 			continue;
 		}
 		if (getLength(u1.nick) < 2 || getLength(u1.nick) > 12) {
@@ -533,16 +543,40 @@ void signUp(Account u1) {
 	while (true) {
 		printf("생성할 계정의 휴대폰 번호를 입력합니다.");
 
-		fgets(u1.phone, PHONENUMBER_MAXSIZE + 2, stdin);
-		u1.phone[strcspn(u1.phone, "\n")] = 0;
+		fgets(tempPhoneNumber, PHONENUMBER_MAXSIZE + 4, stdin);
+		tempPhoneNumber[strcspn(tempPhoneNumber, "\n")] = 0;
 
 		// 메뉴로 이동
-		if (u1.phone[0] == '~') {
+		if (tempPhoneNumber[0] == '~'&&strlen(tempPhoneNumber)==1) {
 			exit(1);
 		}
-		if (strlen(u1.phone) > PHONENUMBER_MAXSIZE) {
+		if (strlen(tempPhoneNumber) > PHONENUMBER_MAXSIZE+2) {
 			clearInputBuffer();
 		}
+		// fileCheck: 중복된 번호가 있는지 검사하는 함수
+		if (fileCheck(u1.nick)) {
+			printf("입력하신 휴대폰 번호는 이미 사용 중인 번호입니다.\n");
+			continue;
+		}
+
+
+		if (matchPhoneNumber(tempPhoneNumber)) {
+			Eliminate(tempPhoneNumber, '-');
+			strcpy_s(u1.phone, PHONENUMBER_MAXSIZE+2, tempPhoneNumber);
+			printf("전화번호 등록이 완료되었습니다.\n");
+			break;
+		}
+		else {
+			if (isOnlyNumber(tempPhoneNumber) && strchr(tempPhoneNumber, '-') || isOnlyNumber(tempPhoneNumber)) {
+				printf("전화번호는 10자리 또는 11자리로 입력해주세요.\n");
+				continue;
+			}
+			else {
+				printf("올바르지 않은 문자가 포함되어 있습니다.\n");
+				continue;
+			}
+		}
+
 	}
 
 	// 추천인 아이디 입력
@@ -569,7 +603,7 @@ void signUp(Account u1) {
 		break;
 	}
 
-	printf("회원가입이 완료되었습니다.");
+	printf("회원가입이 완료되었습니다.\n");
 	showUserInformation(u1);
 	// 파일에 구조체 쓰기
 	// 초기 메뉴로 이동
