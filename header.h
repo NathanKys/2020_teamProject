@@ -49,4 +49,4 @@ int getLength(const char*);
 void clearInputBuffer();
 void showUserInformation(Account);
 void signUp(Account);
-
+void Eliminate(char*, char);
