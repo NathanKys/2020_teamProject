@@ -7,7 +7,7 @@ void writeAccountInfo(Account user) {
 		exit(1);
 	}
 	else {
-		fprintf(fp, "%s,%s,%s,%s,%s,%s,%s,%d,%d,%d\n",
+		fprintf(fp, " %s,%s,%s,%s,%s,%s,%s,%d,%d,%d\n",
 			user.name, user.pw, user.name, user.nick, user.email, user.birth, user.phone, user.rec, user.lock, user.admin);
 		printf("위의 정보를 저장하였습니다.\n");
 	}
