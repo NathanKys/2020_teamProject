@@ -187,19 +187,34 @@ bool duplicateCheck(char* _string, int option) {
 		printf("파일 불러오기 실패\n");
 		exit(1);
 	}
-	while ((ch = fgetc(fp)) != EOF) {
+	while (true) {
 		for (;j < option;j++) {
 			while (true) {
-				if (fgetc(fp) == ',') {
+				ch = fgetc(fp);
+				if (ch == ',') {
 					break;
+				}
+				else if (ch == EOF) {
+					fclose(fp);
+					return false;
 				}
 			}
 		}
 		while (true) {
 			string[i] = fgetc(fp);
-			if (string[i] == ',') { string[i] = '\0'; i = 0; fgets(temp, MAX_LINE_LENGTH, fp); break; }
+			if (string[i] == ',') {
+				string[i] = '\0';
+				i = 0;
+				fgets(temp, MAX_LINE_LENGTH, fp);
+				break;
+			}
+			else if (string[i] == EOF) {
+				fclose(fp);
+				return false;
+			}
 			i++;
 		}
+		printf("%s\n", string);
 		if (!strcmp(string, _string)) {
 			return true;
 		}
@@ -348,7 +363,7 @@ void ret(char* _string) {
 	char string[EMAILADDRESS_MAXSIZE + 2] = "";
 	int tempRet;
 	char buf[3];
-	
+
 	// 읽기 우선 쓰기 모드
 	fp = fopen("accountlist.txt", "r+t");
 	if (fp == NULL)
@@ -364,7 +379,7 @@ void ret(char* _string) {
 		}
 		if (!strcmp(string, _string)) {
 			// 위에서 아이디를 먼저 읽었기 때문에 -1해줘야 함.
-			for (;j < RETCHECK-1;j++) {
+			for (;j < RETCHECK - 1;j++) {
 				while (true) {
 					if (fgetc(fp) == ',') {
 						break;
@@ -377,11 +392,11 @@ void ret(char* _string) {
 				i++;
 			}
 			tempRet = atoi(string);
-			if (tempRet < 99 &&tempRet>9) {
+			if (tempRet < 99 && tempRet>9) {
 				tempRet += 1;
 				snprintf(buf, sizeof(buf), "%d", tempRet);
 				fseek(fp, -3, SEEK_CUR);
-				fwrite(buf,sizeof(buf)-1, 1, fp);
+				fwrite(buf, sizeof(buf) - 1, 1, fp);
 				fseek(fp, -3, SEEK_CUR); // 다시 원래대로 안 돌려주면 원인 모를 오류 발생
 
 			}
@@ -728,11 +743,11 @@ void signUp(Account u1) {
 		}
 	}
 
-	 //생년월일 입력
+	//생년월일 입력
 	while (true) {
 		system("cls");
 		printf("생성할 계정의 생년월일을 입력합니다.");
-		
+
 		fgets(tempBirthNumber, BIRTHDAY_MAXSIZE + 2, stdin);
 		tempBirthNumber[strcspn(tempBirthNumber, "\n")] = 0;
 
@@ -794,7 +809,7 @@ void signUp(Account u1) {
 
 		fgets(tempPhoneNumber, PHONENUMBER_MAXSIZE + 4, stdin);
 		tempPhoneNumber[strcspn(tempPhoneNumber, "\n")] = 0;
-		
+
 		// 메뉴로 이동
 		if (tempPhoneNumber[0] == '~' && strlen(tempPhoneNumber) == 1) {
 			printf("메뉴로 돌아갑니다.\n");
