@@ -172,6 +172,8 @@ bool isOnlyNumber(const char* string) {
 
 // 파일체크하는 함수
 bool duplicateCheck(char* _string, int option) {
+	// _string: 중복 검사할 문자열
+	//  option: 중복 검사할 유형
 	FILE* fp;
 	char temp[MAX_LINE_LENGTH];
 	char ch;
@@ -202,9 +204,6 @@ bool duplicateCheck(char* _string, int option) {
 			return true;
 		}
 		j = 0;
-		/*if (!feof(fp)) {
-			break;
-		}*/
 	}
 	fclose(fp);
 	return false;
@@ -339,6 +338,71 @@ void Eliminate(char* string, char ch) {
 	}
 }
 
+void ret(char* _string) {
+	// 최대 추천 횟수: 99번
+	FILE* fp;
+	char temp[MAX_LINE_LENGTH];
+	char ch;
+	int i = 0;
+	int j = 0;
+	char string[EMAILADDRESS_MAXSIZE + 2] = "";
+	int tempRet;
+	char buf[3];
+	
+	// 읽기 우선 쓰기 모드
+	fp = fopen("accountlist.txt", "r+t");
+	if (fp == NULL)
+	{
+		printf("파일 불러오기 실패\n");
+		exit(1);
+	}
+	while ((ch = fgetc(fp)) != EOF) {
+		while (true) {
+			string[i] = fgetc(fp);
+			if (string[i] == ',') { string[i] = '\0'; i = 0; break; }
+			i++;
+		}
+		if (!strcmp(string, _string)) {
+			// 위에서 아이디를 먼저 읽었기 때문에 -1해줘야 함.
+			for (;j < RETCHECK-1;j++) {
+				while (true) {
+					if (fgetc(fp) == ',') {
+						break;
+					}
+				}
+			}
+			while (true) {
+				string[i] = fgetc(fp);
+				if (string[i] == ',') { string[i] = '\0'; i = 0; break; }
+				i++;
+			}
+			tempRet = atoi(string);
+			if (tempRet < 99 &&tempRet>9) {
+				tempRet += 1;
+				snprintf(buf, sizeof(buf), "%d", tempRet);
+				fseek(fp, -3, SEEK_CUR);
+				fwrite(buf,sizeof(buf)-1, 1, fp);
+				fseek(fp, -3, SEEK_CUR); // 다시 원래대로 안 돌려주면 원인 모를 오류 발생
+
+			}
+			else if (tempRet < 10) {
+				tempRet += 1;
+				snprintf(buf, sizeof(buf), "%d", tempRet);
+				fseek(fp, -2, SEEK_CUR);
+				fwrite(buf, sizeof(buf) - 2, 1, fp);
+				fseek(fp, -2, SEEK_CUR); // 다시 원래대로 안 돌려주면 원인 모를 오류 발생
+			}
+
+			//printf("%s의 추천횟수: %d\n", _string, tempRet);
+		}
+		else {
+			// 아이디가 일치하지 않으면 다음 줄로 넘어감.
+			fgets(temp, MAX_LINE_LENGTH, fp);
+		}
+		j = 0;
+	}
+	fclose(fp);
+}
 // 제대로 입력이 되었는지 확인하는 임시 함수
 void showUserInformation(Account a) {
 	printf("아이디: %s\n", a.id);
@@ -381,6 +445,8 @@ void signUp(Account u1) {
 
 		// 메뉴로 이동
 		if (u1.id[0] == '~' && strlen(u1.id) == 1) {
+			printf("메뉴로 돌아갑니다.\n");
+			system("pause");
 			exit(1);
 		}
 
@@ -391,32 +457,31 @@ void signUp(Account u1) {
 		// fileCheck: 중복된 아이디가 있는지 검사하는 함수
 		if (duplicateCheck(u1.id, IDCHECK)) {
 			printf("입력하신 아이디는 이미 사용 중인 아이디입니다.\n");
-			_getch();
+			system("pause");
 			continue;
 		}
 
 		if (matchId(u1.id)) {
 			if (getLength(u1.id) > ID_MAXSIZE || getLength(u1.id) < 6) {
 				printf("글자수 범위(최소6자 ~ 최대 12자)초과입니다.\n");
-				_getch();
+				system("pause");
 				continue;
 			}
 			else {
 				printf("아이디 입력이 완료되었습니다.\n");
-				_getch();
+				system("pause");
 				break;
 			}
 		}
 		else {
 			printf("올바른 문자를 입력해주세요.\n");
-			_getch();
+			system("pause");
 			continue;
 		}
 
 	}
-	// 비밀번호 입력 (미완성)
 
-
+	// 비밀번호 입력
 	while (true) {
 		system("cls");
 		printf("생성할 계정의 비밀번호를 입력합니다.");
@@ -426,6 +491,8 @@ void signUp(Account u1) {
 
 		// 메뉴로 이동
 		if (u1.pw[0] == '~' && strlen(u1.pw) == 1) {
+			printf("메뉴로 돌아갑니다.\n");
+			system("pause");
 			exit(1);
 		}
 		if (strlen(u1.pw) > PASSWORD_MAXSIZE) {
@@ -435,7 +502,7 @@ void signUp(Account u1) {
 		if (matchPassword(u1.pw)) {
 			if (strlen(u1.pw) < 8 || strlen(u1.pw) > 16) {
 				printf("글자수 범위(최소 8자~최대 16자) 초과입니다.\n");
-				_getch();
+				system("pause");
 				continue;
 			}
 			else {
@@ -454,24 +521,24 @@ void signUp(Account u1) {
 
 				if (isContainNumber(u1.pw) && isContainUpperCase(u1.pw) && isContainLowerCase(u1.pw)) {
 					printf("비밀번호 입력이 완료되었습니다.\n");
-					_getch();
+					system("pause");
 					break;
 				}
-				_getch();
+				system("pause");
 				continue;
 			}
 
 		}
 		else {
 			printf("다음의 문자를 제외한 특수문자는 허용하지 않습니다.!@#$%^&*\n");
-			_getch();
+			system("pause");
 			continue;
 		}
 
 
 	}
 
-	//비밀번호 확인 (미완성)
+	//비밀번호 확인
 	while (true) {
 		system("cls");
 		char checkPassword[PASSWORD_MAXSIZE + 2] = { 0, };
@@ -484,6 +551,8 @@ void signUp(Account u1) {
 
 		// 메뉴로 이동
 		if (checkPassword[0] == '~' && strlen(checkPassword) == 1) {
+			printf("메뉴로 돌아갑니다.\n");
+			system("pause");
 			exit();
 		}
 
@@ -498,12 +567,12 @@ void signUp(Account u1) {
 
 		if (!strcmp(checkPassword, u1.pw)) {
 			printf("비밀번호 확인이 완료되었습니다.\n");
-			_getch();
+			system("pause");
 			break;
 		}
 		else {
 			printf("비밀번호와 일치하지 않습니다.\n");
-			_getch();
+			system("pause");
 			continue;
 		}
 	}
@@ -517,6 +586,8 @@ void signUp(Account u1) {
 
 		// 메뉴로 이동
 		if (u1.name[0] == '~' && strlen(u1.name) == 1) {
+			printf("메뉴로 돌아갑니다.\n");
+			system("pause");
 			exit(1);
 		}
 		if (strlen(u1.name) > NAME_MAXSIZE) {
@@ -530,23 +601,23 @@ void signUp(Account u1) {
 			else {
 				printf("올바른 문자를 입력해주세요.\n");
 			}
-			_getch();
+			system("pause");
 			continue;
 		}
 		if (matchKorean(u1.name, strlen(u1.name))) {
 			if (!isCompleteKorean(u1.name, strlen(u1.name))) {
 				printf("올바른 문자를 입력해주세요.\n");
-				_getch();
+				system("pause");
 				continue;
 			}
 			if (getLength(u1.name) >= 2 && getLength(u1.name) <= 5) {
 				printf("이름 입력이 완료되었습니다.\n");
-				_getch();
+				system("pause");
 				break;
 			}
 			else {
 				printf("한글은 공백을 포함하지 않고 2~5자를 입력해야 합니다.\n");
-				_getch();
+				system("pause");
 				continue;
 			}
 		}
@@ -554,18 +625,18 @@ void signUp(Account u1) {
 			if (matchEngName(u1.name)) {
 				if (getLength(u1.name) >= 3 && getLength(u1.name) <= 20) {
 					printf("이름 입력이 완료되었습니다.\n");
-					_getch();
+					system("pause");
 					break;
 				}
 				else {
 					printf("영어는 공백을 포함하여 3~20자를 입력해야 합니다.\n");
-					_getch();
+					system("pause");
 					continue;
 				}
 			}
 			else {
 				printf("올바른 문자를 입력해주세요.\n");
-				_getch();
+				system("pause");
 				continue;
 			}
 		}
@@ -582,6 +653,8 @@ void signUp(Account u1) {
 
 		if (u1.nick[0] == '~' && strlen(u1.nick) == 1) {
 			// 메뉴로 이동
+			printf("메뉴로 돌아갑니다.\n");
+			system("pause");
 			exit(1);
 		}
 		if (strlen(u1.nick) > NICKNAME_MAXSIZE) {
@@ -591,22 +664,22 @@ void signUp(Account u1) {
 		// fileCheck: 중복된 아이디가 있는지 검사하는 함수
 		if (duplicateCheck(u1.nick, NICKNAMECHECK)) {
 			printf("입력하신 닉네임는 이미 사용 중인 닉네임입니다.\n");
-			_getch();
+			system("pause");
 			continue;
 		}
 		if (getLength(u1.nick) < 2 || getLength(u1.nick) > 12) {
 			printf("닉네임은 한글, 영어, 숫자로 이루어진 2자~12자를 입력해야합니다.\n");
-			_getch();
+			system("pause");
 			continue;
 		}
 		if (matchNickname(u1.nick)) {
 			printf("닉네임 입력이 완료되었습니다.\n");
-			_getch();
+			system("pause");
 			break;
 		}
 		else {
 			printf("올바른 문자를 입력해주세요.\n");
-			_getch();
+			system("pause");
 			continue;
 		}
 
@@ -622,6 +695,8 @@ void signUp(Account u1) {
 
 		// 메뉴로 이동
 		if (u1.email[0] == '~' && strlen(u1.email) == 1) {
+			printf("메뉴로 돌아갑니다.\n");
+			system("pause");
 			exit(1);
 		}
 		if (strlen(u1.email) > EMAILADDRESS_MAXSIZE) {
@@ -631,29 +706,29 @@ void signUp(Account u1) {
 		// fileCheck: 중복된 아이디가 있는지 검사하는 함수
 		if (duplicateCheck(u1.email, EMAILCHECK)) {
 			printf("이미 등록된 이메일입니다.\n");
-			_getch();
+			system("pause");
 			continue;
 		}
 
 		if (getLength(u1.email) > 30) {
 			printf("이메일은 30자를 초과할 수 없습니다.\n");
-			_getch();
+			system("pause");
 			continue;
 		}
 
 		if (matchEmail(u1.email)) {
 			printf("이메일이 등록되었습니다.\n");
-			_getch();
+			system("pause");
 			break;
 		}
 		else {
 			printf("올바른 형식의 이메일 주소를 입력해주세요.\n");
-			_getch();
+			system("pause");
 			continue;
 		}
 	}
-	 //생년월일 입력
 
+	 //생년월일 입력
 	while (true) {
 		system("cls");
 		printf("생성할 계정의 생년월일을 입력합니다.");
@@ -663,6 +738,8 @@ void signUp(Account u1) {
 
 		// 메뉴로 이동
 		if (tempBirthNumber[0] == '~' && strlen(tempBirthNumber) == 1) {
+			printf("메뉴로 돌아갑니다.\n");
+			system("pause");
 			exit(1);
 		}
 		if (strlen(tempBirthNumber) > BIRTHDAY_MAXSIZE) {
@@ -671,13 +748,13 @@ void signUp(Account u1) {
 		if (isOnlyNumber(tempBirthNumber)) {
 			if (strlen(tempBirthNumber) > 8) {
 				printf("글자수 범위(숫자 8자) 초과입니다.\n");
-				_getch();
+				system("pause");
 				continue;
 			}
 			else if (strlen(tempBirthNumber) == 8) {
 				if (!isRightDate(tempBirthNumber)) {
 					printf("존재하지 않는 날짜입니다.\n");
-					_getch();
+					system("pause");
 					continue;
 				}
 			}
@@ -686,23 +763,23 @@ void signUp(Account u1) {
 			// 윤년 고려해서 없는 날짜 판단
 			if (isInTheFuture(tempBirthNumber)) {
 				printf("잘못된 생년월일입니다.\n");
-				_getch();
+				system("pause");
 				continue;
 			}
 			// 프로그램 실행 이후 날짜 판단
 			if (!isRightDate(tempBirthNumber)) {
 				printf("존재하지 않는 날짜입니다.\n");
-				_getch();
+				system("pause");
 				continue;
 			}
 			printf("생년월일이 등록되었습니다.\n");
 			strcpy_s(u1.birth, BIRTHDAY_MAXSIZE + 2, tempBirthNumber);
-			_getch();
+			system("pause");
 			break;
 		}
 		else {
 			printf("숫자로만 이루어진 8자를 입력해주세요.\n");
-			_getch();
+			system("pause");
 			continue;
 		}
 
@@ -720,6 +797,8 @@ void signUp(Account u1) {
 		
 		// 메뉴로 이동
 		if (tempPhoneNumber[0] == '~' && strlen(tempPhoneNumber) == 1) {
+			printf("메뉴로 돌아갑니다.\n");
+			system("pause");
 			exit(1);
 		}
 		if (strlen(tempPhoneNumber) > PHONENUMBER_MAXSIZE + 2) {
@@ -736,7 +815,7 @@ void signUp(Account u1) {
 			Eliminate(tempPhoneNumber, '-');
 			strcpy_s(u1.phone, PHONENUMBER_MAXSIZE + 2, tempPhoneNumber);
 			printf("전화번호 등록이 완료되었습니다.\n");
-			_getch();
+			system("pause");
 			break;
 		}
 		else {
@@ -746,7 +825,7 @@ void signUp(Account u1) {
 			else {
 				printf("올바르지 않은 문자가 포함되어 있습니다.\n");
 			}
-			_getch();
+			system("pause");
 			continue;
 		}
 
@@ -764,6 +843,8 @@ void signUp(Account u1) {
 
 		// 메뉴로 이동
 		if (retId[0] == '~' && strlen(retId) == 1) {
+			printf("메뉴로 돌아갑니다.\n");
+			system("pause");
 			exit(1);
 		}
 
@@ -772,6 +853,9 @@ void signUp(Account u1) {
 		}
 		if (matchId(retId) && getLength(retId) >= 6 && getLength(retId) <= 12 && duplicateCheck(retId, IDCHECK)) {
 			// 해당 아이디의 추천 횟수 증가
+			printf("추천인 입력이 완료되었습니다.\n");
+			system("pause");
+			ret(retId);
 			break;
 		}
 		break;
