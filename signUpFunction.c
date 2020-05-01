@@ -406,7 +406,7 @@ void ret(char* _string) {
 		}
 		if (!strcmp(string, _string)) {
 			// 위에서 아이디를 먼저 읽었기 때문에 -1해줘야 함.
-			for (;j < RETCHECK;j++) {
+			for (;j < RETCHECK-1;j++) {
 				while (true) {
 					ch = fgetc(fp);
 					fgetc(tempfp);
