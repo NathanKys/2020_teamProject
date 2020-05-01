@@ -553,7 +553,7 @@ void signUp(Account u1) {
 		if (u1.id[0] == '~' && strlen(u1.id) == 1) {
 			printf("메뉴로 돌아갑니다.\n");
 			system("pause");
-			exit(1);
+			return;
 		}
 
 		if (strlen(u1.id) > ID_MAXSIZE) {
@@ -599,7 +599,7 @@ void signUp(Account u1) {
 		if (u1.pw[0] == '~' && strlen(u1.pw) == 1) {
 			printf("메뉴로 돌아갑니다.\n");
 			system("pause");
-			exit(1);
+			return;
 		}
 		if (strlen(u1.pw) > PASSWORD_MAXSIZE) {
 			clearInputBuffer();
@@ -704,7 +704,7 @@ void signUp(Account u1) {
 		if (u1.name[0] == '~' && strlen(u1.name) == 1) {
 			printf("메뉴로 돌아갑니다.\n");
 			system("pause");
-			exit(1);
+			return;
 		}
 		if (strlen(u1.name) > NAME_MAXSIZE) {
 			clearInputBuffer();
@@ -771,7 +771,7 @@ void signUp(Account u1) {
 			// 메뉴로 이동
 			printf("메뉴로 돌아갑니다.\n");
 			system("pause");
-			exit(1);
+			return;
 		}
 		if (strlen(u1.nick) > NICKNAME_MAXSIZE) {
 			clearInputBuffer();
@@ -813,7 +813,7 @@ void signUp(Account u1) {
 		if (u1.email[0] == '~' && strlen(u1.email) == 1) {
 			printf("메뉴로 돌아갑니다.\n");
 			system("pause");
-			exit(1);
+			return;
 		}
 		if (strlen(u1.email) > EMAILADDRESS_MAXSIZE) {
 			clearInputBuffer();
@@ -856,7 +856,7 @@ void signUp(Account u1) {
 		if (tempBirthNumber[0] == '~' && strlen(tempBirthNumber) == 1) {
 			printf("메뉴로 돌아갑니다.\n");
 			system("pause");
-			exit(1);
+			return;
 		}
 		if (strlen(tempBirthNumber) > BIRTHDAY_MAXSIZE) {
 			clearInputBuffer();
@@ -915,13 +915,13 @@ void signUp(Account u1) {
 		if (tempPhoneNumber[0] == '~' && strlen(tempPhoneNumber) == 1) {
 			printf("메뉴로 돌아갑니다.\n");
 			system("pause");
-			exit(1);
+			return;
 		}
 		if (strlen(tempPhoneNumber) > PHONENUMBER_MAXSIZE + 2) {
 			clearInputBuffer();
 		}
 		// fileCheck: 중복된 번호가 있는지 검사하는 함수
-		if (duplicateCheck(u1.phone, PHONENUMBERCHECK)) {
+		if (duplicateCheck(tempPhoneNumber, PHONENUMBERCHECK)) {
 			printf("입력하신 휴대폰 번호는 이미 사용 중인 번호입니다.\n");
 			continue;
 		}
@@ -961,7 +961,7 @@ void signUp(Account u1) {
 		if (retId[0] == '~' && strlen(retId) == 1) {
 			printf("메뉴로 돌아갑니다.\n");
 			system("pause");
-			exit(1);
+			return;
 		}
 
 		if (strlen(retId) > ID_MAXSIZE) {
@@ -980,6 +980,6 @@ void signUp(Account u1) {
 	printf("회원가입이 완료되었습니다.\n");
 	showUserInformation(u1);
 	writeAccount(u1);
-	// 초기 메뉴로 이동
+	return;
 
 }
