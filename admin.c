@@ -368,7 +368,7 @@ void changeLock(char* id, bool* lock) {
 void adminMenu(int num_account) {
 
 	int pageNum = 1;
-	int endPage = (num_account / 10) + 1;
+	int endPage = ((num_account-1) / 10) + 1;
 
 	while (true) {
 
@@ -457,7 +457,7 @@ void adminMenu(int num_account) {
 			}
 		}
 		if (triangle == 31) {
-			if (pageNum = endPage) {
+			if (pageNum == endPage) {
 				system("cls");
 				printf("더 이상 표시할 계정이 없습니다.");
 				system("pause");
