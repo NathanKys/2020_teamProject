@@ -5,8 +5,8 @@ typedef enum { false, true } bool;
 #define ID_MAXSIZE 12
 #define PASSWORD_MAXSIZE 16
 #define NAME_MAXSIZE 20
-#define EMAILADDRESS_MAXSIZE 30
 #define NICKNAME_MAXSIZE 24
+#define EMAILADDRESS_MAXSIZE 30
 #define BIRTHDAY_MAXSIZE 8
 #define PHONENUMBER_MAXSIZE 11
 

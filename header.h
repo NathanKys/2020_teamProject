@@ -21,7 +21,7 @@ int uiShowMyInfo(Account* login);
 
 // 내 정보 수정 관련 함수
 int checkPW(char * pw);
-int selectEdit(Account login);
+int selectEdit(Account* login);
 void editPW(char* pw);
 void editName(char* name);
 void editNick(char* nick);

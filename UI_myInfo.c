@@ -102,7 +102,7 @@ int uiShowMyInfo(Account* login) {
 	{
 		case 8:
 			if (checkPW((*login).pw) == 1) {
-				selectEdit(login);
+				selectEdit(&login);
 			}
 			else {
 				break;
