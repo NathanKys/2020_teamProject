@@ -13,6 +13,7 @@
 #define RIGHT 77
 #define UP 72 // 방향키 위 아스키코드
 #define DOWN 80 // 방향키 아래 아스키코드
+#define MAX_LINE_LENGTH 130
 
 enum { IDCHECK = 0, NICKNAMECHECK = 3, EMAILCHECK = 4, PHONENUMBERCHECK = 6, RETCHECK = 7 };
 
@@ -37,7 +38,9 @@ void readAccountInfo2(int startline, Account* a);
 void showAllAccountInfo(int pageNum, int num_account);
 void adminMenu(int num_account);
 int selectAccountToManage();
-void selectManageFunction(Account* a);
+int selectManageFunction();
+void changeNick(char* nick);
+void changeLock(char* id, bool* lock);
 
 // 회원가입 관련 함수
 int pow(int, int);

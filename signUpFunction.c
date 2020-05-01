@@ -1,3 +1,4 @@
+﻿#define _CRT_SECURE_NO_WARNINGS
 #include "header.h"
 
 // 메뉴로 돌아가는 기능 추가
@@ -666,7 +667,7 @@ void signUp(Account u1) {
 		if (checkPassword[0] == '~' && strlen(checkPassword) == 1) {
 			printf("메뉴로 돌아갑니다.\n");
 			system("pause");
-			exit();
+			return;
 		}
 
 		/*

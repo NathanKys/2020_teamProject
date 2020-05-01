@@ -1,7 +1,6 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #include "header.h"
-#define MAX_LINE_LENGTH 130
 
 Account readAccountInfo(int line) {
 	FILE* fp;
