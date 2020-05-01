@@ -14,6 +14,8 @@
 #define UP 72 // 방향키 위 아스키코드
 #define DOWN 80 // 방향키 아래 아스키코드
 
+enum {IDCHECK=0, NICKNAMECHECK=3, EMAILCHECK=4, PHONENUMBERCHECK=6, RETCHECK = 7};
+
 void gotoxy(int x, int y);
 int uiMainMenu();
 int uiAfterLogin(char * nick);
@@ -46,15 +48,21 @@ bool kreng(const char*, int n);
 bool isCompleteKorean(const char*, int);
 bool isContainEng(const char*);
 bool isOnlyNumber(const char*);
-bool fileCheck();
+bool duplicateCheck(char*, int);
 bool isRightDate(const char*);
 bool isInTheFuture(const char*);
 bool isContainLowerCase(const char*);
 bool isContainUpperCase(const char*);
 bool isContainNumber(const char*);
+bool isRepeat(const char*, int);
+bool isConti(const char*, int);
 int getLength(const char*);
+void Eliminate(char*, char);
+void ret(char*);
+void strAppend(char*, char);
 void clearInputBuffer();
 void showUserInformation(Account);
+void writeAccount(Account);
 void signUp(Account);
-void Eliminate(char*, char);
+
 void writeAccountInfo(int, Account*);
