@@ -1,10 +1,12 @@
-﻿#include "header.h"
+﻿#pragma once
+#include "header.h"
 
 
 int uiAfterLogin(char * nick) {
 	int triangle;
 	char ch;
 
+	system("cls");
 	gotoxy(40, 5);
 	printf("%s님 안녕하세요!\n", nick);
 

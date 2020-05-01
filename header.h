@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <Windows.h>
-#include <regex.h> // 정규식 라이브러리
+//#include <regex.h> // 정규식 라이브러리
 #include <string.h>
 #include <time.h>
 
@@ -17,7 +17,7 @@
 void gotoxy(int x, int y);
 int uiMainMenu();
 int uiAfterLogin(char * nick);
-int uiShowMyInfo(Account login);
+int uiShowMyInfo(Account* login);
 
 int checkPW(char * pw);
 int selectEdit(Account login);
@@ -53,4 +53,4 @@ void clearInputBuffer();
 void showUserInformation(Account);
 void signUp(Account);
 void Eliminate(char*, char);
-void writeAccountInfo(Account);
+void writeAccountInfo(int, Account*);

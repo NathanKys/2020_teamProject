@@ -1,6 +1,8 @@
 ﻿#include "header.h"
 
-int uiShowMyInfo(Account login) {
+
+
+int uiShowMyInfo(Account* login) {
 	int triangle;
 	char ch;
 	system("cls");
@@ -8,36 +10,36 @@ int uiShowMyInfo(Account login) {
 	gotoxy(20, 3);
 	printf("아이디");
 	gotoxy(20, 4);
-	printf("%s\t", login.id);
+	printf("%s\t", (*login).id);
 
 	gotoxy(40, 3);
 	printf("이름");
 	gotoxy(40, 4);
-	printf("%s\t", login.name);
+	printf("%s\t", (*login).name);
 
 	gotoxy(60, 3);
 	printf("닉네임");
 	gotoxy(60, 4);
-	printf("%s\t", login.nick);
+	printf("%s\t", (*login).nick);
 
 	gotoxy(20, 6);
 	printf("생년월일");
 	gotoxy(20, 7);
-	for (int i = 0; i < sizeof(login.birth) / sizeof(int); i++) {
-		printf("%d", login.birth[i]);
+	for (int i = 0; i < sizeof((*login).birth) / sizeof(int); i++) {
+		printf("%d", (*login).birth[i]);
 	}
 
 	gotoxy(40, 6);
 	printf("휴대폰 번호");
 	gotoxy(40, 7);
-	for (int i = 0; i < sizeof(login.phone) / sizeof(int); i++) {
-		printf("%d", login.phone[i]);
+	for (int i = 0; i < sizeof((*login).phone) / sizeof(int); i++) {
+		printf("%d", (*login).phone[i]);
 	}
 
 	gotoxy(60, 6);
 	printf("이메일 주소");
 	gotoxy(60, 7);
-	printf("%s\t", login.email);
+	printf("%s\t", (*login).email);
 
 	gotoxy(10, 16);
 	printf("┌-------------------------------┐\n");
@@ -49,7 +51,7 @@ int uiShowMyInfo(Account login) {
 	gotoxy(50, 16);
 	printf("┌-------------------------------┐\n");
 	gotoxy(50, 17);
-	printf("│           사용자 검색         │\n");
+	printf("│            뒤로 가기          │\n");
 	gotoxy(50, 18);
 	printf("└-------------------------------┘\n");
 
@@ -94,8 +96,23 @@ int uiShowMyInfo(Account login) {
 				break;
 		}
 	}
-	if (triangle == 8)
-		return 1;
-	if (triangle == 48)
-		return 2;
+
+
+	switch (triangle)
+	{
+		case 8:
+			if (checkPW((*login).pw) == 1) {
+				selectEdit(login);
+			}
+			else {
+				break;
+			}
+
+			break;
+
+		case 48:
+			return 2;
+			break;
+	}
+
 }
