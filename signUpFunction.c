@@ -980,6 +980,7 @@ void signUp(Account u1) {
 	printf("회원가입이 완료되었습니다.\n");
 	showUserInformation(u1);
 	writeAccount(u1);
+	system("pause");
 	return;
 
 }
