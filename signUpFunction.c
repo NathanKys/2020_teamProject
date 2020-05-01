@@ -531,7 +531,7 @@ void writeAccount(Account user) {
 	else {
 		fprintf(fp, "%s,%s,%s,%s,%s,%s,%s,%d,%d,%d\n",
 			user.id, user.pw, user.name, user.nick, user.email, user.birth, user.phone, user.rec, user.lock, user.admin);
-		printf("위의 정보를 저장하였습니다.\n");
+		//printf("위의 정보를 저장하였습니다.\n");
 	}
 	fclose(fp);
 }
@@ -978,7 +978,7 @@ void signUp(Account u1) {
 	}
 	system("cls");
 	printf("회원가입이 완료되었습니다.\n");
-	showUserInformation(u1);
+	//showUserInformation(u1);
 	writeAccount(u1);
 	system("pause");
 	return;
