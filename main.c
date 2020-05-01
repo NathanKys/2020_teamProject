@@ -11,12 +11,12 @@ void gotoxy(int x, int y) {
 int main() {
 
 	Account login;
-	int login_id_num = 2;	//2는 테스트를 위한 임시값
+	int login_id_num = -1;	//현재 로그인된 아이디의 DB상 순서. -1은 관리자 아이디
 	//로그인한 아이디 번호(= 로그인한 계정이 DB 상 몇번째 줄인지. 1번부터 시작)
 	//이 값을 내 정보 보기 함수에서 인자로 받아, DB 상 해당 줄에 정보 출력
 	int nextMenu = 0;
 	bool flag = 0;	//로그인 상태
-	int num_account = 2;	//DB에 등록된 계정의 총 개수
+	int num_account = 11;	//DB에 등록된 계정의 총 개수
 
 
 
@@ -64,7 +64,7 @@ int main() {
 					checkSecondPw();
 					flag = 1;
 					while (flag) {
-						showAllAccountInfo(num_account);
+						adminMenu(num_account);
 
 					}
 				}

@@ -34,7 +34,10 @@ void editPhone(int* phone);
 // 관리자 기능 관련 함수
 void checkSecondPw();
 void readAccountInfo2(int startline, Account* a);
-void showAllAccountInfo(int num_account);
+void showAllAccountInfo(int pageNum, int num_account);
+void adminMenu(int num_account);
+int selectAccountToManage();
+void selectManageFunction(Account* a);
 
 // 회원가입 관련 함수
 int pow(int, int);

@@ -38,6 +38,7 @@ void checkSecondPw() {
 
 	} while (flag);
 
+	system("cls");
 }
 
 void readAccountInfo2(int startline, Account* a) {
@@ -111,7 +112,7 @@ void readAccountInfo2(int startline, Account* a) {
 }
 
 
-void showAllAccountInfo(int num_account) {
+void showAllAccountInfo(int pageNum, int num_account) {
 
 	gotoxy(40, 1);
 	printf("서비스 관리 계정 정보 열람");
@@ -128,13 +129,12 @@ void showAllAccountInfo(int num_account) {
 	gotoxy(102, 3);
 	printf("핸드폰 번호");
 
-
-	int pageNum = 1;
-
 	for (int i = 1; i <= 10; i++) {
 		if ((pageNum - 1) * 10 + i <= num_account) {
 			Account a = { "", "", "", "", "", {0, }, {0, }, 0, 0, 0 };
 			readAccountInfo2((pageNum - 1) * 10 + i, &a);
+			gotoxy(1, 3 + (i * 2));
+			printf("%d", i - 1);
 			gotoxy(3, 3 + (i * 2));	//아이디
 			printf("%s", a.id);
 			gotoxy(16, 3 + (i * 2));	//이름
@@ -154,84 +154,157 @@ void showAllAccountInfo(int num_account) {
 
 		}
 	}
+}
 
-	gotoxy(3, 25);
-	printf("┌--------------------┐\n");
-	gotoxy(3, 26);
-	printf("│     이전 페이지    │\n");
-	gotoxy(3, 27);
-	printf("└--------------------┘\n");
-	gotoxy(33, 25);
-	printf("┌--------------------┐\n");
-	gotoxy(33, 26);
-	printf("│     다음 페이지    │\n");
-	gotoxy(33, 27);
-	printf("└--------------------┘\n");
-	gotoxy(63, 25);
-	printf("┌------------------┐\n");
-	gotoxy(63, 26);
-	printf("│     로그아웃     │\n");
-	gotoxy(63, 27);
-	printf("└------------------┘\n");
-	gotoxy(93, 25);
-	printf("┌------------------┐\n");
-	gotoxy(93, 26);
-	printf("│     번호 선택    │\n");
-	gotoxy(93, 27);
-	printf("└------------------┘\n");
+int selectAccountToManage() {
+
+	bool flag = 0;
+	int in = 0;
+	do {
+		flag = 0;
+		for (int i = 0; i < 3; i++) {
+			gotoxy(3, 25 + i);
+			printf("                                                           ");
+			printf("                                                           ");
+		}
+		gotoxy(3, 25);
+		printf("관리할 계정 번호를 선택하세요.");
+		char input = ' ';
+		char temp = ' ';
+		scanf("%c", &input);
+		scanf("%c", &temp);
+
+		in = input - 48;
+		if (temp != '\n' || !(0 <= in && in <= 9)) {
+			printf("잘못된 입력입니다. 숫자 하나만을 입력하세요.\n");
+			system("pause");
+			flag = 1;
+		}
+
+	} while (flag);
+
+	return in;
+}
+
+void selectManageFunction(Account* a) {
+
+}
+
+void adminMenu(int num_account) {
+
+	int pageNum = 1;
+	int endPage = (num_account / 10) + 1;
+
+	while (true) {
+
+		showAllAccountInfo(pageNum, num_account);
+
+		gotoxy(3, 25);
+		printf("┌--------------------┐\n");
+		gotoxy(3, 26);
+		printf("│     이전 페이지    │\n");
+		gotoxy(3, 27);
+		printf("└--------------------┘\n");
+		gotoxy(33, 25);
+		printf("┌--------------------┐\n");
+		gotoxy(33, 26);
+		printf("│     다음 페이지    │\n");
+		gotoxy(33, 27);
+		printf("└--------------------┘\n");
+		gotoxy(63, 25);
+		printf("┌------------------┐\n");
+		gotoxy(63, 26);
+		printf("│     로그아웃     │\n");
+		gotoxy(63, 27);
+		printf("└------------------┘\n");
+		gotoxy(93, 25);
+		printf("┌------------------┐\n");
+		gotoxy(93, 26);
+		printf("│     번호 선택    │\n");
+		gotoxy(93, 27);
+		printf("└------------------┘\n");
 
 
-	int triangle;
-	char ch;
+		int triangle;
+		char ch;
 
-	triangle = 1;
-	gotoxy(triangle, 26);
-	printf("▶");
-	while (1)
-	{
-		Sleep(1000);
-		if (_kbhit())
+		triangle = 1;
+		gotoxy(triangle, 26);
+		printf("▶");
+		while (1)
 		{
-			ch = _getch();
-			if (ch == -32)
+			Sleep(1000);
+			if (_kbhit())
 			{
 				ch = _getch();
-				switch (ch)
+				if (ch == -32)
 				{
-					case LEFT:
-						if (triangle > 1)
-						{
-							gotoxy(triangle, 26);
-							printf("  ");
-							triangle = triangle - 30;
-							gotoxy(triangle, 26);
-							printf("▶");
-						}
-						break;
-					case RIGHT:
-						if (triangle < 91)
-						{
-							gotoxy(triangle, 26);
-							printf("  ");
-							triangle = triangle + 30;
-							gotoxy(triangle, 26);
-							printf("▶");
-						}
-						break;
+					ch = _getch();
+					switch (ch)
+					{
+						case LEFT:
+							if (triangle > 1)
+							{
+								gotoxy(triangle, 26);
+								printf("  ");
+								triangle = triangle - 30;
+								gotoxy(triangle, 26);
+								printf("▶");
+							}
+							break;
+						case RIGHT:
+							if (triangle < 91)
+							{
+								gotoxy(triangle, 26);
+								printf("  ");
+								triangle = triangle + 30;
+								gotoxy(triangle, 26);
+								printf("▶");
+							}
+							break;
+					}
 				}
+				if (ch == 13)
+					break;
 			}
-			if (ch == 13)
-				break;
 		}
-	}
 
-	if (triangle == 1)
-		return 1;
-	if (triangle == 31)
-		return 2;
-	if (triangle == 61)
-		return 3;
-	if (triangle == 91)
-		return 4;
+
+
+		if (triangle == 1) {
+			if (pageNum == 1) {
+				system("cls");
+				printf("더 이상 표시할 계정이 없습니다.");
+				system("pause");
+			}
+			else {
+				pageNum--;
+			}
+		}
+		if (triangle == 31) {
+			if (pageNum = endPage) {
+				system("cls");
+				printf("더 이상 표시할 계정이 없습니다.");
+				system("pause");
+			}
+			else {
+				pageNum++;
+			}
+		}
+		if (triangle == 61)
+			return;
+		if (triangle == 91) {
+			int manageAccount = 0;
+			Account a;
+			manageAccount = ((pageNum-1)*10) + (selectAccountToManage() + 1);
+			a = readAccountInfo(manageAccount);
+			system("cls");
+			selectManageFunction(&a);
+			
+
+		}
+
+
+	}
 
 }
