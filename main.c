@@ -1,6 +1,13 @@
 #include <stdio.h>
 #include "header.h"
 
+void gotoxy(int x, int y) {
+	COORD Pos;
+	Pos.X = x;
+	Pos.Y = y;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
+}
+
 int main() {
 
 	Account login;
@@ -9,6 +16,7 @@ int main() {
 	//이 값을 내 정보 보기 함수에서 인자로 받아, DB 상 해당 줄에 정보 출력
 	int nextMenu = 0;
 	bool flag = 0;	//로그인 상태
+	int num_account = 2;	//DB에 등록된 계정의 총 개수
 
 
 
@@ -17,6 +25,7 @@ int main() {
 			case 1:
 				// 회원가입 함수
 
+				num_account++;	//회원가입 완료 시 계정 개수 증가
 				break;
 			case 2:
 				// 로그인 함수 - 리턴값은 DB상 몇번째 줄에 있는 계정인지.(1부터 시작)
@@ -55,7 +64,7 @@ int main() {
 					checkSecondPw();
 					flag = 1;
 					while (flag) {
-
+						showAllAccountInfo(num_account);
 
 					}
 				}

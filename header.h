@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <Windows.h>
-//#include <regex.h> // 정규식 라이브러리
+#include <regex.h> // 정규식 라이브러리
 #include <string.h>
 #include <time.h>
 
@@ -14,15 +14,15 @@
 #define UP 72 // 방향키 위 아스키코드
 #define DOWN 80 // 방향키 아래 아스키코드
 
-enum {IDCHECK=0, NICKNAMECHECK=3, EMAILCHECK=4, PHONENUMBERCHECK=6, RETCHECK = 7};
+enum { IDCHECK = 0, NICKNAMECHECK = 3, EMAILCHECK = 4, PHONENUMBERCHECK = 6, RETCHECK = 7 };
 
 void gotoxy(int x, int y);
 int uiMainMenu();
-int uiAfterLogin(char * nick);
+int uiAfterLogin(char* nick);
 int uiShowMyInfo(Account* login);
 
 // 내 정보 수정 관련 함수
-int checkPW(char * pw);
+int checkPW(char* pw);
 int selectEdit(Account* login);
 void editPW(char* pw);
 void editName(char* name);
@@ -33,6 +33,8 @@ void editPhone(int* phone);
 
 // 관리자 기능 관련 함수
 void checkSecondPw();
+void readAccountInfo2(int startline, Account* a);
+void showAllAccountInfo(int num_account);
 
 // 회원가입 관련 함수
 int pow(int, int);
