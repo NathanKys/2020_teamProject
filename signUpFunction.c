@@ -1,7 +1,7 @@
 #include "header.h"
-// 해야할 일
+
 // 메뉴로 돌아가는 기능 추가
-// 디자인 통일
+
 int pow(int a, int b) {
 	if (b == 0) return 1;
 	int c;
@@ -214,7 +214,7 @@ bool duplicateCheck(char* _string, int option) {
 			}
 			i++;
 		}
-		printf("%s\n", string);
+		//printf("%s\n", string);
 		if (!strcmp(string, _string)) {
 			return true;
 		}
@@ -325,6 +325,25 @@ bool isContainNumber(const char* string) {
 	return regexec(&state, string, 0, NULL, 0) ? false : true;
 }
 
+bool isRepeat(const char* string, int length) {
+	for (int i = 0;i < length - 2;i++) {
+		if ((string[i] - string[i + 1] == 1) && (string[i + 1] - string[i + 2] == 1)) {
+			return  true;
+		}
+		if ((string[i + 2] - string[i + 1] == 1) && (string[i + 1] - string[i] == 1)) {
+			return  true;
+		}
+	}
+	return false;
+}
+
+bool isConti(const char* string, int length) {
+	for (int i = 0;i < length - 2;i++) {
+		if (string[i] == string[i + 1] && string[i + 1] == string[i + 2]) { return true; }
+	}
+	return false;
+}
+
 int getLength(const char* string) {
 	int a = strlen(string);
 	int temp = 0;
@@ -343,6 +362,7 @@ void clearInputBuffer()
 	while (getchar() != '\n');
 }
 
+// 문자열 내의 특정 문자 제거
 void Eliminate(char* string, char ch) {
 	int len = strlen(string) + 1;
 	for (;*string != '\0';string++, len--) {
@@ -353,59 +373,118 @@ void Eliminate(char* string, char ch) {
 	}
 }
 
+// 인자로 받은 아이디의 추천 횟수 증가
 void ret(char* _string) {
 	// 최대 추천 횟수: 99번
 	FILE* fp;
+	FILE* tempfp;
+	int rewindCount = 0;
 	char temp[MAX_LINE_LENGTH];
 	char ch;
 	int i = 0;
 	int j = 0;
 	char string[EMAILADDRESS_MAXSIZE + 2] = "";
 	int tempRet;
-	char buf[3];
-
+	char buf[10];
+	char buf_temp[2] = { 0, };
 	// 읽기 우선 쓰기 모드
 	fp = fopen("accountlist.txt", "r+t");
+	tempfp = fopen("accountlist.txt", "r");
 	if (fp == NULL)
 	{
 		printf("파일 불러오기 실패\n");
 		exit(1);
 	}
-	while ((ch = fgetc(fp)) != EOF) {
+	while (true) {
 		while (true) {
 			string[i] = fgetc(fp);
+			fgetc(tempfp);
 			if (string[i] == ',') { string[i] = '\0'; i = 0; break; }
+			else if (string[i] == EOF) { fclose(fp);fclose(tempfp); return; }
 			i++;
 		}
 		if (!strcmp(string, _string)) {
 			// 위에서 아이디를 먼저 읽었기 때문에 -1해줘야 함.
-			for (;j < RETCHECK - 1;j++) {
+			for (;j < RETCHECK;j++) {
 				while (true) {
-					if (fgetc(fp) == ',') {
+					ch = fgetc(fp);
+					fgetc(tempfp);
+					if (ch == ',') {
 						break;
+					}
+					else if (ch == EOF) {
+						fclose(fp);
+						fclose(tempfp);
+						return;
 					}
 				}
 			}
 			while (true) {
 				string[i] = fgetc(fp);
+				fgetc(tempfp);
 				if (string[i] == ',') { string[i] = '\0'; i = 0; break; }
+				else if (string[i] == EOF) { fclose(fp);fclose(tempfp); return; }
 				i++;
 			}
 			tempRet = atoi(string);
 			if (tempRet < 99 && tempRet>9) {
 				tempRet += 1;
-				snprintf(buf, sizeof(buf), "%d", tempRet);
+				snprintf(buf, 3, "%d", tempRet);
 				fseek(fp, -3, SEEK_CUR);
-				fwrite(buf, sizeof(buf) - 1, 1, fp);
+				fwrite(buf, 2, 1, fp);
 				fseek(fp, -3, SEEK_CUR); // 다시 원래대로 안 돌려주면 원인 모를 오류 발생
 
 			}
-			else if (tempRet < 10) {
+			else if (tempRet < 9) {
 				tempRet += 1;
-				snprintf(buf, sizeof(buf), "%d", tempRet);
+				snprintf(buf, 3, "%d", tempRet);
 				fseek(fp, -2, SEEK_CUR);
-				fwrite(buf, sizeof(buf) - 2, 1, fp);
+				fwrite(buf, 1, 1, fp);
 				fseek(fp, -2, SEEK_CUR); // 다시 원래대로 안 돌려주면 원인 모를 오류 발생
+			}
+			else if (tempRet == 9) {
+
+				//tempRet += 1;
+				//snprintf(buf, 3, "%d", tempRet);
+				//strncat(buf, ",", 1);
+				//int count = 0;
+				//while (true) {
+				//	count++;
+				//	buf_temp[0] = fgetc(fp);
+				//	strncat(buf, buf_temp, 1);
+				//	if (buf_temp[0] == '\n') { break; }
+				//}
+				////for (int k = 0;k < 10;k++) {
+				////	printf("%d: %d\n", k, buf[k]);
+				////}
+				////printf("%s %d\n", buf, strlen(buf));
+				//fseek(fp, -strlen(buf), SEEK_CUR);
+				//fwrite(buf, strlen(buf), 1, fp);
+				//fseek(fp, -strlen(buf), SEEK_CUR);
+				fseek(fp, -2, SEEK_CUR);
+				fwrite("10,", 3, 1, fp);
+				fseek(fp, 2, SEEK_CUR);
+				//ch = fgetc(tempfp);
+				//printf("%c", ch);
+				//ch = fgetc(tempfp);
+				//printf("%c", ch);
+				//ch = fgetc(tempfp);
+				//printf("%c", ch);
+				//ch = fgetc(tempfp);
+				//printf("%c", ch);
+				fseek(fp, -2, SEEK_CUR);
+				while (true) {
+					ch = fgetc(tempfp);
+					if (feof(tempfp) != 0)
+						break;
+					fputc(ch, fp);
+					rewindCount++;
+				}
+				fseek(fp, 2, SEEK_CUR);
+
+				/*fseek(fp, -rewindCount-4, SEEK_CUR);
+				fwrite("Tlqkf", 5, 1, fp);
+				fseek(fp, rewindCount+4, SEEK_CUR);*/
 			}
 
 			//printf("%s의 추천횟수: %d\n", _string, tempRet);
@@ -413,11 +492,22 @@ void ret(char* _string) {
 		else {
 			// 아이디가 일치하지 않으면 다음 줄로 넘어감.
 			fgets(temp, MAX_LINE_LENGTH, fp);
+			fgets(temp, MAX_LINE_LENGTH, tempfp);
 		}
 		j = 0;
 	}
 	fclose(fp);
+	fclose(tempfp);
 }
+
+// 문자열 뒤에 문자 합치기
+void strAppend(char* dest, char ch) {
+	char* p = dest;
+	while (*p != '\0') p++;
+	*p = ch;
+	*(p + 1) = '\0';
+}
+
 // 제대로 입력이 되었는지 확인하는 임시 함수
 void showUserInformation(Account a) {
 	printf("아이디: %s\n", a.id);
@@ -430,7 +520,7 @@ void showUserInformation(Account a) {
 }
 
 // 계정 구조체를 accountlist.txt에 저장
-void writeAccountInfo(Account user) {
+void writeAccount(Account user) {
 	FILE* fp;
 	fp = fopen("accountlist.txt", "a+");
 	if (fp == NULL) {
@@ -438,8 +528,8 @@ void writeAccountInfo(Account user) {
 		exit(1);
 	}
 	else {
-		fprintf(fp, " %s,%s,%s,%s,%s,%s,%s,%d,%d,%d\n",
-			user.name, user.pw, user.name, user.nick, user.email, user.birth, user.phone, user.rec, user.lock, user.admin);
+		fprintf(fp, "%s,%s,%s,%s,%s,%s,%s,%d,%d,%d\n",
+			user.id, user.pw, user.name, user.nick, user.email, user.birth, user.phone, user.rec, user.lock, user.admin);
 		printf("위의 정보를 저장하였습니다.\n");
 	}
 	fclose(fp);
@@ -524,17 +614,25 @@ void signUp(Account u1) {
 				// 대문자 하나 이상
 				// 소문자 하나 이상
 				// 숫자 하나 이상
-				if (!isContainUpperCase(u1.pw)) {
-					printf("알파벳 대문자를 하나 이상 포함해야 합니다.\n");
-				}
-				if (!isContainLowerCase(u1.pw)) {
-					printf("알파벳 소문자를 하나 이상 포함해야 합니다.\n");
-				}
-				if (!isContainNumber(u1.pw)) {
-					printf("인도-아라비아 숫자를 하나 이상 포함해야 합니다.\n");
-				}
+				if (!isContainUpperCase(u1.pw)) {printf("알파벳 대문자를 하나 이상 포함해야 합니다.\n");}
+				if (!isContainLowerCase(u1.pw)) {printf("알파벳 소문자를 하나 이상 포함해야 합니다.\n");}
+				if (!isContainNumber(u1.pw)) {printf("인도-아라비아 숫자를 하나 이상 포함해야 합니다.\n");}
 
+				// 위의 세 조건을 모두 만족할 때
 				if (isContainNumber(u1.pw) && isContainUpperCase(u1.pw) && isContainLowerCase(u1.pw)) {
+					// 반복된 문자 체크
+					if (isRepeat(u1.pw, strlen(u1.pw))) { 
+						printf("비밀번호에 반복된 문자가 있습니다.\n"); 
+						system("pause");
+						continue;
+					}
+					// 연속된 문자 체크
+					if (isConti(u1.pw, strlen(u1.pw))) {
+						printf("비밀번호에 연속된 문자가 있습니다.\n");
+						system("pause");
+						continue;
+					}
+
 					printf("비밀번호 입력이 완료되었습니다.\n");
 					system("pause");
 					break;
@@ -595,7 +693,9 @@ void signUp(Account u1) {
 	// 이름 입력
 	while (true) {
 		system("cls");
-		printf("이름을 입력합니다.");
+		printf("이름을 입력합니다.\n");
+		printf("이름은 한글(최소 2자~최대 5자) 또는 영어 대소문자(최소 3자~최대 20자)로 구성됩니다.\n");
+		printf("한글와 영어는 혼용하여 사용할 수 없습니다. 영어의 경우 띄어쓰기가 가능합니다.\n");
 		fgets(u1.name, NAME_MAXSIZE + 2, stdin);
 		u1.name[strcspn(u1.name, "\n")] = 0;
 
@@ -661,7 +761,7 @@ void signUp(Account u1) {
 	while (true) {
 		system("cls");
 		printf("생성할 계정의 닉네임을 입력합니다.\n");
-		printf("닉네임에는 한글, 영어, 숫자, 띄어쓰기를 사용할 수 있습니다.\n");
+		printf("닉네임에는 한글, 영어, 숫자, 띄어쓰기를 사용할 수 있습니다.(최소2자~최대12자)\n");
 
 		fgets(u1.nick, NICKNAME_MAXSIZE + 2, stdin);
 		u1.nick[strcspn(u1.nick, "\n")] = 0;
@@ -878,7 +978,7 @@ void signUp(Account u1) {
 	system("cls");
 	printf("회원가입이 완료되었습니다.\n");
 	showUserInformation(u1);
-	writeAccountInfo(u1);
+	writeAccount(u1);
 	// 초기 메뉴로 이동
 
 }
