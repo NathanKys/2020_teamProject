@@ -19,6 +19,7 @@ int uiMainMenu();
 int uiAfterLogin(char * nick);
 int uiShowMyInfo(Account* login);
 
+// 내 정보 수정 관련 함수
 int checkPW(char * pw);
 int selectEdit(Account login);
 void editPW(char* pw);
@@ -27,6 +28,9 @@ void editNick(char* nick);
 void editEmail(char* email);
 void editBirth(int* birth);
 void editPhone(int* phone);
+
+// 관리자 기능 관련 함수
+void checkSecondPw();
 
 // 회원가입 관련 함수
 int pow(int, int);
