@@ -11,71 +11,73 @@ void gotoxy(int x, int y) {
 int main() {
 
 	Account login;
-	Account targetAccount;	//°ü¸®ÀÚ ·Î±×ÀÎ ½Ã °ü¸® ´ë»ó °èÁ¤
-	int login_id_num = -1;	//ÇöÀç ·Î±×ÀÎµÈ ¾ÆÀÌµğÀÇ DB»ó ¼ø¼­. -1Àº °ü¸®ÀÚ ¾ÆÀÌµğ
-	//·Î±×ÀÎÇÑ ¾ÆÀÌµğ ¹øÈ£(= ·Î±×ÀÎÇÑ °èÁ¤ÀÌ DB »ó ¸î¹øÂ° ÁÙÀÎÁö. 1¹øºÎÅÍ ½ÃÀÛ)
-	//ÀÌ °ªÀ» ³» Á¤º¸ º¸±â ÇÔ¼ö¿¡¼­ ÀÎÀÚ·Î ¹Ş¾Æ, DB »ó ÇØ´ç ÁÙ¿¡ Á¤º¸ Ãâ·Â
+	Account targetAccount;	//ê´€ë¦¬ì ë¡œê·¸ì¸ ì‹œ ê´€ë¦¬ ëŒ€ìƒ ê³„ì •
+	int login_id_num = -1;	//í˜„ì¬ ë¡œê·¸ì¸ëœ ì•„ì´ë””ì˜ DBìƒ ìˆœì„œ. -1ì€ ê´€ë¦¬ì ì•„ì´ë””
+	//ë¡œê·¸ì¸í•œ ì•„ì´ë”” ë²ˆí˜¸(= ë¡œê·¸ì¸í•œ ê³„ì •ì´ DB ìƒ ëª‡ë²ˆì§¸ ì¤„ì¸ì§€. 1ë²ˆë¶€í„° ì‹œì‘)
+	//ì´ ê°’ì„ ë‚´ ì •ë³´ ë³´ê¸° í•¨ìˆ˜ì—ì„œ ì¸ìë¡œ ë°›ì•„, DB ìƒ í•´ë‹¹ ì¤„ì— ì •ë³´ ì¶œë ¥
 	int nextMenu = 0;
-	bool flag = 0;	//·Î±×ÀÎ »óÅÂ
-	int num_account = 12;	//DB¿¡ µî·ÏµÈ °èÁ¤ÀÇ ÃÑ °³¼ö
+	bool flag = 0;	//ë¡œê·¸ì¸ ìƒíƒœ
+	int num_account = 12;	//DBì— ë“±ë¡ëœ ê³„ì •ì˜ ì´ ê°œìˆ˜
 
 	bool programFlag = 1;
 	do {
 		switch (uiMainMenu()) {
 			case 1:
-				// È¸¿ø°¡ÀÔ ÇÔ¼ö
+				// íšŒì›ê°€ì… í•¨ìˆ˜
 
-				num_account++;	//È¸¿ø°¡ÀÔ ¿Ï·á ½Ã °èÁ¤ °³¼ö Áõ°¡
+				num_account++;	//íšŒì›ê°€ì… ì™„ë£Œ ì‹œ ê³„ì • ê°œìˆ˜ ì¦ê°€
 				break;
 
 			case 2:
-				// ·Î±×ÀÎ ÇÔ¼ö - ¸®ÅÏ°ªÀº DB»ó ¸î¹øÂ° ÁÙ¿¡ ÀÖ´Â °èÁ¤ÀÎÁö.(1ºÎÅÍ ½ÃÀÛ)
-				// return °ªÀ» login_id_num¿¡ º¹»ç
-				// °ü¸®ÀÚ ·Î±×ÀÎÀÇ °æ¿ì -1À» ¸®ÅÏ
+				// ë¡œê·¸ì¸ í•¨ìˆ˜ - ë¦¬í„´ê°’ì€ DBìƒ ëª‡ë²ˆì§¸ ì¤„ì— ìˆëŠ” ê³„ì •ì¸ì§€.(1ë¶€í„° ì‹œì‘)
+				// return ê°’ì„ login_id_numì— ë³µì‚¬
+				// ê´€ë¦¬ì ë¡œê·¸ì¸ì˜ ê²½ìš° -1ì„ ë¦¬í„´
 				flag = 1;
 
-				if (login_id_num != -1) {	//°ü¸®ÀÚ°¡ ¾Æ´Ñ ÀÏ¹İ È¸¿ø ·Î±×ÀÎÀÏ °æ¿ì
+				if (login_id_num != -1) {	//ê´€ë¦¬ìê°€ ì•„ë‹Œ ì¼ë°˜ íšŒì› ë¡œê·¸ì¸ì¼ ê²½ìš°
 
-					login = readAccountInfo(login_id_num); //·Î±×ÀÎÇÑ °èÁ¤ Á¤º¸ ±¸Á¶Ã¼¿¡ ÀúÀå
+					login = readAccountInfo(login_id_num); //ë¡œê·¸ì¸í•œ ê³„ì • ì •ë³´ êµ¬ì¡°ì²´ì— ì €ì¥
 					if (login.lock) {
-						printf("Àá±ä °èÁ¤ÀÔ´Ï´Ù. ¼­ºñ½º¸¦ ÀÌ¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.\n");
+						printf("ì ê¸´ ê³„ì •ì…ë‹ˆë‹¤. ì„œë¹„ìŠ¤ë¥¼ ì´ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.\n");
 						system("pause");
 						system("cls");
 					}
 					else {
 						if (login.changed) {
-							printf("´Ğ³×ÀÓÀÌ º¯°æµÇ¾ú½À´Ï´Ù.\n");
-							printf("±âÁ¸ ´Ğ³×ÀÓ: ");
-							printf("»õ·Î¿î ´Ğ³×ÀÓ: %s", login.nick);
+							printf("ë‹‰ë„¤ì„ì´ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤.\n");
+							printf("ê¸°ì¡´ ë‹‰ë„¤ì„: ");
+							printf("ìƒˆë¡œìš´ ë‹‰ë„¤ì„: %s", login.nick);
 							login.changed = 0;
 							system("cls");
 							system("pause");
 						}
 						while (flag) {
 							switch (uiAfterLogin(login.nick)) {
-								case 1:	// ³» Á¤º¸ º¸±â ÇÔ¼ö
+								case 1:	// ë‚´ ì •ë³´ ë³´ê¸° í•¨ìˆ˜
 									while (uiShowMyInfo(&login) != 2) {
 
 									}
 									break;
 
 								case 2:
-									// »ç¿ëÀÚ °Ë»ö ÇÔ¼ö
+									userSearch(&login, num_account);
+									// ì‚¬ìš©ì ê²€ìƒ‰ í•¨ìˆ˜
 									break;
 
 								case 3:
-									// ÂÊÁöÇÔ ÇÔ¼ö
+									messageBox(login.id);
+									// ìª½ì§€í•¨ í•¨ìˆ˜
 									break;
 
 								case 4:
 									flag = 0;
 									writeAccountInfo(login_id_num, &login);
-									break; //·Î±×¾Æ¿ô
+									break; //ë¡œê·¸ì•„ì›ƒ
 							}
 						}
 					}
 				}
-				else {	//°ü¸®ÀÚ ·Î±×ÀÎ
+				else {	//ê´€ë¦¬ì ë¡œê·¸ì¸
 					checkSecondPw();
 					while (flag) {
 						flag = adminMenu(num_account, &targetAccount);
@@ -84,12 +86,12 @@ int main() {
 
 				break;
 			case 3:
-				// ¾ÆÀÌµğ ¹× ºñ¹Ğ¹øÈ£ Ã£±â ÇÔ¼ö
+				// ì•„ì´ë”” ë° ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° í•¨ìˆ˜
 				break;
 			case 4:
 				programFlag = 0;
 				system("cls");
-				break; // Á¾·áÇÏ±â
+				break; // ì¢…ë£Œí•˜ê¸°
 		}
 	} while (programFlag);
 }
