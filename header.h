@@ -78,7 +78,7 @@ void strAppend(char*, char);
 void clearInputBuffer();
 void showUserInformation(Account);
 void writeAccount(Account);
-void signUp(Account);
+void signUp();
 
 void writeAccountInfo(int, Account*);
 void showAllAccountInfo2(int pageNum, int num_account);
