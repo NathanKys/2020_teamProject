@@ -40,7 +40,7 @@ int countMessage(char* id) {
 		fgetc(fp);
 		while (true) {
 			temp.text[i] = fgetc(fp);
-			if (temp.text[i] == '\n') {	temp.text[i] = '\0'; i = 0; break; }
+			if (temp.text[i] == '\n') { temp.text[i] = '\0'; i = 0; break; }
 			else if (temp.text[i] == EOF) {
 				fclose(fp);
 				return messageCounter;
@@ -54,10 +54,10 @@ int countMessage(char* id) {
 	fclose(fp);
 	return messageCounter;
 }
-Message* readMessage(char* id, int count) {
+Message* readMessageFile(char* id, int count) {
 	FILE* fp;
 	fp = fopen("./message.txt", "r");
-	if (fp == NULL){
+	if (fp == NULL) {
 		printf("파일 읽기 실패\n");
 		exit(1);
 	}
@@ -123,7 +123,7 @@ char* writeMessage() {
 		fgets(input, TEXT_MAXSIZE + 2, stdin);
 		input[strcspn(input, "\n")] = 0;
 
-		if (input[0]=='~' && strlen(input) == 1) {
+		if (input[0] == '~' && strlen(input) == 1) {
 			system("cls");
 			gotoxy(45, 10);
 			printf("메뉴로 돌아갑니다.");
@@ -208,8 +208,8 @@ void showMessage(Message* m, char* id, int num) {
 				printf("%c", m[num].text[i]);
 			}
 		}
-		else if(strlen(m[num].text) > 80){
-			for(int i=0; i<80; i++){
+		else if (strlen(m[num].text) > 80) {
+			for (int i = 0; i < 80; i++) {
 				printf("%c", m[num].text[i]);
 			}
 			gotoxy(22, 6);
@@ -297,7 +297,7 @@ void showMessage(Message* m, char* id, int num) {
 }
 Message* showMessageList(char* id) {
 	int count = countMessage(id);
-	Message* m = readMessage(id, count);
+	Message* m = readMessageFile(id, count);
 
 	if (count > 0 && count < 10) {
 		for (int i = 0; i < count; i++) {
@@ -312,7 +312,7 @@ Message* showMessageList(char* id) {
 			gotoxy(50, 5 + (i * 2));
 			printf("%s", m[i].senderId);
 			gotoxy(70, 5 + (i * 2));
-			if (strlen(m[i].text) > 11){
+			if (strlen(m[i].text) > 11) {
 				for (int j = 0; j < 10; j++) {
 					printf("%c", m[i].text[j]);
 				}
@@ -338,7 +338,7 @@ Message* showMessageList(char* id) {
 			gotoxy(50, 5 + (line * 2));
 			printf("%s", m[i].senderId);
 			gotoxy(70, 5 + (line * 2));
-			if (strlen(m[i].text) > 10){
+			if (strlen(m[i].text) > 10) {
 				for (int j = 0; j < 10; j++) {
 					printf("%c", m[i].text[j]);
 				}
@@ -437,7 +437,7 @@ void messageBox(char* id) {
 		if (triangleY < 26 && count>index) {
 			showMessage(m, id, index);
 		}
-		else if (triangleY==26){
+		else if (triangleY == 26) {
 			break;
 		}
 	}
@@ -463,19 +463,20 @@ void readMessage(const char* _string) {
 		while (true) {
 			// 해당 아이디 확인
 			string[i] = fgetc(fp);
-			if (string[i] == ',') { 
-				string[i] = '\0'; 
-				i = 0; 
-				break; }
-			else if (string[i] == EOF) { 
-				fclose(fp); 
-				return; 
+			if (string[i] == ',') {
+				string[i] = '\0';
+				i = 0;
+				break;
+			}
+			else if (string[i] == EOF) {
+				fclose(fp);
+				return;
 			}
 			i++;
 		}
 		if (!strcmp(string, _string)) {
 			// 읽었는지 확인하는 변수까지 이동
-			for (;j < 1;j++) {
+			for (; j < 1; j++) {
 				while (true) {
 					ch = fgetc(fp);
 					if (ch == ',') {
@@ -488,7 +489,7 @@ void readMessage(const char* _string) {
 				}
 			}
 			fseek(fp, 0, SEEK_CUR);//없으면 오류 발생
-			fputs("0",fp);
+			fputs("0", fp);
 			fseek(fp, 0, SEEK_CUR);//없으면 오류 발생
 		}
 		else {
