@@ -529,9 +529,13 @@ void writeAccount(Account user) {
 		exit(1);
 	}
 	else {
-		fprintf(fp, "%s,%s,%s,%s,%s,%s,%s,%d,%d\n",
+		fprintf(fp, "%s,%s,%s,%s,%s,%s,%s,%d,%d",
 			user.id, user.pw, user.name, user.nick, user.email, user.birth, user.phone, user.rec, user.lock);
-		//printf("위의 정보를 저장하였습니다.\n");
+		fprintf(fp, "                         \n");
+		//최소 길이의 닉네임(2byte)으로 회원가입 하고, 관리자에 의해 최대 길이의 닉네임(24byte)으로 수정될 경우를 대비하여
+		//이에 필요한 여유 공간을 미리 확보해둬야 함.
+		//그렇지 않으면 다음 줄의 데이터를 덮어쓰게 됨.
+		//24 - 2 = 22이지만 여유있게 25byte의 공간을 확보.
 	}
 	fclose(fp);
 }

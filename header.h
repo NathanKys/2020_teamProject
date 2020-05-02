@@ -14,7 +14,13 @@
 #define RIGHT 77
 #define UP 72 // 방향키 위 아스키코드
 #define DOWN 80 // 방향키 아래 아스키코드
-#define MAX_LINE_LENGTH 130
+#define MAX_LINE_LENGTH 150
+// 한 계정당 가능한 최소 데이터 길이(51byte)
+// 한 계정당 가능한 최대 데이터 길이(120byte)
+// 최소 길이로 회원가입하고, 그 계정의 닉네임이 관리자에 의해 최대 길이로 수정될 경우
+// 2byte짜리 닉네임 -> 24byte짜리 닉네임(최대 한글 12자)
+// 따라서, 최소 길이로 회원가입해도, DB 상에서 이에 필요한 여유 공간은 22byte 이상 빈칸으로 처리해둬야 함.
+// -> 120 byte + 22byte의 여유있는 값으로 150 설정
 
 enum { IDCHECK = 0, NICKNAMECHECK = 3, EMAILCHECK = 4, PHONENUMBERCHECK = 6, RETCHECK = 7 };
 
