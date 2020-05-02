@@ -17,3 +17,4 @@ void deleteMessage(Message* m);
 void showMessage(Message* m, char* id, int num);
 Message* showMessageList(char* id);
 void messageBox(char* id);
+void readMessage(const char*)
