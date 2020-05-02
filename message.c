@@ -171,7 +171,7 @@ void sendMessage(char* sender, char* receiver) {
 	}
 	char* input;
 	input = writeMessage();
-	fprintf(fp, "\n%s,%s,%d,%s", sender, receiver, 1, input);
+	fprintf(fp, "%s,%s,%d,%s\n", sender, receiver, 1, input);
 	fclose(fp);
 }
 void deleteMessage(Message* m) { //미구현
