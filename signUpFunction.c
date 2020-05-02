@@ -529,15 +529,14 @@ void writeAccount(Account user) {
 		exit(1);
 	}
 	else {
-		fprintf(fp, "%s,%s,%s,%s,%s,%s,%s,%d,%d,%d\n",
-			user.id, user.pw, user.name, user.nick, user.email, user.birth, user.phone, user.rec, user.lock, user.admin);
+		fprintf(fp, "%s,%s,%s,%s,%s,%s,%s,%d,%d\n",
+			user.id, user.pw, user.name, user.nick, user.email, user.birth, user.phone, user.rec, user.lock);
 		//printf("위의 정보를 저장하였습니다.\n");
 	}
 	fclose(fp);
 }
 
 void signUp(Account u1) {
-	u1.admin = false;
 	u1.lock = false;
 	char tempPhoneNumber[PHONENUMBER_MAXSIZE + 4];
 	char tempBirthNumber[BIRTHDAY_MAXSIZE + 2];

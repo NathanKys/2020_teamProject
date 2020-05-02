@@ -104,8 +104,6 @@ void readAccountInfo2(int startline, Account* a) {
 	fscanf(fp, "%d", &(*a).rec);
 	fgetc(fp);
 	(*a).lock = (fgetc(fp) - 48);
-	fgetc(fp);
-	(*a).admin = (fgetc(fp) - 48);
 
 	fclose(fp);
 
@@ -133,7 +131,7 @@ void showAllAccountInfo(int pageNum, int num_account) {
 
 	for (int i = 1; i <= 10; i++) {
 		if ((pageNum - 1) * 10 + i <= num_account) {
-			Account a = { "", "", "", "", "", {0, }, {0, }, 0, 0, 0 };
+			Account a = { "", "", "", "", "", {0, }, {0, }, 0, 0 };
 			readAccountInfo2((pageNum - 1) * 10 + i, &a);
 			gotoxy(1, 3 + (i * 2));
 			printf("%d", i - 1);
