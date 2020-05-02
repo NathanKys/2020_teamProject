@@ -1,148 +1,256 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #include "header.h"
+#include "ReadAccount.h"
+#include "message.h"
 #define MAX_LINE_LENGTH 130
-Account inputAccount(int line)
-{
-	FILE* fp;
-	fp = fopen("./accountlist.txt", "r");
-	if (fp == NULL)
-	{
-		printf("파일 입출력 실패.\n");
-		exit(1);
-	}
-	char temp[MAX_LINE_LENGTH];
-	int lineCounter = 1;
-	while (lineCounter != line) {
-		fgets(temp, MAX_LINE_LENGTH, fp);
-		lineCounter++;
 
-	}
-
-	Account a = { "", "", "", "", "", {0, }, {0, }, 0, 0, 0 };
-	int i = 0;
-	while (true) {
-		a.id[i] = fgetc(fp);
-		if (a.id[i] == ',') { a.id[i] = '\0'; i = 0; break; }
-		i++;
-	}
-	while (true) {
-		a.pw[i] = fgetc(fp);
-		if (a.pw[i] == ',') { a.pw[i] = '\0'; i = 0; break; }
-		i++;
-	}
-	while (true) {
-		a.name[i] = fgetc(fp);
-		if (a.name[i] == ',') { a.name[i] = '\0'; i = 0; break; }
-		i++;
-	}
-	while (true) {
-		a.nick[i] = fgetc(fp);
-		if (a.nick[i] == ',') { a.nick[i] = '\0'; i = 0; break; }
-		i++;
-	}
-	while (true) {
-		a.email[i] = fgetc(fp);
-		if (a.email[i] == ',') { a.email[i] = '\0'; i = 0; break; }
-		i++;
-	}
-	while (true) {
-		int temp = fgetc(fp) - 48;
-		if (temp != -4)
-		{
-			a.birth[i] = temp; i++;
+void showAllAccountInfo2(int pageNum, int num_account) {
+	for (int i = 1; i <= 10; i++) {
+		if ((pageNum - 1) * 10 + i <= num_account) {
+			Account a = { "", "", "", "", "", {0, }, {0, }, 0, 0, 0 };
+			readAccountInfo2((pageNum - 1) * 10 + i, &a);
+			gotoxy(35, 3 + (i * 2));
+			printf("%d", i - 1);
+			gotoxy(37, 3 + (i * 2));
+			printf("%s", a.id);
+			gotoxy(62, 3 + (i * 2));
+			printf("%d", a.rec);
 		}
-		else { i = 0; break; }
 	}
-	while (true) {
-		int temp = fgetc(fp) - 48;
-		if (temp != -4) { a.phone[i] = temp; i++; }
-		else { i = 0; break; }
+}
+int selectAccountToShow() {
+	bool flag = 0;
+	int in = 0;
+	do {
+		flag = 0;
+		for (int i = 0; i < 3; i++) {
+			gotoxy(3, 25 + i);
+			printf("                                                           ");
+			printf("                                                           ");
+		}
+		gotoxy(3, 25);
+		printf("열람할 계정의 아이디 번호를 선택하세요.");
+		char input = ' ';
+		char temp = ' ';
+		scanf("%c", &input);
+		scanf("%c", &temp);
+
+		in = input - 48;
+		if (temp != '\n' || !(0 <= in && in <= 9)) {
+			printf("잘못된 입력입니다. 숫자 하나만을 입력하세요.\n");
+			system("pause");
+			flag = 1;
+		}
+
+	} while (flag);
+	return in;
+}
+int accountInfo_Menu(Account* a) {
+	gotoxy(50, 4);
+	printf("사용자 정보 조회");
+	gotoxy(19, 6);
+	printf("==============================================================================");
+	gotoxy(23, 8);
+	printf("아이디");
+	gotoxy(37, 8);
+	printf("닉네임");
+	gotoxy(52, 8);
+	printf("생년월일");
+	gotoxy(65, 8);
+	printf("이메일");
+	gotoxy(19, 10);
+	printf("==============================================================================");
+	gotoxy(23, 12);
+	printf("%s", a->id);
+	gotoxy(37, 12);
+	printf("%s", a->nick);
+	gotoxy(52, 12);
+	for (int j = 0; j < 6; j++) {
+		printf("%d", a->birth[j]);
 	}
+	gotoxy(65, 12);
+	printf("%s", a->email);
+	gotoxy(33, 25);
+	printf("┌----------------------┐");
+	gotoxy(33, 26);
+	printf("│      쪽지 보내기     │");
+	gotoxy(33, 27);
+	printf("└----------------------┘");
+	gotoxy(63, 25);
+	printf("┌------------------------┐");
+	gotoxy(63, 26);
+	printf("│    뒤로가기   │");
+	gotoxy(63, 27);
+	printf("└------------------------┘");
 
-	fscanf(fp, "%d", &a.rec);
-	fgetc(fp);
-	a.lock = (fgetc(fp) - 48);
-	fgetc(fp);
-	a.admin = (fgetc(fp) - 48);
-
-	fclose(fp);
-
-	return a;
-}
-int selectMenu() {
-	int number;
-	printf("1.이전 페이지 ");
-	printf("2.다음 페이지 ");
-	printf("3.뒤로가기 ");
-	printf("4.번호입력\n");
-
-	scanf("%d", &number);
-	
-	return number;
-}
-void returnAccount(Account temp) {
-	int number;
+	int triangle;
+	char ch;
+	triangle = 31;
+	gotoxy(triangle, 26);
+	printf("▶");
+	while (1)
+	{
+		if (_kbhit())
+		{
+			ch = _getch();
+			if (ch == -32)
+			{
+				ch = _getch();
+				switch (ch)
+				{
+				case LEFT:
+					if (triangle > 31)
+					{
+						gotoxy(triangle, 26);
+						printf("  ");
+						triangle = triangle - 30;
+						gotoxy(triangle, 26);
+						printf("▶");
+					}
+					break;
+				case RIGHT:
+					if (triangle < 61)
+					{
+						gotoxy(triangle, 26);
+						printf("  ");
+						triangle = triangle + 30;
+						gotoxy(triangle, 26);
+						printf("▶");
+					}
+					break;
+				}
+			}
+			if (ch == 13)
+				break;
+		}
+	}
 	system("cls");
-	printf("			사용자 정보 조회\n");
-	printf("=================================================================================\n");
-	printf("	아이디		닉네임			이메일			생년월일\n");
-	printf("=================================================================================\n");
-	printf("%12s	%12s	%30s		", temp.id, temp.nick, temp.email);
-	for (int i = 0; i < sizeof(temp.birth) / sizeof(int); i++) {
-		printf("%d", temp.birth[i]);
-	}
-	printf("\n");
-	printf("1.쪽지 보내기");
-	printf("2.뒤로가기\n");
-
-	scanf("%d", &number);
-	switch (number)
-	{
-	case 1:
+	switch (triangle) {
+	case 31:
+		return 1;
 		break;
-	case 2:
-		system("cls");
-		showUserList(0);
-	default:
+	case 61:
+		return 2;
 		break;
 	}
 }
-void showUserList(int page) {
-	int number = 0;
-	int num = 0;
-	Account temp[10];
-	for (int i = 0; i < 10; i++) {
-		temp[i] = inputAccount(i + 1 + page);
-	}
-	for (int i = 0; i < 10; i++) {
-		printf("%d. %12s (%d)\n", i, temp[i].id, temp[i].rec);
-	}
-	number = selectMenu();
+void userSearch(Account* login, int num_account) {
+	int pageNum = 1;
+	int endPage = ((num_account - 1) / 10) + 1;
 
-	switch (number)
-	{
-	case 1:
-		if(page>0)
-			system("cls");
-			showUserList(page - 10);
-		break; 
-	case 2:
+	while (true) {
 		system("cls");
-		showUserList(page + 10);
-		break;
-	case 3:
-		break;
-	case 4:
-		
-		printf("열람할 계정의 아이디 번호를 입력하세요.(0~9)\n");
-		printf(">");
-		scanf("%d", &num);
-		if (num>=0 &&  num<=9)
-			returnAccount(temp[num]);
-		break;
-	default:
-		break;
-	}
+		gotoxy(40, 1);
+		printf("사용자 검색");
+		gotoxy(37, 3);
+		printf("아이디");
+		gotoxy(62, 3);
+		printf("추천 횟수");
+		showAllAccountInfo2(pageNum, num_account);
+		gotoxy(3, 25);
+		printf("┌--------------------┐");
+		gotoxy(3, 26);
+		printf("│     이전 페이지    │");
+		gotoxy(3, 27);
+		printf("└--------------------┘");
+		gotoxy(33, 25);
+		printf("┌--------------------┐");
+		gotoxy(33, 26);
+		printf("│     다음 페이지    │");
+		gotoxy(33, 27);
+		printf("└--------------------┘");
+		gotoxy(63, 25);
+		printf("┌------------------┐");
+		gotoxy(63, 26);
+		printf("│     뒤로가기     │");
+		gotoxy(63, 27);
+		printf("└------------------┘");
+		gotoxy(93, 25);
+		printf("┌------------------┐");
+		gotoxy(93, 26);
+		printf("│     번호 선택    │");
+		gotoxy(93, 27);
+		printf("└------------------┘");
 
+		int triangle;
+		char ch;
+		triangle = 1;
+		gotoxy(triangle, 26);
+		printf("▶");
+		while (1)
+		{
+			if (_kbhit())
+			{
+				ch = _getch();
+				if (ch == -32)
+				{
+					ch = _getch();
+					switch (ch)
+					{
+					case LEFT:
+						if (triangle > 1)
+						{
+							gotoxy(triangle, 26);
+							printf("  ");
+							triangle = triangle - 30;
+							gotoxy(triangle, 26);
+							printf("▶");
+						}
+						break;
+					case RIGHT:
+						if (triangle < 91)
+						{
+							gotoxy(triangle, 26);
+							printf("  ");
+							triangle = triangle + 30;
+							gotoxy(triangle, 26);
+							printf("▶");
+						}
+						break;
+					}
+				}
+				if (ch == 13)
+					break;
+			}
+		}
+		if (triangle == 1) {
+			if (pageNum == 1) {
+				system("cls");
+				printf("더 이상 표시할 계정이 없습니다.");
+				system("pause");
+			}
+			else {
+				pageNum--;
+			}
+		}
+		if (triangle == 31) { 
+			if (pageNum == endPage) {
+				system("cls");
+				printf("더 이상 표시할 계정이 없습니다.");
+				system("pause");
+			}
+			else {
+				pageNum++;
+			}
+		}
+		if (triangle == 61)
+			return;
+		if (triangle == 91) {
+			int showAccount = 0;
+			Account a;
+			showAccount = ((pageNum - 1) * 10) + (selectAccountToShow() + 1);
+			a = readAccountInfo(showAccount);
+			system("cls");
+			int menu = 0;
+			menu = accountInfo_Menu(&a);
+			switch (menu) {
+			case 1:
+				sendMessage(login->id, a.id);
+				break;
+			case 2:
+				return;
+			}
+		}
+	}
 }
