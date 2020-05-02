@@ -540,7 +540,8 @@ void writeAccount(Account user) {
 	fclose(fp);
 }
 
-void signUp(Account u1) {
+void signUp() {
+	Account u1 = {0, };
 	u1.lock = false;
 	u1.changed = false;
 	char tempPhoneNumber[PHONENUMBER_MAXSIZE + 4];
