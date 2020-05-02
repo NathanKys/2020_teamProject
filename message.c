@@ -1,104 +1,417 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #include "header.h"
-//message.txt로 부터 첫줄부터 파일입출력을 통해 temp구조체에 담고,
-//그 구조체의 receiver가 사용자 id와 같으면 크기가 10인 구조체 배열 message에 저장
-//구조체가 꽉차면 첫번째 구조체부터 밀어내는식으로 해서 배열 마지막이 가장 최신(텍스트파일에 가장 아래있는) message로 유지
-//message.txt파일의 마지막 줄을 읽으면 런타임에러가 발생
-//message.txt파일이 10줄 이하거나, 메세지함의 크기가 10이하인 경우 에러
+#include "Message.h"
+#include "ReadAccount.h"
 
-void showMessageList(char* id) {
+int countMessage(char* id) {
 	FILE* fp;
 	fp = fopen("./message.txt", "r");
 	if (fp == NULL)
 	{
-		printf("파일 입출력 실패.\n");
-		return;
+		printf("파일 읽기 실패\n");
+		exit(1);
 	}
-	int j = 0;
-	int k = 0;
-	Message message[10] = { "", "", "", 0 };
-	int count = 0;
-	while (count!=35) {
-		Message temp = { "", "", "", 0 };
-		if (k < 10) {
-			while (true) {
-				temp.sender[j] = fgetc(fp);
-				if (temp.sender[j] == ',') { temp.sender[j] = '\0'; j = 0; break; }
-				j++;
-			}
-			while (true) {
-				temp.receiver[j] = fgetc(fp);
-				if (temp.receiver[j] == ',') { temp.receiver[j] = '\0'; j = 0; break; }
-				j++;
-			}
-			temp.read = (fgetc(fp) - 48);
-			fgetc(fp);
-			while (true) {
-				temp.content[j] = fgetc(fp);
-				if (temp.content[j] == '\n') { temp.content[j] = '\0'; j = 0; break; }
-				j++;
-			}
-			if (!strcmp(temp.receiver,id)) {
-				message[k] = temp;
-				k++;
-			}		
+	int messageCounter = 0;
+
+	int i = 0;
+	while (!feof(fp)) {
+		Message temp = { "", "", 0, "" };
+		while (true) {
+			temp.senderId[i] = fgetc(fp);
+			if (temp.senderId[i] == ',') { temp.senderId[i] = '\0'; i = 0; break; }
+			i++;
 		}
-		else {
-			while (true) {
-				temp.sender[j] = fgetc(fp);
-				if (temp.sender[j] == ',') { temp.sender[j] = '\0'; j = 0; break; }
-				j++;
-			}
-			while (true) {
-				temp.receiver[j] = fgetc(fp);
-				if (temp.receiver[j] == ',') { temp.receiver[j] = '\0'; j = 0; break; }
-				j++;
-			}
-			temp.read = (fgetc(fp) - 48);
-			fgetc(fp);
-			while (true) {
-				temp.content[j] = fgetc(fp);
-				if (temp.content[j] == '\n') { temp.content[j] = '\0'; j = 0; break; }
-				j++;
-			}
-			if (!strcmp(temp.receiver, id)){
-				for (int i = 0; i < 9; i++) {
-					message[i] = message[i+1];
-				}
-				message[9] = temp;
-			}
+		while (true) {
+			temp.receiverId[i] = fgetc(fp);
+			if (temp.receiverId[i] == ',') { temp.receiverId[i] = '\0'; i = 0; break; }
+			i++;
 		}
-		count++;
-	}
-	for (int i = 0; i < 10; i++) {
-		printf("발신자: %s	쪽지내용: ", message[i].sender);
-		for (int j = 0; j < 10; j++) {
-			printf("%c", message[i].content[j]);
+		while (true) {
+			temp.text[i] = fgetc(fp);
+			if (temp.text[i] == ',') { temp.text[i] = '\0'; i = 0; break; }
+			i++;
 		}
-		if (strlen(message[i].content) > 10){
-			printf("...\n");
-		}
-		else {
-			printf("\n");
+		temp.read = (fgetc(fp) - 48);
+		fgetc(fp);
+		if (!strcmp(temp.receiverId, id)) {
+			messageCounter++;
 		}
 	}
 	fclose(fp);
+	return messageCounter;
 }
-
-/*
-void writeMessage() {
+Message* readMessage(char* id) {
 	FILE* fp;
-	fp = fopen("./message.txt", "w");
+	fp = fopen("./message.txt", "r");
+	if (fp == NULL){
+		printf("파일 읽기 실패\n");
+		exit(1);
+	}
+	Message* m_arr;
+	m_arr = (Message*)malloc(sizeof(Message) * countMessage(id));
+	int i = 0;
+	int j = 0;
+
+	while (!feof(fp)) {
+		Message temp = { "", "", 0, "" };
+		while (true) {
+			temp.senderId[i] = fgetc(fp);
+			if (temp.senderId[i] == ',') { temp.senderId[i] = '\0'; i = 0; break; }
+			i++;
+		}
+		while (true) {
+			temp.receiverId[i] = fgetc(fp);
+			if (temp.receiverId[i] == ',') { temp.receiverId[i] = '\0'; i = 0; break; }
+			i++;
+		}
+		while (true) {
+			temp.text[i] = fgetc(fp);
+			if (temp.text[i] == ',') { temp.text[i] = '\0'; i = 0; break; }
+			i++;
+		}
+		temp.read = (fgetc(fp) - 48);
+		fgetc(fp);
+		if (!strcmp(temp.receiverId, id)) {
+			m_arr[j] = temp;
+			j++;
+		}
+	}
+	fclose(fp);
+	return m_arr;
+}
+bool matchMessage(const char* string) {
+	regex_t state;
+	const char* pattern = "^([A-Za-z0-9가-힣.?,\\!]||[[:blank:]]){1,200}$";
+
+	regcomp(&state, pattern, REG_EXTENDED);
+	return regexec(&state, string, 0, NULL, 0) ? false : true;
+}
+char* writeMessage() {
+	char* input = malloc(sizeof(char) * 201);
+	while (true) {
+		system("cls");
+		gotoxy(10, 10);
+		printf("쪽지는 최대 200자까지 작성할 수 있습니다.");
+		gotoxy(10, 11);
+		printf(">");
+		fgets(input, TEXT_MAXSIZE + 2, stdin);
+		input[strcspn(input, "\n")] = 0;
+
+		if (input[0]=='~' && strlen(input) == 1) {
+			system("cls");
+			gotoxy(45, 10);
+			printf("메뉴로 돌아갑니다.");
+			gotoxy(41, 11);
+			system("pause");
+			return;
+		}
+		if (strlen(input) > NICKNAME_MAXSIZE) {
+			clearInputBuffer();
+		}
+		if (getLength(input) > 200) {
+			gotoxy(10, 15);
+			printf("쪽지는 최대 200자까지 작성할 수 있습니다!");
+			gotoxy(10, 16);
+			system("pause");
+			continue;
+		}
+		if (matchMessage(input)) {
+			system("cls");
+			gotoxy(45, 10);
+			printf("쪽지를 성공적으로 보냈습니다.");
+			gotoxy(41, 12);
+			system("pause");
+			break;
+		}
+		else {
+			gotoxy(10, 15);
+			printf("허용되지 않은 문자가 포함되었습니다.");
+			gotoxy(10, 16);
+			printf("허용하는 문자 : 한글, 영어, 숫자, '?', '!', '.', '(', ')', 띄어쓰기 ");
+			gotoxy(10, 17);
+			system("pause");
+			continue;
+		}
+	}
+	return input;
+}
+void sendMessage(char* sender, char* receiver) {
+	FILE* fp;
+	fp = fopen("./message.txt", "a+");
 	if (fp == NULL)
 	{
 		printf("파일 입출력 실패.\n");
-		return;
+		exit(1);
+	}
+	char* input;
+	input = writeMessage();
+	fprintf(fp, "\n%s,%s,%s,%d", sender, receiver, input, 1);
+	fclose(fp);
+}
+void deleteMessage(Message* m) { //미구현
+	FILE* fp;
+	fp = fopen("./message.txt", "a+");
+	if (fp == NULL)
+	{
+		printf("파일 입출력 실패.\n");
+		exit(1);
 	}
 
 
+	fclose(fp);
+}
+void showMessage(Message* m, char* id, int num) {
+	while (true) {
+		system("cls");
+		gotoxy(40, 1);
+		printf("쪽지 확인");
+		gotoxy(10, 3);
+		printf("발신자 : %s", m[num].senderId);
+		gotoxy(10, 5);
+		printf("쪽지 내용 : ");
+		if (strlen(m[num].text) > 160) {
+			for (int i = 0; i < 80; i++) {
+				printf("%c", m[num].text[i]);
+			}
+			gotoxy(22, 6);
+			for (int i = 80; i < 160; i++) {
+				printf("%c", m[num].text[i]);
+			}
+			gotoxy(22, 7);
+			for (int i = 160; i < strlen(m[num].text); i++) {
+				printf("%c", m[num].text[i]);
+			}
+		}
+		else if(strlen(m[num].text) > 80){
+			for(int i=0; i<80; i++){
+				printf("%c", m[num].text[i]);
+			}
+			gotoxy(22, 6);
+			for (int i = 80; i < strlen(m[num].text); i++) {
+				printf("%c", m[num].text[i]);
+			}
+		}
+		else {
+			printf("%s", m[num].text);
+		}
+		gotoxy(3, 25);
+		printf("┌----------------┐");
+		gotoxy(3, 26);
+		printf("│     답장    │");
+		gotoxy(3, 27);
+		printf("└----------------┘");
+		gotoxy(33, 25);
+		printf("┌----------------┐");
+		gotoxy(33, 26);
+		printf("│     삭제    │");
+		gotoxy(33, 27);
+		printf("└----------------┘");
+		gotoxy(63, 25);
+		printf("┌------------------┐");
+		gotoxy(63, 26);
+		printf("│     뒤로가기     │");
+		gotoxy(63, 27);
+		printf("└------------------┘");
 
+		int triangle;
+		char ch;
+		triangle = 1;
+		gotoxy(triangle, 26);
+		printf("▶");
+		while (1)
+		{
+			if (_kbhit())
+			{
+				ch = _getch();
+				if (ch == -32)
+				{
+					ch = _getch();
+					switch (ch)
+					{
+					case LEFT:
+						if (triangle > 1)
+						{
+							gotoxy(triangle, 26);
+							printf("  ");
+							triangle = triangle - 30;
+							gotoxy(triangle, 26);
+							printf("▶");
+						}
+						break;
+					case RIGHT:
+						if (triangle < 61)
+						{
+							gotoxy(triangle, 26);
+							printf("  ");
+							triangle = triangle + 30;
+							gotoxy(triangle, 26);
+							printf("▶");
+						}
+						break;
+					}
+				}
+				if (ch == 13)
+					break;
+			}
+		}
+		if (triangle == 1) {
+			system("cls");
+			sendMessage(id, m[num].senderId);
+			return;
+		}
+		if (triangle == 31) {
+			system("cls");
+			deleteMessage(&m);
+			return;
+		}
+		if (triangle == 61) {
+			return;
+		}
+	}
+}
+Message* showMessageList(char* id) {
+	int count = countMessage(id);
+	Message* m = readMessage(id);
 
+	if (count > 0 && count < 10) {
+		for (int i = 0; i < count; i++) {
+			if (m[i].read) {
+				gotoxy(34, 5 + (i * 2));
+				printf("안읽음");
+			}
+			else {
+				gotoxy(35, 5 + (i * 2));
+				printf("읽음");
+			}
+			gotoxy(50, 5 + (i * 2));
+			printf("%s", m[i].senderId);
+			gotoxy(70, 5 + (i * 2));
+			if (strlen(m[i].text) > 11){
+				for (int j = 0; j < 10; j++) {
+					printf("%c", m[i].text[j]);
+				}
+				printf("...");
+			}
+			else {
+				printf("%s", m[i].text);
+			}
+		}
+	}
+	else if (count >= 10) {
+		for (int i = count - 10; i < count; i++) {
+			if (m[i].read) {
+				gotoxy(34, 5 + (i * 2));
+				printf("안읽음");
+			}
+			else {
+				gotoxy(35, 5 + (i * 2));
+				printf("읽음");
+			}
+			gotoxy(50, 5 + (i * 2));
+			printf("%s", m[i].senderId);
+			gotoxy(70, 5 + (i * 2));
+			if (strlen(m[i].text) > 10){
+				for (int j = 0; j < 10; j++) {
+					printf("%c", m[i].text[j]);
+				}
+				printf("...");
+			}
+			else {
+				printf("%s", m[i].text);
+			}
+		}
+	}
+	else {
+		gotoxy(48, 13);
+		printf("쪽지함이 비어있습니다!");
+	}
+	return m;
+}
+void messageBox(char* id) {
+	while (true) {
+		system("cls");
+		Message* m = showMessageList(id);
+		gotoxy(1, 1);
+		gotoxy(57, 1);
+		printf("쪽지함");
+		gotoxy(35, 3);
+		printf("상태");
+		gotoxy(50, 3);
+		printf("발신자");
+		gotoxy(70, 3);
+		printf("쪽지 내용");
+		gotoxy(48, 25);
+		printf("┌------------------┐");
+		gotoxy(48, 26);
+		printf("│     뒤로가기     │");
+		gotoxy(48, 27);
+		printf("└------------------┘");
 
-
-}*/
+		int triangleX = 30;
+		int triangleY = 5;
+		char ch;
+		gotoxy(triangleX, triangleY);
+		printf("▶");
+		while (1)
+		{
+			if (_kbhit())
+			{
+				ch = _getch();
+				if (ch == -32)
+				{
+					ch = _getch();
+					switch (ch)
+					{
+					case UP:
+						if (triangleY > 5 && triangleY < 26)
+						{
+							gotoxy(triangleX, triangleY);
+							printf("  ");
+							triangleY = triangleY - 2;
+							gotoxy(triangleX, triangleY);
+							printf("▶");
+						}
+						else if (triangleY == 26) {
+							gotoxy(triangleX, triangleY);
+							printf("  ");
+							triangleX = 30;
+							triangleY = 23;
+							gotoxy(triangleX, triangleY);
+							printf("▶");
+						}
+						break;
+					case DOWN:
+						if (triangleY < 23)
+						{
+							gotoxy(triangleX, triangleY);
+							printf("  ");
+							triangleY = triangleY + 2;
+							gotoxy(triangleX, triangleY);
+							printf("▶");
+						}
+						else if (triangleY == 23) {
+							gotoxy(triangleX, triangleY);
+							printf("  ");
+							triangleX = 45;
+							triangleY = 26;
+							gotoxy(triangleX, triangleY);
+							printf("▶");
+						}
+						break;
+					}
+				}
+				if (ch == 13)
+					break;
+			}
+		}
+		int index = (triangleY - 5) / 2;
+		int count = countMessage(id);
+		if (triangleY < 26 && count>index) {
+			showMessage(m, id, index);
+		}
+		else if (triangleY==26){
+			break;
+		}
+	}
+}
