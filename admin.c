@@ -127,7 +127,9 @@ void showAllAccountInfo(int pageNum, int num_account) {
 	gotoxy(93, 3);
 	printf("생년월일");
 	gotoxy(102, 3);
-	printf("핸드폰 번호");
+	printf("휴대폰 번호");
+	gotoxy(114, 3);
+	printf("잠금 여부");
 
 	for (int i = 1; i <= 10; i++) {
 		if ((pageNum - 1) * 10 + i <= num_account) {
@@ -150,6 +152,13 @@ void showAllAccountInfo(int pageNum, int num_account) {
 			gotoxy(102, 3 + (i * 2));	//휴대폰 번호
 			for (int j = 0; j < 11; j++) {
 				printf("%d", a.phone[j]);
+			}
+			gotoxy(114, 3 + (i * 2));	//이메일
+			if (a.lock == 0) {
+				printf("X");
+			}
+			else {
+				printf("O");
 			}
 
 		}
@@ -307,6 +316,8 @@ void changeNick(char * nick) {
 		}
 
 	}
+	strcpy(nick, input);
+	system("cls");
 }
 
 void changeLock(char* id, bool* lock) {
@@ -362,16 +373,18 @@ void changeLock(char* id, bool* lock) {
 		}
 		printf("계정 잠금 처리되었습니다.");
 	}
-	(*lock) = !lock;
+
+	bool temp = (*lock);
+	(*lock) = !temp;
 }
 
-void adminMenu(int num_account) {
+bool adminMenu(int num_account, Account * targetAccount) {
 
 	int pageNum = 1;
 	int endPage = ((num_account-1) / 10) + 1;
 
 	while (true) {
-
+		
 		showAllAccountInfo(pageNum, num_account);
 
 		gotoxy(3, 25);
@@ -467,27 +480,31 @@ void adminMenu(int num_account) {
 			}
 		}
 		if (triangle == 61)
-			return;
+			return false;
+
 		if (triangle == 91) {
 			int manageAccount = 0;
-			Account a;
+
 			manageAccount = ((pageNum - 1) * 10) + (selectAccountToManage() + 1);
-			a = readAccountInfo(manageAccount);
+
+			*targetAccount = readAccountInfo(manageAccount);
 			system("cls");
 			int menu = 0;
 			menu = selectManageFunction();
 			switch (menu) {
 				case 1:
-					changeNick(&(a.nick));
+					changeNick((*targetAccount).nick);
+					writeAccountInfo(manageAccount, targetAccount);
 					break;
 
 				case 2:
-					changeLock(&(a.id), &(a.lock));
+					changeLock((*targetAccount).id, &((*targetAccount).lock));
+					writeAccountInfo(manageAccount, targetAccount);
 					break;
 			}
 
 		}
-
+		system("cls");
 	}
 
 }

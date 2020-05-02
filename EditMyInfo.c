@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "header.h"
+#pragma warning(disable:4098)
 
 int checkPW(char* pw) {
 
@@ -27,7 +28,7 @@ int checkPW(char* pw) {
 
 }
 
-int selectEdit(Account* login) {
+void selectEdit(Account* login) {
 
 	while (1) {
 		system("cls");

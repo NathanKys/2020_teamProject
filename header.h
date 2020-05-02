@@ -6,6 +6,7 @@
 #include <regex.h> // 정규식 라이브러리
 #include <string.h>
 #include <time.h>
+#include <conio.h>
 
 #include "ReadAccount.h"	//파일에서 계정 읽어와서 구조체에 저장
 
@@ -24,7 +25,7 @@ int uiShowMyInfo(Account* login);
 
 // 내 정보 수정 관련 함수
 int checkPW(char* pw);
-int selectEdit(Account* login);
+void selectEdit(Account* login);
 void editPW(char* pw);
 void editName(char* name);
 void editNick(char* nick);
@@ -34,9 +35,9 @@ void editPhone(int* phone);
 
 // 관리자 기능 관련 함수
 void checkSecondPw();
+bool adminMenu(int num_account, Account* targetAccount);
 void readAccountInfo2(int startline, Account* a);
 void showAllAccountInfo(int pageNum, int num_account);
-void adminMenu(int num_account);
 int selectAccountToManage();
 int selectManageFunction();
 void changeNick(char* nick);

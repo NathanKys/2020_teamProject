@@ -21,22 +21,19 @@ void writeAccountInfo(int line, Account* login) {
 		fgets(temp, MAX_LINE_LENGTH, fp);
 		fgetpos(fp, &position);
 		lineCounter++;
-
 	}
 
 	char temp1[MAX_LINE_LENGTH] = "";
 	int counter = 0;
-	while (true) {
+	while (true) {	//입력하기 전에 입력대상 라인의 기존 글자수만큼의 문자열 준비
 		temp1[counter] = fgetc(fp);
 		if (temp1[counter] == EOF || temp1[counter] == '\n')
 			break;
 		temp1[counter] = ' ';
 		counter++;
 	}
-	fseek(fp, position, SEEK_SET);
-	fwrite(temp1, strlen(temp1), 1, fp);
-
-
+	fseek(fp, position, SEEK_SET);	//다시 입력 대상 라인의 처음으로 돌아가기
+	fwrite(temp1, strlen(temp1), 1, fp);	//앞서 준비한 문자열로 입력 대상 라인 밀기(덮어쓰기)
 
 
 	char infoString[MAX_LINE_LENGTH] = "";
