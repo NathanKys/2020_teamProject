@@ -81,3 +81,7 @@ void writeAccount(Account);
 void signUp(Account);
 
 void writeAccountInfo(int, Account*);
+void showAllAccountInfo2(int pageNum, int num_account);
+int selectAccountToShow();
+int accountInfo_Menu(Account* a);
+void userSearch(Account* login, int num_account);
