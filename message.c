@@ -20,20 +20,33 @@ int countMessage(char* id) {
 		while (true) {
 			temp.senderId[i] = fgetc(fp);
 			if (temp.senderId[i] == ',') { temp.senderId[i] = '\0'; i = 0; break; }
+			else if (temp.senderId[i] == EOF) {
+				fclose(fp);
+				return messageCounter;
+			}
 			i++;
+
 		}
 		while (true) {
 			temp.receiverId[i] = fgetc(fp);
 			if (temp.receiverId[i] == ',') { temp.receiverId[i] = '\0'; i = 0; break; }
-			i++;
-		}
-		while (true) {
-			temp.text[i] = fgetc(fp);
-			if (temp.text[i] == ',') { temp.text[i] = '\0'; i = 0; break; }
+			else if (temp.receiverId[i] == EOF) {
+				fclose(fp);
+				return messageCounter;
+			}
 			i++;
 		}
 		temp.read = (fgetc(fp) - 48);
 		fgetc(fp);
+		while (true) {
+			temp.text[i] = fgetc(fp);
+			if (temp.text[i] == '\n') {	temp.text[i] = '\0'; i = 0; break; }
+			else if (temp.text[i] == EOF) {
+				fclose(fp);
+				return messageCounter;
+			}
+			i++;
+		}
 		if (!strcmp(temp.receiverId, id)) {
 			messageCounter++;
 		}
@@ -41,7 +54,7 @@ int countMessage(char* id) {
 	fclose(fp);
 	return messageCounter;
 }
-Message* readMessage(char* id) {
+Message* readMessage(char* id, int count) {
 	FILE* fp;
 	fp = fopen("./message.txt", "r");
 	if (fp == NULL){
@@ -49,7 +62,7 @@ Message* readMessage(char* id) {
 		exit(1);
 	}
 	Message* m_arr;
-	m_arr = (Message*)malloc(sizeof(Message) * countMessage(id));
+	m_arr = (Message*)malloc(sizeof(Message) * count);
 	int i = 0;
 	int j = 0;
 
@@ -58,20 +71,32 @@ Message* readMessage(char* id) {
 		while (true) {
 			temp.senderId[i] = fgetc(fp);
 			if (temp.senderId[i] == ',') { temp.senderId[i] = '\0'; i = 0; break; }
+			else if (temp.senderId[i] == EOF) {
+				fclose(fp);
+				return m_arr;
+			}
 			i++;
 		}
 		while (true) {
 			temp.receiverId[i] = fgetc(fp);
 			if (temp.receiverId[i] == ',') { temp.receiverId[i] = '\0'; i = 0; break; }
-			i++;
-		}
-		while (true) {
-			temp.text[i] = fgetc(fp);
-			if (temp.text[i] == ',') { temp.text[i] = '\0'; i = 0; break; }
+			else if (temp.receiverId[i] == EOF) {
+				fclose(fp);
+				return m_arr;
+			}
 			i++;
 		}
 		temp.read = (fgetc(fp) - 48);
 		fgetc(fp);
+		while (true) {
+			temp.text[i] = fgetc(fp);
+			if (temp.text[i] == '\n') { temp.text[i] = '\0'; i = 0; break; }
+			else if (temp.text[i] == EOF) {
+				fclose(fp);
+				return m_arr;
+			}
+			i++;
+		}
 		if (!strcmp(temp.receiverId, id)) {
 			m_arr[j] = temp;
 			j++;
@@ -146,7 +171,7 @@ void sendMessage(char* sender, char* receiver) {
 	}
 	char* input;
 	input = writeMessage();
-	fprintf(fp, "\n%s,%s,%s,%d", sender, receiver, input, 1);
+	fprintf(fp, "\n%s,%s,%d,%s", sender, receiver, 1, input);
 	fclose(fp);
 }
 void deleteMessage(Message* m) { //미구현
@@ -272,7 +297,7 @@ void showMessage(Message* m, char* id, int num) {
 }
 Message* showMessageList(char* id) {
 	int count = countMessage(id);
-	Message* m = readMessage(id);
+	Message* m = readMessage(id, count);
 
 	if (count > 0 && count < 10) {
 		for (int i = 0; i < count; i++) {
@@ -299,18 +324,20 @@ Message* showMessageList(char* id) {
 		}
 	}
 	else if (count >= 10) {
+		int line;
 		for (int i = count - 10; i < count; i++) {
+			line = i - count + 10;
 			if (m[i].read) {
-				gotoxy(34, 5 + (i * 2));
+				gotoxy(34, 5 + (line * 2));
 				printf("안읽음");
 			}
 			else {
-				gotoxy(35, 5 + (i * 2));
+				gotoxy(35, 5 + (line * 2));
 				printf("읽음");
 			}
-			gotoxy(50, 5 + (i * 2));
+			gotoxy(50, 5 + (line * 2));
 			printf("%s", m[i].senderId);
-			gotoxy(70, 5 + (i * 2));
+			gotoxy(70, 5 + (line * 2));
 			if (strlen(m[i].text) > 10){
 				for (int j = 0; j < 10; j++) {
 					printf("%c", m[i].text[j]);
