@@ -19,20 +19,23 @@ void writeAccountInfo(int line, Account* login) {
 
 	while (lineCounter != line) {
 		fgets(temp, MAX_LINE_LENGTH, fp);
-		fgetpos(fp, &position);
 		lineCounter++;
 	}
+	fgetpos(fp, &position);
 
 	char temp1[MAX_LINE_LENGTH] = "";
 	int counter = 0;
 	while (true) {	//입력하기 전에 입력대상 라인의 기존 글자수만큼의 문자열 준비
 		temp1[counter] = fgetc(fp);
-		if (temp1[counter] == EOF || temp1[counter] == '\n')
+		if (temp1[counter] == EOF || temp1[counter] == '\n') {
+			//temp1[counter] = '\0';
 			break;
+		}
 		temp1[counter] = ' ';
 		counter++;
 	}
-	fseek(fp, position, SEEK_SET);	//다시 입력 대상 라인의 처음으로 돌아가기
+
+	fseek(fp, position, SEEK_SET);
 	fwrite(temp1, counter, 1, fp);	//앞서 준비한 문자열로 입력 대상 라인 밀기(덮어쓰기)
 
 
@@ -101,11 +104,26 @@ void writeAccountInfo(int line, Account* login) {
 		infoString[i++] = c[j++];
 	}
 	infoString[i++] = (*login).lock + 48;
-	infoString[i++] = '\n';
-	infoString[i] = '\0';
+	for (int j = i; j < MAX_LINE_LENGTH-3; j++) {
+		infoString[j] = ' ';
+	}
+	infoString[MAX_LINE_LENGTH-2] = '\n';
+	infoString[MAX_LINE_LENGTH-1] = '\0';
 		
-	fseek(fp, position, SEEK_SET);
-	fputs(infoString, fp);
+	if (i < counter) {		//변경된 이후의 총 데이터 길이가 원래보다 짧아진 경우
+		infoString[i-1] = '\0';
+		fseek(fp, position, SEEK_SET);
+		fputs(infoString, fp);
+	}
+	else {		//변경된 이후의 총 데이터 길이가 원래보다 길어진 경우
+		fseek(fp, position, SEEK_SET);
+		fputs(infoString, fp);
+
+
+	}
+
+
+
 	
 	fclose(fp);
 

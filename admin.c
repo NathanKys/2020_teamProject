@@ -218,7 +218,7 @@ int selectManageFunction() {
 	printf("▶");
 	while (1)
 	{
-		Sleep(1000);
+		Sleep(500);
 		if (_kbhit())
 		{
 			ch = _getch();

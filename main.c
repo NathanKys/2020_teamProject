@@ -17,7 +17,7 @@ int main() {
 	//이 값을 내 정보 보기 함수에서 인자로 받아, DB 상 해당 줄에 정보 출력
 	int nextMenu = 0;
 	bool flag = 0;	//로그인 상태
-	int num_account = 11;	//DB에 등록된 계정의 총 개수
+	int num_account = 3;	//DB에 등록된 계정의 총 개수
 
 
 
