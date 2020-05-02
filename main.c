@@ -19,7 +19,6 @@ int main() {
 	bool flag = 0;	//로그인 상태
 	int num_account = 12;	//DB에 등록된 계정의 총 개수
 
-
 	bool programFlag = 1;
 	do {
 		switch (uiMainMenu()) {
@@ -33,36 +32,51 @@ int main() {
 				// 로그인 함수 - 리턴값은 DB상 몇번째 줄에 있는 계정인지.(1부터 시작)
 				// return 값을 login_id_num에 복사
 				// 관리자 로그인의 경우 -1을 리턴
+				flag = 1;
 
 				if (login_id_num != -1) {	//관리자가 아닌 일반 회원 로그인일 경우
-					flag = 1;
+
 					login = readAccountInfo(login_id_num); //로그인한 계정 정보 구조체에 저장
-					while (flag) {
-						switch (uiAfterLogin(login.nick)) {
-							case 1:	// 내 정보 보기 함수
-								while (uiShowMyInfo(&login) != 2) {
+					if (login.lock) {
+						printf("잠긴 계정입니다. 서비스를 이용할 수 없습니다.\n");
+						system("pause");
+						system("cls");
+					}
+					else {
+						if (login.changed) {
+							printf("닉네임이 변경되었습니다.\n");
+							printf("기존 닉네임: ");
+							printf("새로운 닉네임: %s", login.nick);
+							login.changed = 0;
+							system("cls");
+							system("pause");
+						}
+						while (flag) {
+							switch (uiAfterLogin(login.nick)) {
+								case 1:	// 내 정보 보기 함수
+									while (uiShowMyInfo(&login) != 2) {
 
-								}
-								break;
+									}
+									break;
 
-							case 2:
-								// 사용자 검색 함수
-								break;
+								case 2:
+									// 사용자 검색 함수
+									break;
 
-							case 3:
-								// 쪽지함 함수
-								break;
+								case 3:
+									// 쪽지함 함수
+									break;
 
-							case 4:
-								flag = 0;
-								writeAccountInfo(login_id_num, &login);
-								break; //로그아웃
+								case 4:
+									flag = 0;
+									writeAccountInfo(login_id_num, &login);
+									break; //로그아웃
+							}
 						}
 					}
 				}
 				else {	//관리자 로그인
 					checkSecondPw();
-					flag = 1;
 					while (flag) {
 						flag = adminMenu(num_account, &targetAccount);
 					}

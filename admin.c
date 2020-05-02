@@ -163,10 +163,10 @@ void showAllAccountInfo(int pageNum, int num_account) {
 			}
 			gotoxy(114, 3 + (i * 2));	//이메일
 			if (a.lock == 0) {
-				printf("X");
+				printf("   X");
 			}
 			else {
-				printf("O");
+				printf("   O");
 			}
 
 		}
@@ -275,7 +275,7 @@ int selectManageFunction() {
 	}
 }
 
-void changeNick(char * nick) {
+void changeNick(char* nick, bool* changed) {
 
 
 	char input[NICKNAME_MAXSIZE + 2];
@@ -325,6 +325,8 @@ void changeNick(char * nick) {
 
 	}
 	strcpy(nick, input);
+	bool temp = (*changed);
+	(*changed) = !temp;
 	system("cls");
 }
 
@@ -388,6 +390,7 @@ void changeLock(char* id, bool* lock) {
 		printf("계정 잠금 처리되었습니다.");
 	}
 	system("pause");
+	system("cls");
 
 	bool temp = (*lock);
 	(*lock) = !temp;
@@ -508,7 +511,7 @@ bool adminMenu(int num_account, Account * targetAccount) {
 			menu = selectManageFunction();
 			switch (menu) {
 				case 1:
-					changeNick((*targetAccount).nick);
+					changeNick((*targetAccount).nick, &((*targetAccount).changed));
 					writeAccountInfo(manageAccount, targetAccount);
 					break;
 

@@ -102,6 +102,9 @@ void writeAccountInfo(int line, Account* login) {
 		infoString[i++] = c[j++];
 	}
 	infoString[i++] = (*login).lock + 48;
+	infoString[i++] = ',';
+	infoString[i++] = (*login).changed + 48;
+	
 
 	infoString[i] = '\0';
 

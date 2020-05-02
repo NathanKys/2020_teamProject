@@ -60,6 +60,8 @@ Account readAccountInfo(int line) {
 	fscanf(fp, "%d", &a.rec);
 	fgetc(fp);
 	a.lock = (fgetc(fp) - 48);
+	fgetc(fp);
+	a.changed = (fgetc(fp) - 48);
 
 	fclose(fp);
 

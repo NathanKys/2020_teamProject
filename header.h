@@ -46,7 +46,7 @@ void readAccountInfo2(int startline, Account* a);
 void showAllAccountInfo(int pageNum, int num_account);
 int selectAccountToManage();
 int selectManageFunction();
-void changeNick(char* nick);
+void changeNick(char* nick, bool* changed);
 void changeLock(char* id, bool* lock);
 
 // 회원가입 관련 함수
