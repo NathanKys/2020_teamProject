@@ -9,7 +9,7 @@ typedef struct Message {
 	char text[TEXT_MAXSIZE + 2];
 } Message;
 int countMessage(char* id);
-Message* readMessage(char* id);
+Message* readMessageFile(char* id, int count);
 bool matchMessage(const char* string);
 char* writeMessage();
 void sendMessage(char* sender, char* receiver);
