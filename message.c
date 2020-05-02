@@ -442,3 +442,60 @@ void messageBox(char* id) {
 		}
 	}
 }
+
+void readMessage(const char* _string) {
+	// 최대 추천 횟수: 99번
+	FILE* fp;
+	char temp[MAX_LINE_LENGTH];
+	char ch;
+	int i = 0;
+	int j = 0;
+	char string[ID_MAXSIZE + 2] = "";
+
+	// 읽기 우선 쓰기 모드
+	fp = fopen("./message.txt", "r+");
+	if (fp == NULL)
+	{
+		printf("파일 불러오기 실패\n");
+		exit(1);
+	}
+	while (true) {
+		while (true) {
+			// 해당 아이디 확인
+			string[i] = fgetc(fp);
+			if (string[i] == ',') { 
+				string[i] = '\0'; 
+				i = 0; 
+				break; }
+			else if (string[i] == EOF) { 
+				fclose(fp); 
+				return; 
+			}
+			i++;
+		}
+		if (!strcmp(string, _string)) {
+			// 읽었는지 확인하는 변수까지 이동
+			for (;j < 1;j++) {
+				while (true) {
+					ch = fgetc(fp);
+					if (ch == ',') {
+						break;
+					}
+					else if (ch == EOF) {
+						fclose(fp);
+						return;
+					}
+				}
+			}
+			fseek(fp, 0, SEEK_CUR);//없으면 오류 발생
+			fputs("0",fp);
+			fseek(fp, 0, SEEK_CUR);//없으면 오류 발생
+		}
+		else {
+			// 아이디가 일치하지 않으면 다음 줄로 넘어감.
+			fgets(temp, MAX_LINE_LENGTH, fp);
+		}
+		j = 0;
+	}
+	fclose(fp);
+}
