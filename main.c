@@ -10,14 +10,15 @@ void gotoxy(int x, int y) {
 
 int main() {
 
-	Account login;
-	Account targetAccount;	//ê´€ë¦¬ì ë¡œê·¸ì¸ ì‹œ ê´€ë¦¬ ëŒ€ìƒ ê³„ì •
-	int login_id_num = -1;	//í˜„ì¬ ë¡œê·¸ì¸ëœ ì•„ì´ë””ì˜ DBìƒ ìˆœì„œ. -1ì€ ê´€ë¦¬ì ì•„ì´ë””
-	//ë¡œê·¸ì¸í•œ ì•„ì´ë”” ë²ˆí˜¸(= ë¡œê·¸ì¸í•œ ê³„ì •ì´ DB ìƒ ëª‡ë²ˆì§¸ ì¤„ì¸ì§€. 1ë²ˆë¶€í„° ì‹œì‘)
-	//ì´ ê°’ì„ ë‚´ ì •ë³´ ë³´ê¸° í•¨ìˆ˜ì—ì„œ ì¸ìë¡œ ë°›ì•„, DB ìƒ í•´ë‹¹ ì¤„ì— ì •ë³´ ì¶œë ¥
+	Account login;	//·Î±×ÀÎÇÑ °èÁ¤ÀÇ °èÁ¤ Á¤º¸ ÀúÀå.
+	Account targetAccount;	//°ü¸®ÀÚ ·Î±×ÀÎ ½Ã °ü¸® ´ë»ó °èÁ¤
+	int login_id_num = 2;	//ÇöÀç ·Î±×ÀÎµÈ ¾ÆÀÌµğÀÇ DB»ó ¼ø¼­. 1ºÎÅÍ ½ÃÀÛ. -1Àº °ü¸®ÀÚ ¾ÆÀÌµğ
+	//·Î±×ÀÎÇÑ ¾ÆÀÌµğ ¹øÈ£(= ·Î±×ÀÎÇÑ °èÁ¤ÀÌ DB »ó ¸î¹øÂ° ÁÙÀÎÁö. 1¹øºÎÅÍ ½ÃÀÛ)
+	//ÀÌ °ªÀ» ³» Á¤º¸ º¸±â ÇÔ¼ö¿¡¼­ ÀÎÀÚ·Î ¹Ş¾Æ, DB »ó ÇØ´ç ÁÙ¿¡ Á¤º¸ Ãâ·Â
 	int nextMenu = 0;
-	bool flag = 0;	//ë¡œê·¸ì¸ ìƒíƒœ
-	int num_account = 12;	//DBì— ë“±ë¡ëœ ê³„ì •ì˜ ì´ ê°œìˆ˜
+	bool flag = 0;	//·Î±×ÀÎ »óÅÂ
+	int num_account = 12;	//DB¿¡ µî·ÏµÈ °èÁ¤ÀÇ ÃÑ °³¼ö
+	char** oldNick = (char**)malloc(sizeof(char*) * num_account);			//´Ğ³×ÀÓ º¯°æµÈ °èÁ¤ÀÇ ±âÁ¸ ´Ğ³×ÀÓ ¸ñ·Ï
 
 	bool programFlag = 1;
 	do {
@@ -25,35 +26,35 @@ int main() {
 			case 1:
 				signUp();
 
-				num_account++;	//íšŒì›ê°€ì… ì™„ë£Œ ì‹œ ê³„ì • ê°œìˆ˜ ì¦ê°€
+				num_account++;	//È¸¿ø°¡ÀÔ ¿Ï·á ½Ã °èÁ¤ °³¼ö Áõ°¡
 				break;
 
 			case 2:
-				// ë¡œê·¸ì¸ í•¨ìˆ˜ - ë¦¬í„´ê°’ì€ DBìƒ ëª‡ë²ˆì§¸ ì¤„ì— ìˆëŠ” ê³„ì •ì¸ì§€.(1ë¶€í„° ì‹œì‘)
-				// return ê°’ì„ login_id_numì— ë³µì‚¬
-				// ê´€ë¦¬ì ë¡œê·¸ì¸ì˜ ê²½ìš° -1ì„ ë¦¬í„´
+				// ·Î±×ÀÎ ÇÔ¼ö - ¸®ÅÏ°ªÀº DB»ó ¸î¹øÂ° ÁÙ¿¡ ÀÖ´Â °èÁ¤ÀÎÁö.(1ºÎÅÍ ½ÃÀÛ)
+				// return °ªÀ» login_id_num¿¡ º¹»ç
+				// °ü¸®ÀÚ ·Î±×ÀÎÀÇ °æ¿ì -1À» ¸®ÅÏ
 				flag = 1;
 
-				if (login_id_num != -1) {	//ê´€ë¦¬ìê°€ ì•„ë‹Œ ì¼ë°˜ íšŒì› ë¡œê·¸ì¸ì¼ ê²½ìš°
+				if (login_id_num != -1) {	//°ü¸®ÀÚ°¡ ¾Æ´Ñ ÀÏ¹İ È¸¿ø ·Î±×ÀÎÀÏ °æ¿ì
 
-					login = readAccountInfo(login_id_num); //ë¡œê·¸ì¸í•œ ê³„ì • ì •ë³´ êµ¬ì¡°ì²´ì— ì €ì¥
+					login = readAccountInfo(login_id_num); //·Î±×ÀÎÇÑ °èÁ¤ Á¤º¸ ±¸Á¶Ã¼¿¡ ÀúÀå
 					if (login.lock) {
-						printf("ì ê¸´ ê³„ì •ì…ë‹ˆë‹¤. ì„œë¹„ìŠ¤ë¥¼ ì´ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.\n");
+						printf("Àá±ä °èÁ¤ÀÔ´Ï´Ù. ¼­ºñ½º¸¦ ÀÌ¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.\n");
 						system("pause");
 						system("cls");
 					}
 					else {
 						if (login.changed) {
-							printf("ë‹‰ë„¤ì„ì´ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤.\n");
-							printf("ê¸°ì¡´ ë‹‰ë„¤ì„: ");
-							printf("ìƒˆë¡œìš´ ë‹‰ë„¤ì„: %s", login.nick);
+							printf("´Ğ³×ÀÓÀÌ º¯°æµÇ¾ú½À´Ï´Ù.\n");
+							printf("±âÁ¸ ´Ğ³×ÀÓ: %s\n", oldNick[login_id_num - 1]);
+							printf("»õ·Î¿î ´Ğ³×ÀÓ: %s\n", login.nick);
 							login.changed = 0;
-							system("cls");
 							system("pause");
+							system("cls");
 						}
 						while (flag) {
 							switch (uiAfterLogin(login.nick)) {
-								case 1:	// ë‚´ ì •ë³´ ë³´ê¸° í•¨ìˆ˜
+								case 1:	// ³» Á¤º¸ º¸±â ÇÔ¼ö
 									while (uiShowMyInfo(&login) != 2) {
 
 									}
@@ -61,37 +62,47 @@ int main() {
 
 								case 2:
 									userSearch(&login, num_account);
-									// ì‚¬ìš©ì ê²€ìƒ‰ í•¨ìˆ˜
+									// »ç¿ëÀÚ °Ë»ö ÇÔ¼ö
 									break;
 
 								case 3:
 									messageBox(login.id);
-									// ìª½ì§€í•¨ í•¨ìˆ˜
+									// ÂÊÁöÇÔ ÇÔ¼ö
 									break;
 
 								case 4:
 									flag = 0;
 									writeAccountInfo(login_id_num, &login);
-									break; //ë¡œê·¸ì•„ì›ƒ
+									break; //·Î±×¾Æ¿ô
 							}
 						}
 					}
 				}
-				else {	//ê´€ë¦¬ì ë¡œê·¸ì¸
+				else {	//°ü¸®ÀÚ ·Î±×ÀÎ
 					checkSecondPw();
-					while (flag) {
-						flag = adminMenu(num_account, &targetAccount);
+					for (int i = 0; i < num_account; i++) {
+						oldNick[i] = (char*)malloc(sizeof(char) * (NICKNAME_MAXSIZE + 2));
 					}
+					while (flag) {
+						flag = adminMenu(num_account, &targetAccount, oldNick);
+					}
+
 				}
 
 				break;
 			case 3:
-				// ì•„ì´ë”” ë° ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° í•¨ìˆ˜
+				// ¾ÆÀÌµğ ¹× ºñ¹Ğ¹øÈ£ Ã£±â ÇÔ¼ö
 				break;
 			case 4:
 				programFlag = 0;
 				system("cls");
-				break; // ì¢…ë£Œí•˜ê¸°
+				break; // Á¾·áÇÏ±â
 		}
 	} while (programFlag);
+
+	for (int i = 0; i < num_account; i++) {
+		free(oldNick[i]);
+	}
+
+	free(oldNick);
 }

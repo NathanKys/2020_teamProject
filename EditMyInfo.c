@@ -71,7 +71,7 @@ void selectEdit(Account* login) {
 		printf("%s\t", (*login).email);
 
 		gotoxy(10, 16);
-		printf("수정을 원하는 항목의 번호를 입력하세요.");
+		printf("수정을 원하는 항목의 번호를 입력하세요: ");
 		char num;
 		scanf("%c", &num);
 		if (num == '~')
@@ -84,22 +84,22 @@ void selectEdit(Account* login) {
 		else {
 			switch (num) {
 				case 0:	//비밀번호
-					editPW((*login).pw);
+					editPW(&((*login).pw));
 					break;
 				case 1:	//이름
-					editName((*login).name);
+					editName(&((*login).name));
 					break;
 				case 2:	//닉네임
-					editNick((*login).nick);
+					editNick(&((*login).nick));
 					break;
 				case 3:	//이메일 주소
-					editEmail((*login).email);
+					editEmail(&((*login).email));
 					break;
 				case 4:	//생년월일
-					editBirth((*login).birth);
+					editBirth(&((*login).birth));
 					break;
 				case 5:	//휴대폰 번호
-					editPhone((*login).phone);
+					editPhone(&((*login).phone));
 					break;
 			}
 		}
@@ -111,7 +111,7 @@ void editPW(char* pw) {
 	getchar();
 	while (1) {
 		system("cls");
-		printf("새로운 비밀번호를 입력하세요.");
+		printf("새로운 비밀번호를 입력하세요: ");
 		char t_pw[17] = "";
 		for (int i = 0; i < 16; i++) {
 			scanf("%c", &t_pw[i]);
@@ -136,7 +136,7 @@ void editName(char* name) {
 	getchar();
 	while (1) {
 		system("cls");
-		printf("새로운 이름을 입력하세요.");
+		printf("새로운 이름을 입력하세요: ");
 		char t_name[21] = "";
 		for (int i = 0; i < 20; i++) {
 			scanf("%c", &t_name[i]);
@@ -149,6 +149,7 @@ void editName(char* name) {
 			system("pause");
 		}
 		else {
+			strcpy(name, t_name);
 			printf("이름 수정이 완료되었습니다.");
 			system("pause");
 			return 0;
@@ -160,7 +161,7 @@ void editNick(char* nick) {
 	getchar();
 	while (1) {
 		system("cls");
-		printf("새로운 닉네임을 입력하세요.");
+		printf("새로운 닉네임을 입력하세요: ");
 		char t_nick[25] = "";
 		for (int i = 0; i < 24; i++) {
 			scanf("%c", &t_nick[i]);
@@ -177,6 +178,7 @@ void editNick(char* nick) {
 			system("pause");
 		}
 		else {
+			strcpy(nick, t_nick);
 			printf("닉네임 수정이 완료되었습니다.");
 			system("pause");
 			return 0;
@@ -188,7 +190,7 @@ void editEmail(char* email) {
 	getchar();
 	while (1) {
 		system("cls");
-		printf("새로운 이메일 주소를 입력하세요.");
+		printf("새로운 이메일 주소를 입력하세요: ");
 		char t_email[31] = "";
 		for (int i = 0; i < 30; i++) {
 			scanf("%c", &t_email[i]);
@@ -205,6 +207,7 @@ void editEmail(char* email) {
 			system("pause");
 		}
 		else {
+			strcpy(email, t_email);
 			printf("이메일 주소 수정이 완료되었습니다.");
 			system("pause");
 			return 0;
@@ -217,7 +220,7 @@ void editBirth(int* birth) {
 	while (1) {
 		int flag = 0;
 		system("cls");
-		printf("새로운 생년월일을 입력하세요.");
+		printf("새로운 생년월일을 입력하세요: ");
 		int t_birth[6] = { 0, };
 		char temp = ' ';
 		for (int i = 0; i < 6; i++) {
@@ -258,7 +261,7 @@ void editPhone(int* phone) {
 	while (1) {
 		int flag = 0;
 		system("cls");
-		printf("새로운 휴대폰 번호를 입력하세요.");
+		printf("새로운 휴대폰 번호를 입력하세요: ");
 		int t_phone[11] = { 0, };
 		char temp = ' ';
 		for (int i = 0; i < 11; i++) {

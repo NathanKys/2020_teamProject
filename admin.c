@@ -325,8 +325,7 @@ void changeNick(char* nick, bool* changed) {
 
 	}
 	strcpy(nick, input);
-	bool temp = (*changed);
-	(*changed) = !temp;
+	(*changed) = true;
 	system("cls");
 }
 
@@ -396,7 +395,7 @@ void changeLock(char* id, bool* lock) {
 	(*lock) = !temp;
 }
 
-bool adminMenu(int num_account, Account * targetAccount) {
+bool adminMenu(int num_account, Account * targetAccount, char** oldNick) {
 
 	int pageNum = 1;
 	int endPage = ((num_account-1) / 10) + 1;
@@ -511,6 +510,8 @@ bool adminMenu(int num_account, Account * targetAccount) {
 			menu = selectManageFunction();
 			switch (menu) {
 				case 1:
+					strcpy(oldNick[manageAccount - 1], (*targetAccount).nick);
+
 					changeNick((*targetAccount).nick, &((*targetAccount).changed));
 					writeAccountInfo(manageAccount, targetAccount);
 					break;

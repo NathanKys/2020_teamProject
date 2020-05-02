@@ -38,10 +38,11 @@ void editNick(char* nick);
 void editEmail(char* email);
 void editBirth(int* birth);
 void editPhone(int* phone);
+void writeAccountInfo(int, Account*);
 
 // 관리자 기능 관련 함수
 void checkSecondPw();
-bool adminMenu(int num_account, Account* targetAccount);
+bool adminMenu(int num_account, Account* targetAccount, char** oldNick);
 void readAccountInfo2(int startline, Account* a);
 void showAllAccountInfo(int pageNum, int num_account);
 int selectAccountToManage();
@@ -80,7 +81,6 @@ void showUserInformation(Account);
 void writeAccount(Account);
 void signUp();
 
-void writeAccountInfo(int, Account*);
 void showAllAccountInfo2(int pageNum, int num_account);
 int selectAccountToShow();
 int accountInfo_Menu(Account* a);
