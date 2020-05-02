@@ -20,7 +20,6 @@ typedef struct Account {
 	int phone[PHONENUMBER_MAXSIZE+2];	//11+\0+1(길이 초과 확인용)
 	unsigned int rec;
 	bool lock;
-	bool admin;
 } Account;
 
 Account readAccountInfo(int line);

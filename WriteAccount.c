@@ -33,7 +33,7 @@ void writeAccountInfo(int line, Account* login) {
 		counter++;
 	}
 	fseek(fp, position, SEEK_SET);	//다시 입력 대상 라인의 처음으로 돌아가기
-	fwrite(temp1, strlen(temp1), 1, fp);	//앞서 준비한 문자열로 입력 대상 라인 밀기(덮어쓰기)
+	fwrite(temp1, counter, 1, fp);	//앞서 준비한 문자열로 입력 대상 라인 밀기(덮어쓰기)
 
 
 	char infoString[MAX_LINE_LENGTH] = "";
@@ -101,8 +101,6 @@ void writeAccountInfo(int line, Account* login) {
 		infoString[i++] = c[j++];
 	}
 	infoString[i++] = (*login).lock + 48;
-	infoString[i++] = ',';
-	infoString[i++] = (*login).admin + 48;
 	infoString[i++] = '\n';
 	infoString[i] = '\0';
 		

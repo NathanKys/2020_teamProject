@@ -18,7 +18,7 @@ Account readAccountInfo(int line) {
 
 	}
 
-	Account a = { "", "", "", "", "", {0, }, {0, }, 0, 0, 0 };
+	Account a = { "", "", "", "", "", {0, }, {0, }, 0, 0 };
 	int i = 0;
 	while (true) {
 		a.id[i] = fgetc(fp);
@@ -60,8 +60,6 @@ Account readAccountInfo(int line) {
 	fscanf(fp, "%d", &a.rec);
 	fgetc(fp);
 	a.lock = (fgetc(fp) - 48);
-	fgetc(fp);
-	a.admin = (fgetc(fp) - 48);
 
 	fclose(fp);
 
