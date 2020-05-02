@@ -1,5 +1,5 @@
 void writeMessage() {
-har *s_Nickname = "아리게리";
+	char *s_Nickname = "아리게리";
 	char *ID_nickname = "Arigeri"; // 가상으로 만든 보내는 사람 이름
 	//구조체를 통해 tt.nickname;
 
