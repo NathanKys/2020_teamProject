@@ -69,7 +69,7 @@ void readAccountInfo2(int startline, Account* a) {
 	}
 	if (feof(fp))
 		return;
-	//Account a = { "", "", "", "", "", {0, }, {0, }, 0, 0, 0 };
+
 	int i = 0;
 	char t = ' ';
 
@@ -191,10 +191,17 @@ int selectAccountToManage() {
 		scanf("%c", &input);
 		scanf("%c", &temp);
 
+		if (input == '~')
+			return -1;
+
 		in = input - 48;
 		if (temp != '\n' || !(0 <= in && in <= 9)) {
 			printf("잘못된 입력입니다. 숫자 하나만을 입력하세요.\n");
 			system("pause");
+			gotoxy(3, 26);
+			printf("                                              ");
+			gotoxy(3, 27);
+			printf("                                              ");
 			flag = 1;
 		}
 
@@ -297,6 +304,10 @@ void changeNick(char* nick, bool* changed) {
 
 		if (strlen(input) > NICKNAME_MAXSIZE) {
 			clearInputBuffer();
+		}
+		if (!strcmp(nick, input)) {
+			printf("기존 정보와 동일합니다.");
+			system("pause");
 		}
 
 		// fileCheck: 중복된 아이디가 있는지 검사하는 함수
@@ -502,24 +513,30 @@ bool adminMenu(int num_account, Account * targetAccount, char** oldNick) {
 		if (triangle == 91) {
 			int manageAccount = 0;
 
-			manageAccount = ((pageNum - 1) * 10) + (selectAccountToManage() + 1);
+			int accountToManage = 0;
+			accountToManage = selectAccountToManage();
 
-			*targetAccount = readAccountInfo(manageAccount);
-			system("cls");
-			int menu = 0;
-			menu = selectManageFunction();
-			switch (menu) {
-				case 1:
-					strcpy(oldNick[manageAccount - 1], (*targetAccount).nick);
+			if (accountToManage != -1) {
 
-					changeNick((*targetAccount).nick, &((*targetAccount).changed));
-					writeAccountInfo(manageAccount, targetAccount);
-					break;
+				manageAccount = ((pageNum - 1) * 10) + (accountToManage + 1);
 
-				case 2:
-					changeLock((*targetAccount).id, &((*targetAccount).lock));
-					writeAccountInfo(manageAccount, targetAccount);
-					break;
+				*targetAccount = readAccountInfo(manageAccount);
+				system("cls");
+				int menu = 0;
+				menu = selectManageFunction();
+				switch (menu) {
+					case 1:
+						strcpy(oldNick[manageAccount - 1], (*targetAccount).nick);
+
+						changeNick((*targetAccount).nick, &((*targetAccount).changed));
+						writeAccountInfo(manageAccount, targetAccount);
+						break;
+
+					case 2:
+						changeLock((*targetAccount).id, &((*targetAccount).lock));
+						writeAccountInfo(manageAccount, targetAccount);
+						break;
+				}
 			}
 
 		}

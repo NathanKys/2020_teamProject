@@ -109,190 +109,457 @@ void selectEdit(Account* login) {
 
 void editPW(char* pw) {
 	getchar();
-	while (1) {
+
+	char t_pw[PASSWORD_MAXSIZE + 2] = "";
+
+	// 비밀번호 입력
+	while (true) {
 		system("cls");
 		printf("새로운 비밀번호를 입력하세요: ");
-		char t_pw[17] = "";
-		for (int i = 0; i < 16; i++) {
-			scanf("%c", &t_pw[i]);
-			if (t_pw[i] == '\n') { t_pw[i] = '\0'; break; }
+		fgets(t_pw, PASSWORD_MAXSIZE + 2, stdin);
+
+		t_pw[strcspn(t_pw, "\n")] = 0;
+
+		// 메뉴로 이동
+		if (t_pw[0] == '~' && strlen(t_pw) == 1) {
+			printf("메뉴로 돌아갑니다.\n");
+			system("pause");
+			return;
 		}
-		if (t_pw[0] == '~')
-			return 0;
+		if (strlen(t_pw) > PASSWORD_MAXSIZE) {
+			clearInputBuffer();
+		}
 		if (!strcmp(pw, t_pw)) {
 			printf("기존 정보와 동일합니다.");
 			system("pause");
+			continue;
+		}
+
+		if (matchPassword(t_pw)) {
+			if (strlen(t_pw) < 8 || strlen(t_pw) > 16) {
+				printf("글자수 범위(최소 8자~최대 16자) 초과입니다.\n");
+				system("pause");
+				continue;
+			}
+			else {
+				// 대문자 하나 이상
+				// 소문자 하나 이상
+				// 숫자 하나 이상
+				if (!isContainUpperCase(t_pw)) { printf("알파벳 대문자를 하나 이상 포함해야 합니다.\n"); }
+				if (!isContainLowerCase(t_pw)) { printf("알파벳 소문자를 하나 이상 포함해야 합니다.\n"); }
+				if (!isContainNumber(t_pw)) { printf("인도-아라비아 숫자를 하나 이상 포함해야 합니다.\n"); }
+
+				// 위의 세 조건을 모두 만족할 때
+				if (isContainNumber(t_pw) && isContainUpperCase(t_pw) && isContainLowerCase(t_pw)) {
+					// 반복된 문자 체크
+					if (isRepeat(t_pw, strlen(t_pw))) {
+						printf("비밀번호에 반복된 문자가 있습니다.\n");
+						system("pause");
+						continue;
+					}
+					// 연속된 문자 체크
+					if (isConti(t_pw, strlen(t_pw))) {
+						printf("비밀번호에 연속된 문자가 있습니다.\n");
+						system("pause");
+						continue;
+					}
+
+					printf("비밀번호 입력이 완료되었습니다.\n");
+					system("pause");
+					break;
+				}
+				system("pause");
+				continue;
+			}
+
 		}
 		else {
-			strcpy(pw, t_pw);
-			printf("비밀번호 수정이 완료되었습니다.");
+			printf("다음의 문자를 제외한 특수문자는 허용하지 않습니다.!@#$%^&*\n");
 			system("pause");
-			return 0;
+			continue;
+		}
+
+
+	}
+
+	//비밀번호 확인
+	while (true) {
+		system("cls");
+		char checkPassword[PASSWORD_MAXSIZE + 2] = { 0, };
+		printf("비밀번호 확인을 위해 다시 입력해주세요.");
+		fgets(checkPassword, PASSWORD_MAXSIZE + 2, stdin);
+		checkPassword[strcspn(checkPassword, "\n")] = 0;
+		if (strlen(checkPassword) > PASSWORD_MAXSIZE) {
+			clearInputBuffer();
+		}
+
+		// 메뉴로 이동
+		if (checkPassword[0] == '~' && strlen(checkPassword) == 1) {
+			printf("메뉴로 돌아갑니다.\n");
+			system("pause");
+			return;
+		}
+
+		if (!strcmp(checkPassword, t_pw)) {
+			strcpy(pw, t_pw);
+			printf("비밀번호 확인&수정이 완료되었습니다.\n");
+			system("pause");
+			break;
+		}
+		else {
+			printf("비밀번호와 일치하지 않습니다.\n");
+			system("pause");
+			continue;
 		}
 	}
+	
 }
 
 void editName(char* name) {
 	getchar();
-	while (1) {
+
+	char t_name[NAME_MAXSIZE + 2] = "";
+	// 이름 입력
+	while (true) {
 		system("cls");
 		printf("새로운 이름을 입력하세요: ");
-		char t_name[21] = "";
-		for (int i = 0; i < 20; i++) {
-			scanf("%c", &t_name[i]);
-			if (t_name[i] == '\n') { t_name[i] = '\0'; break; }
+		printf("이름은 한글(최소 2자~최대 5자) 또는 영어 대소문자(최소 3자~최대 20자)로 구성됩니다.\n");
+		printf("한글와 영어는 혼용하여 사용할 수 없습니다. 영어의 경우 띄어쓰기가 가능합니다.\n");
+		fgets(t_name, NAME_MAXSIZE + 2, stdin);
+		t_name[strcspn(t_name, "\n")] = 0;
+
+		// 메뉴로 이동
+		if (t_name[0] == '~' && strlen(t_name) == 1) {
+			printf("메뉴로 돌아갑니다.\n");
+			system("pause");
+			return;
 		}
-		if (t_name[0] == '~')
-			return 0;
+		if (strlen(t_name) > NAME_MAXSIZE) {
+			clearInputBuffer();
+		}
 		if (!strcmp(name, t_name)) {
 			printf("기존 정보와 동일합니다.");
 			system("pause");
+			continue;
+		}
+
+		if (kreng(t_name, strlen(t_name))) {
+			if (isContainEng(t_name)) {
+				printf("한글과 영어는 함께 사용할 수 없습니다.\n");
+			}
+			else {
+				printf("올바른 문자를 입력해주세요.\n");
+			}
+			system("pause");
+			continue;
+		}
+		if (matchKorean(t_name, strlen(t_name))) {
+			if (!isCompleteKorean(t_name, strlen(t_name))) {
+				printf("올바른 문자를 입력해주세요.\n");
+				system("pause");
+				continue;
+			}
+			if (getLength(t_name) >= 2 && getLength(t_name) <= 5) {
+				strcpy(name, t_name);
+				printf("이름 수정이 완료되었습니다.\n");
+				system("pause");
+				break;
+			}
+			else {
+				printf("한글은 공백을 포함하지 않고 2~5자를 입력해야 합니다.\n");
+				system("pause");
+				continue;
+			}
 		}
 		else {
-			strcpy(name, t_name);
-			printf("이름 수정이 완료되었습니다.");
-			system("pause");
-			return 0;
+			if (matchEngName(t_name)) {
+				if (getLength(t_name) >= 3 && getLength(t_name) <= 20) {
+					strcpy(name, t_name);
+					printf("이름 수정이 완료되었습니다.\n");
+					system("pause");
+					break;
+				}
+				else {
+					printf("영어는 공백을 포함하여 3~20자를 입력해야 합니다.\n");
+					system("pause");
+					continue;
+				}
+			}
+			else {
+				printf("올바른 문자를 입력해주세요.\n");
+				system("pause");
+				continue;
+			}
 		}
 	}
+
 }
 
 void editNick(char* nick) {
 	getchar();
-	while (1) {
+
+	char t_nick[NICKNAME_MAXSIZE + 2] = "";
+
+	// 닉네임 입력
+	while (true) {
 		system("cls");
 		printf("새로운 닉네임을 입력하세요: ");
-		char t_nick[25] = "";
-		for (int i = 0; i < 24; i++) {
-			scanf("%c", &t_nick[i]);
-			if (t_nick[i] == '\n') { t_nick[i] = '\0'; break; }
+		printf("닉네임에는 한글, 영어, 숫자, 띄어쓰기를 사용할 수 있습니다.(최소2자~최대12자)\n");
+
+		fgets(t_nick, NICKNAME_MAXSIZE + 2, stdin);
+		t_nick[strcspn(t_nick, "\n")] = 0;
+
+		if (t_nick[0] == '~' && strlen(t_nick) == 1) {
+			// 메뉴로 이동
+			printf("메뉴로 돌아갑니다.\n");
+			system("pause");
+			return;
 		}
-		if (t_nick[0] == '~')
-			return 0;
+		if (strlen(t_nick) > NICKNAME_MAXSIZE) {
+			clearInputBuffer();
+		}
 		if (!strcmp(nick, t_nick)) {
 			printf("기존 정보와 동일합니다.");
 			system("pause");
+			continue;
 		}
-		else if (1) {
-			//닉네임 중복 체크 함수
+
+		// fileCheck: 중복된 아이디가 있는지 검사하는 함수
+		if (duplicateCheck(t_nick, NICKNAMECHECK)) {
+			printf("입력하신 닉네임는 이미 사용 중인 닉네임입니다.\n");
 			system("pause");
+			continue;
+		}
+		if (getLength(t_nick) < 2 || getLength(t_nick) > 12) {
+			printf("닉네임은 한글, 영어, 숫자로 이루어진 2자~12자를 입력해야합니다.\n");
+			system("pause");
+			continue;
+		}
+		if (matchNickname(t_nick)) {
+			strcpy(nick, t_nick);
+			printf("닉네임 수정이 완료되었습니다.\n");
+			system("pause");
+			break;
 		}
 		else {
-			strcpy(nick, t_nick);
-			printf("닉네임 수정이 완료되었습니다.");
+			printf("올바른 문자를 입력해주세요.\n");
 			system("pause");
-			return 0;
+			continue;
 		}
+
 	}
+
 }
 
 void editEmail(char* email) {
 	getchar();
-	while (1) {
+
+	char t_email[EMAILADDRESS_MAXSIZE + 2] = "";
+	// 이메일 주소 입력
+	while (true) {
 		system("cls");
-		printf("새로운 이메일 주소를 입력하세요: ");
-		char t_email[31] = "";
-		for (int i = 0; i < 30; i++) {
-			scanf("%c", &t_email[i]);
-			if (t_email[i] == '\n') { t_email[i] = '\0'; break; }
+		printf("생성할 계정의 이메일 주소를 입력합니다.");
+
+		fgets(t_email, EMAILADDRESS_MAXSIZE + 2, stdin);
+		t_email[strcspn(t_email, "\n")] = 0;
+
+		// 메뉴로 이동
+		if (t_email[0] == '~' && strlen(t_email) == 1) {
+			printf("메뉴로 돌아갑니다.\n");
+			system("pause");
+			return;
 		}
-		if (t_email[0] == '~')
-			return 0;
+		if (strlen(t_email) > EMAILADDRESS_MAXSIZE) {
+			clearInputBuffer();
+		}
 		if (!strcmp(email, t_email)) {
 			printf("기존 정보와 동일합니다.");
 			system("pause");
+			continue;
 		}
-		else if (1) {
-			//닉네임 중복 체크 함수
+
+		// fileCheck: 중복된 아이디가 있는지 검사하는 함수
+		if (duplicateCheck(t_email, EMAILCHECK)) {
+			printf("이미 등록된 이메일입니다.\n");
 			system("pause");
+			continue;
+		}
+
+		if (getLength(t_email) > 30) {
+			printf("이메일은 30자를 초과할 수 없습니다.\n");
+			system("pause");
+			continue;
+		}
+
+		if (matchEmail(t_email)) {
+			strcpy(email, t_email);
+			printf("이메일이 수정이 완료되었습니다.\n");
+			system("pause");
+			break;
 		}
 		else {
-			strcpy(email, t_email);
-			printf("이메일 주소 수정이 완료되었습니다.");
+			printf("올바른 형식의 이메일 주소를 입력해주세요.\n");
 			system("pause");
-			return 0;
+			continue;
 		}
 	}
+
 }
 
 void editBirth(int* birth) {
 	getchar();
-	while (1) {
-		int flag = 0;
+
+	char tempBirthNumber[BIRTHDAY_MAXSIZE + 2];
+	//생년월일 입력
+	while (true) {
 		system("cls");
 		printf("새로운 생년월일을 입력하세요: ");
-		int t_birth[6] = { 0, };
-		char temp = ' ';
-		for (int i = 0; i < 6; i++) {
-			scanf("%c", &temp);
-			if (temp == '\n') {
-				printf("글자수 오류");
-				flag = 1;
+
+		fgets(tempBirthNumber, BIRTHDAY_MAXSIZE + 2, stdin);
+		tempBirthNumber[strcspn(tempBirthNumber, "\n")] = 0;
+
+		// 메뉴로 이동
+		if (tempBirthNumber[0] == '~' && strlen(tempBirthNumber) == 1) {
+			printf("메뉴로 돌아갑니다.\n");
+			system("pause");
+			return;
+		}
+		if (strlen(tempBirthNumber) > BIRTHDAY_MAXSIZE) {
+			clearInputBuffer();
+		}
+		if (tempBirthNumber[8] == '\n') {
+			bool flag = 1;
+			for (int i = 0; i < 8; i++) {
+				if (birth[i] != (tempBirthNumber[i] - 48)) {
+					flag = 0;
+					break;
+				}
+			}
+			if (flag) {
+				printf("기존 정보와 동일합니다.");
 				system("pause");
-				break;
-			}
-			t_birth[i] = temp - 48;
-		}
-		if (t_birth[0] == '~')
-			return 0;
-		for (int i = 0; i < 6; i++) {
-			if (birth[i] == t_birth[i]) {
-				flag = 2;
-				break;
+				continue;
 			}
 		}
-		if (flag == 2) {
-			printf("기존 정보와 동일합니다.");
+
+		if (isOnlyNumber(tempBirthNumber)) {
+			if (strlen(tempBirthNumber) > 8) {
+				printf("글자수 범위(숫자 8자) 초과입니다.\n");
+				system("pause");
+				continue;
+			}
+			else if (strlen(tempBirthNumber) == 8) {
+				if (!isRightDate(tempBirthNumber)) {
+					printf("존재하지 않는 날짜입니다.\n");
+					system("pause");
+					continue;
+				}
+			}
+		}
+		if (matchBirthday(tempBirthNumber)) {
+			// 윤년 고려해서 없는 날짜 판단
+			if (isInTheFuture(tempBirthNumber)) {
+				printf("잘못된 생년월일입니다.\n");
+				system("pause");
+				continue;
+			}
+			// 프로그램 실행 이후 날짜 판단
+			if (!isRightDate(tempBirthNumber)) {
+				printf("존재하지 않는 날짜입니다.\n");
+				system("pause");
+				continue;
+			}
+			strcpy_s(birth, BIRTHDAY_MAXSIZE + 2, tempBirthNumber);
+			printf("생년월일 수정이 완료되었습니다.\n");
 			system("pause");
+			break;
 		}
-		else if (flag == 0) {
-			for (int i = 0; i < 6; i++) {
-				birth[i] = t_birth[i];
-			}
-			printf("생년월일 수정이 완료되었습니다.");
+		else {
+			printf("숫자로만 이루어진 8자를 입력해주세요.\n");
 			system("pause");
-			return 0;
+			continue;
 		}
+
 	}
+
 }
 
 void editPhone(int* phone) {
 	getchar();
-	while (1) {
-		int flag = 0;
+
+	char tempPhoneNumber[PHONENUMBER_MAXSIZE + 4] = "";
+
+	// 휴대폰 번호 입력
+	while (true) {
 		system("cls");
 		printf("새로운 휴대폰 번호를 입력하세요: ");
-		int t_phone[11] = { 0, };
-		char temp = ' ';
-		for (int i = 0; i < 11; i++) {
-			scanf("%c", &temp);
-			if (temp == '\n') {
-				printf("글자수 오류");
-				flag = 1;
+
+		fgets(tempPhoneNumber, PHONENUMBER_MAXSIZE + 4, stdin);
+		tempPhoneNumber[strcspn(tempPhoneNumber, "\n")] = 0;
+
+		// 메뉴로 이동
+		if (tempPhoneNumber[0] == '~' && strlen(tempPhoneNumber) == 1) {
+			printf("메뉴로 돌아갑니다.\n");
+			system("pause");
+			return;
+		}
+		if (strlen(tempPhoneNumber) > PHONENUMBER_MAXSIZE + 2) {
+			clearInputBuffer();
+		}
+		Eliminate(tempPhoneNumber, '-');
+
+		if (tempPhoneNumber[10] == '\n') {
+			bool flag = 1;
+			for (int i = 0; i < 10; i++) {
+				if (phone[i] != (tempPhoneNumber[i] - 48)) {
+					flag = 0;
+					break;
+				}
+			}
+			if (flag) {
+				printf("기존 정보와 동일합니다.");
 				system("pause");
-				break;
-			}
-			t_phone[i] = temp - 48;
-		}
-		if (t_phone[0] == '~')
-			return 0;
-		for (int i = 0; i < 6; i++) {
-			if (phone[i] == t_phone[i]) {
-				flag = 2;
-				break;
+				continue;
 			}
 		}
-		if (flag == 2) {
-			printf("기존 정보와 동일합니다.");
-			system("pause");
-		}
-		else if (flag == 0) {
+		if (tempPhoneNumber[11] == '\n') {
+			bool flag = 1;
 			for (int i = 0; i < 11; i++) {
-				phone[i] = t_phone[i];
+				if (phone[i] != (tempPhoneNumber[i] - 48)) {
+					flag = 0;
+					break;
+				}
 			}
-			printf("휴대폰 번호 수정이 완료되었습니다.");
-			system("pause");
-			return 0;
+			if (flag) {
+				printf("기존 정보와 동일합니다.");
+				system("pause");
+				continue;
+			}
 		}
+
+		// fileCheck: 중복된 번호가 있는지 검사하는 함수
+		if (duplicateCheck(tempPhoneNumber, PHONENUMBERCHECK)) {
+			printf("입력하신 휴대폰 번호는 이미 사용 중인 번호입니다.\n");
+			continue;
+		}
+
+		if (matchPhoneNumber(tempPhoneNumber)) {
+			strcpy_s(phone, PHONENUMBER_MAXSIZE + 2, tempPhoneNumber);
+			printf("전화번호 수정이 완료되었습니다.\n");
+			system("pause");
+			break;
+		}
+		else {
+			if (isOnlyNumber(tempPhoneNumber) && strchr(tempPhoneNumber, '-') || isOnlyNumber(tempPhoneNumber)) {
+				printf("전화번호는 10자리 또는 11자리로 입력해주세요.\n");
+			}
+			else {
+				printf("올바르지 않은 문자가 포함되어 있습니다.\n");
+			}
+			system("pause");
+			continue;
+		}
+
 	}
+
 }
