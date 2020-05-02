@@ -52,7 +52,7 @@ int uiMainMenu() {
 	printf("¢º");
 	while (1)
 	{
-		Sleep(500);
+		Sleep(300);
 		if (_kbhit())
 		{
 			ch = _getch();

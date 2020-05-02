@@ -12,20 +12,30 @@ void checkSecondPw() {
 		system("cls");
 		flag = 0;
 		printf("2차 비밀번호를 입력하세요.(숫자 6자리)");
-		char input[7] = "";
+		char input[8] = "";
 
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 7; i++) {
 			scanf("%c", &input[i]);
+			if (i != 6 && input[i] == '\n') {	//6자를 다 입력하지 않고 enter친 경우
+				printf("비밀번호가 틀립니다.");
+				system("pause");
+				flag = 1;
+				break;
+			}
 		}
-
-		char temp = ' ';
-		scanf("%c", &temp);
-		if (temp != '\n') {
+		if (flag != 1 && input[6] != '\n') {
+			char temp = ' ';
+			while (true) {
+				scanf("%c", &temp);
+				if (temp == '\n')
+					break;
+			}
 			printf("비밀번호가 틀립니다.");
 			system("pause");
 			flag = 1;
 		}
-		else {
+
+		if (flag != 1) {
 			for (int i = 0; i < 6; i++) {
 				if ((input[i] - 48) != adminSecondPw[i]) {
 					printf("비밀번호가 틀립니다.");
@@ -218,7 +228,7 @@ int selectManageFunction() {
 	printf("▶");
 	while (1)
 	{
-		Sleep(500);
+		Sleep(300);
 		if (_kbhit())
 		{
 			ch = _getch();
@@ -303,7 +313,7 @@ void changeNick(char * nick) {
 		if (matchNickname(input)) {
 			printf("닉네임 입력이 완료되었습니다.\n");
 			gotoxy(10, 10);
-			printf("변경 이후 닉네임: %s", input);
+			printf("변경 이후 닉네임: %s\n", input);
 			system("pause");
 			break;
 		}
@@ -321,7 +331,7 @@ void changeNick(char * nick) {
 void changeLock(char* id, bool* lock) {
 
 	printf("선택한 계정: %s\n", id);
-	printf("계정 잠금 여부: ");
+
 
 	int triangle;
 	char ch;
@@ -330,17 +340,20 @@ void changeLock(char* id, bool* lock) {
 	gotoxy(triangle, 6);
 	printf("▶");
 
-	if (lock) {
+	gotoxy(0, 1);
+	if (*lock) {
+		printf("계정 잠금 여부: ");
 		printf("O");
 		gotoxy(3, 5);
 		printf("┌----------------------┐\n");
 		gotoxy(3, 6);
-		printf("│      잠금 해제      │\n");
+		printf("│       잠금 해제      │\n");
 		gotoxy(3, 7);
 		printf("└----------------------┘\n");
+		gotoxy(1, 6);
 		while (1)
 		{
-			Sleep(1000);
+			Sleep(300);
 			if (_kbhit())
 			{
 				ch = _getch();
@@ -348,20 +361,22 @@ void changeLock(char* id, bool* lock) {
 					break;
 			}
 		}
+		gotoxy(3, 9);
 		printf("잠금 해제 처리되었습니다.");
 	}
 	else {
+		printf("계정 잠금 여부: ");
 		printf("X");
-		printf("O");
 		gotoxy(3, 5);
 		printf("┌----------------------┐\n");
 		gotoxy(3, 6);
-		printf("│      계정 잠금      │\n");
+		printf("│       계정 잠금      │\n");
 		gotoxy(3, 7);
 		printf("└----------------------┘\n");
+		gotoxy(1, 6);
 		while (1)
 		{
-			Sleep(1000);
+			Sleep(300);
 			if (_kbhit())
 			{
 				ch = _getch();
@@ -369,8 +384,10 @@ void changeLock(char* id, bool* lock) {
 					break;
 			}
 		}
+		gotoxy(3, 9);
 		printf("계정 잠금 처리되었습니다.");
 	}
+	system("pause");
 
 	bool temp = (*lock);
 	(*lock) = !temp;
@@ -419,7 +436,7 @@ bool adminMenu(int num_account, Account * targetAccount) {
 		printf("▶");
 		while (1)
 		{
-			Sleep(1000);
+			Sleep(300);
 			if (_kbhit())
 			{
 				ch = _getch();

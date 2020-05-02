@@ -17,10 +17,10 @@ int main() {
 	//이 값을 내 정보 보기 함수에서 인자로 받아, DB 상 해당 줄에 정보 출력
 	int nextMenu = 0;
 	bool flag = 0;	//로그인 상태
-	int num_account = 3;	//DB에 등록된 계정의 총 개수
+	int num_account = 12;	//DB에 등록된 계정의 총 개수
 
 
-
+	bool programFlag = 1;
 	do {
 		switch (uiMainMenu()) {
 			case 1:
@@ -28,11 +28,11 @@ int main() {
 
 				num_account++;	//회원가입 완료 시 계정 개수 증가
 				break;
+
 			case 2:
 				// 로그인 함수 - 리턴값은 DB상 몇번째 줄에 있는 계정인지.(1부터 시작)
 				// return 값을 login_id_num에 복사
 				// 관리자 로그인의 경우 -1을 리턴
-				
 
 				if (login_id_num != -1) {	//관리자가 아닌 일반 회원 로그인일 경우
 					flag = 1;
@@ -40,20 +40,19 @@ int main() {
 					while (flag) {
 						switch (uiAfterLogin(login.nick)) {
 							case 1:	// 내 정보 보기 함수
-
 								while (uiShowMyInfo(&login) != 2) {
 
-
-
 								}
-
 								break;
+
 							case 2:
 								// 사용자 검색 함수
 								break;
+
 							case 3:
 								// 쪽지함 함수
 								break;
+
 							case 4:
 								flag = 0;
 								writeAccountInfo(login_id_num, &login);
@@ -66,7 +65,6 @@ int main() {
 					flag = 1;
 					while (flag) {
 						flag = adminMenu(num_account, &targetAccount);
-
 					}
 				}
 
@@ -75,8 +73,9 @@ int main() {
 				// 아이디 및 비밀번호 찾기 함수
 				break;
 			case 4:
+				programFlag = 0;
 				system("cls");
 				break; // 종료하기
 		}
-	} while (uiMainMenu() != 4);
+	} while (programFlag);
 }

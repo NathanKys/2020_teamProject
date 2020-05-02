@@ -55,7 +55,7 @@ int uiAfterLogin(char * nick) {
 	printf("▶");
 	while (1)
 	{
-		Sleep(500);
+		Sleep(300);
 		if (_kbhit())
 		{
 			ch = _getch();
