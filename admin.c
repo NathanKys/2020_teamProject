@@ -128,8 +128,8 @@ void readAccountInfo2(int startline, Account* a) {
 
 void showAllAccountInfo(int pageNum, int num_account) {
 
-	gotoxy(40, 1);
-	printf("서비스 관리 계정 정보 열람");
+	gotoxy(45, 1);
+	printf("관리자 기능 - 계정 정보 열람");
 	gotoxy(3, 3);
 	printf("아이디");
 	gotoxy(16, 3);
@@ -188,23 +188,38 @@ int selectAccountToManage(int num_account, int pageNum, int endPage) {
 	do {
 		flag = 0;
 		for (int i = 0; i < 3; i++) {
-			gotoxy(3, 25 + i);
-			printf("                                                           ");
-			printf("                                                           ");
+			gotoxy(0, 25 + i);
+			printf("                                                                  ");
+			printf("                                                                  ");
 		}
 		gotoxy(3, 25);
-		printf("관리할 계정 번호를 선택하세요.");
-		char input = ' ';
+		printf("관리할 계정 번호를 선택하세요: ");
+
+		char input;
+		scanf("%c", &input);
+		char c = ' ';
+		char test = ' ';
+		scanf("%c", &test);
+		while (test != '\n') {
+			scanf("%c", &c);
+			if (c == '\n')
+				break;
+		}
+
+		/*char input = ' ';
 		char temp = ' ';
 		scanf("%c", &input);
-		scanf("%c", &temp);
+		scanf("%c", &temp);*/
 
 		if (input == '~')
 			return -1;
 
 		in = input - 48;
-		if (temp != '\n' || !(0 <= in && in <= 9)) {
+		if (test != '\n' || !(0 <= in && in <= 9)) {
+		//if (!(0 <= in && in <= 9)) {
+			gotoxy(3, 26);
 			printf("잘못된 입력입니다. 숫자 하나만을 입력하세요.\n");
+			gotoxy(3, 27);
 			system("pause");
 			gotoxy(3, 26);
 			printf("                                              ");
@@ -212,8 +227,10 @@ int selectAccountToManage(int num_account, int pageNum, int endPage) {
 			printf("                                              ");
 			flag = 1;
 		}
-		if (pageNum == endPage && num_account % 10 <= in ) {
+		else if (pageNum == endPage && num_account % 10 <= in ) {
+			gotoxy(3, 26);
 			printf("존재하지 않는 아이디 번호입니다.\n");
+			gotoxy(3, 27);
 			system("pause");
 			flag = 1;
 		}
