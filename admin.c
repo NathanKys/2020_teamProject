@@ -107,7 +107,7 @@ void readAccountInfo2(int startline, Account* a) {
 	}
 	while (true) {
 		int temp = fgetc(fp) - 48;
-		if (temp != -4) { (*a).phone[i] = temp; i++; }
+		if (temp != -4 && temp != -1) { (*a).phone[i] = temp; i++; }
 		else { i = 0; break; }
 	}
 
@@ -173,7 +173,7 @@ void showAllAccountInfo(int pageNum, int num_account) {
 	}
 }
 
-int selectAccountToManage() {
+int selectAccountToManage(int num_account, int pageNum, int endPage) {
 
 	bool flag = 0;
 	int in = 0;
@@ -202,6 +202,11 @@ int selectAccountToManage() {
 			printf("                                              ");
 			gotoxy(3, 27);
 			printf("                                              ");
+			flag = 1;
+		}
+		if (pageNum == endPage && num_account % 10 <= in ) {
+			printf("존재하지 않는 아이디 번호입니다.\n");
+			system("pause");
 			flag = 1;
 		}
 
@@ -514,7 +519,7 @@ bool adminMenu(int num_account, Account * targetAccount, char** oldNick) {
 			int manageAccount = 0;
 
 			int accountToManage = 0;
-			accountToManage = selectAccountToManage();
+			accountToManage = selectAccountToManage(num_account, pageNum, endPage);
 
 			if (accountToManage != -1) {
 

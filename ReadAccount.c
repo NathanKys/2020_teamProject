@@ -54,7 +54,7 @@ Account readAccountInfo(int line) {
 	while (true) {
 		int temp = fgetc(fp) - 48;
 		if (temp != -4) { a.phone[i] = temp; i++; }
-		else { i = 0; break; }
+		else { a.phone[i] = -1; i = 0; break; }
 	}
 
 	fscanf(fp, "%d", &a.rec);

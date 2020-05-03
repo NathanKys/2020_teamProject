@@ -11,12 +11,14 @@ int checkPW(char* pw) {
 		char temp = ' ';
 		for (int i = 0; i < 16; i++) {
 			scanf("%c", &temp);
-			if (temp == '\n')
+			if (temp == '\n') {
 				break;
+			}
 			t_pw[i] = temp;
 		}
-		if (t_pw[0] == '~')
+		if (t_pw[0] == '~') {
 			return 0;
+		}
 		if (!strcmp(pw, t_pw)) {
 			return 1;
 		}
@@ -54,15 +56,22 @@ void selectEdit(Account* login) {
 		gotoxy(20, 6);
 		printf("생년월일(4)");
 		gotoxy(20, 7);
-		for (int i = 0; i < sizeof((*login).birth) / sizeof(int); i++) {
+		for (int i = 0; i < 8; i++) {
 			printf("%d", (*login).birth[i]);
 		}
 
 		gotoxy(40, 6);
 		printf("휴대폰 번호(5)");
 		gotoxy(40, 7);
-		for (int i = 0; i < sizeof((*login).phone) / sizeof(int); i++) {
-			printf("%d", (*login).phone[i]);
+		if ((*login).phone[10] == '\0') {
+			for (int i = 0; i < 10; i++) {
+				printf("%d", (*login).phone[i]);
+			}
+		}
+		else if ((*login).phone[11] == '\0') {
+			for (int i = 0; i < 11; i++) {
+				printf("%d", (*login).phone[i]);
+			}
 		}
 
 		gotoxy(60, 6);
@@ -72,13 +81,23 @@ void selectEdit(Account* login) {
 
 		gotoxy(10, 16);
 		printf("수정을 원하는 항목의 번호를 입력하세요: ");
+
 		char num;
 		scanf("%c", &num);
+		char c = ' ';
+		char test = ' ';
+		scanf("%c", &test);
+		while (test != '\n') {
+			scanf("%c", &c);
+			if (c == '\n')
+				break;
+		}
 		if (num == '~')
 			return;
 		num = num - 48;
-		if (!(0 <= num && num <= 5)) {
-			printf("존재하지 않는 항목 번호입니다.");
+		if (!(0 <= num && num <= 5) || test != '\n') {
+			gotoxy(10, 17);
+			printf("존재하지 않는 항목 번호입니다.\n");
 			system("pause");
 		}
 		else {
@@ -108,7 +127,6 @@ void selectEdit(Account* login) {
 }
 
 void editPW(char* pw) {
-	getchar();
 
 	char t_pw[PASSWORD_MAXSIZE + 2] = "";
 
@@ -122,8 +140,6 @@ void editPW(char* pw) {
 
 		// 메뉴로 이동
 		if (t_pw[0] == '~' && strlen(t_pw) == 1) {
-			printf("메뉴로 돌아갑니다.\n");
-			system("pause");
 			return;
 		}
 		if (strlen(t_pw) > PASSWORD_MAXSIZE) {
@@ -196,8 +212,6 @@ void editPW(char* pw) {
 
 		// 메뉴로 이동
 		if (checkPassword[0] == '~' && strlen(checkPassword) == 1) {
-			printf("메뉴로 돌아갑니다.\n");
-			system("pause");
 			return;
 		}
 
@@ -217,22 +231,22 @@ void editPW(char* pw) {
 }
 
 void editName(char* name) {
-	getchar();
 
 	char t_name[NAME_MAXSIZE + 2] = "";
 	// 이름 입력
 	while (true) {
 		system("cls");
-		printf("새로운 이름을 입력하세요: ");
+		gotoxy(0, 1);
 		printf("이름은 한글(최소 2자~최대 5자) 또는 영어 대소문자(최소 3자~최대 20자)로 구성됩니다.\n");
 		printf("한글와 영어는 혼용하여 사용할 수 없습니다. 영어의 경우 띄어쓰기가 가능합니다.\n");
+		gotoxy(0, 0);
+		printf("새로운 이름을 입력하세요: ");
 		fgets(t_name, NAME_MAXSIZE + 2, stdin);
 		t_name[strcspn(t_name, "\n")] = 0;
 
+		gotoxy(0, 4);
 		// 메뉴로 이동
 		if (t_name[0] == '~' && strlen(t_name) == 1) {
-			printf("메뉴로 돌아갑니다.\n");
-			system("pause");
 			return;
 		}
 		if (strlen(t_name) > NAME_MAXSIZE) {
@@ -249,6 +263,7 @@ void editName(char* name) {
 				printf("한글과 영어는 함께 사용할 수 없습니다.\n");
 			}
 			else {
+				gotoxy(0, 4);
 				printf("올바른 문자를 입력해주세요.\n");
 			}
 			system("pause");
@@ -306,23 +321,23 @@ void editName(char* name) {
 }
 
 void editNick(char* nick) {
-	getchar();
 
 	char t_nick[NICKNAME_MAXSIZE + 2] = "";
 
 	// 닉네임 입력
 	while (true) {
 		system("cls");
-		printf("새로운 닉네임을 입력하세요: ");
+		gotoxy(0, 1);
 		printf("닉네임에는 한글, 영어, 숫자, 띄어쓰기를 사용할 수 있습니다.(최소2자~최대12자)\n");
+		gotoxy(0, 0);
+		printf("새로운 닉네임을 입력하세요: ");
 
 		fgets(t_nick, NICKNAME_MAXSIZE + 2, stdin);
 		t_nick[strcspn(t_nick, "\n")] = 0;
 
+		gotoxy(0, 3);
 		if (t_nick[0] == '~' && strlen(t_nick) == 1) {
 			// 메뉴로 이동
-			printf("메뉴로 돌아갑니다.\n");
-			system("pause");
 			return;
 		}
 		if (strlen(t_nick) > NICKNAME_MAXSIZE) {
@@ -336,7 +351,7 @@ void editNick(char* nick) {
 
 		// fileCheck: 중복된 아이디가 있는지 검사하는 함수
 		if (duplicateCheck(t_nick, NICKNAMECHECK)) {
-			printf("입력하신 닉네임는 이미 사용 중인 닉네임입니다.\n");
+			printf("이미 존재하는 닉네임입니다.\n");
 			system("pause");
 			continue;
 		}
@@ -362,21 +377,18 @@ void editNick(char* nick) {
 }
 
 void editEmail(char* email) {
-	getchar();
 
 	char t_email[EMAILADDRESS_MAXSIZE + 2] = "";
 	// 이메일 주소 입력
 	while (true) {
 		system("cls");
-		printf("생성할 계정의 이메일 주소를 입력합니다.");
+		printf("새로운 이메일 주소를 입력하세요: ");
 
 		fgets(t_email, EMAILADDRESS_MAXSIZE + 2, stdin);
 		t_email[strcspn(t_email, "\n")] = 0;
 
 		// 메뉴로 이동
 		if (t_email[0] == '~' && strlen(t_email) == 1) {
-			printf("메뉴로 돌아갑니다.\n");
-			system("pause");
 			return;
 		}
 		if (strlen(t_email) > EMAILADDRESS_MAXSIZE) {
@@ -390,7 +402,7 @@ void editEmail(char* email) {
 
 		// fileCheck: 중복된 아이디가 있는지 검사하는 함수
 		if (duplicateCheck(t_email, EMAILCHECK)) {
-			printf("이미 등록된 이메일입니다.\n");
+			printf("이미 존재하는 이메일입니다.\n");
 			system("pause");
 			continue;
 		}
@@ -417,7 +429,6 @@ void editEmail(char* email) {
 }
 
 void editBirth(int* birth) {
-	getchar();
 
 	char tempBirthNumber[BIRTHDAY_MAXSIZE + 2];
 	//생년월일 입력
@@ -430,14 +441,12 @@ void editBirth(int* birth) {
 
 		// 메뉴로 이동
 		if (tempBirthNumber[0] == '~' && strlen(tempBirthNumber) == 1) {
-			printf("메뉴로 돌아갑니다.\n");
-			system("pause");
 			return;
 		}
 		if (strlen(tempBirthNumber) > BIRTHDAY_MAXSIZE) {
 			clearInputBuffer();
 		}
-		if (tempBirthNumber[8] == '\n') {
+		if (tempBirthNumber[8] == '\0') {
 			bool flag = 1;
 			for (int i = 0; i < 8; i++) {
 				if (birth[i] != (tempBirthNumber[i] - 48)) {
@@ -479,7 +488,10 @@ void editBirth(int* birth) {
 				system("pause");
 				continue;
 			}
-			strcpy_s(birth, BIRTHDAY_MAXSIZE + 2, tempBirthNumber);
+			//strcpy_s(birth, BIRTHDAY_MAXSIZE + 2, tempBirthNumber);
+			for (int i = 0; i < BIRTHDAY_MAXSIZE; i++) {
+				birth[i] = tempBirthNumber[i] - 48;
+			}
 			printf("생년월일 수정이 완료되었습니다.\n");
 			system("pause");
 			break;
@@ -495,7 +507,6 @@ void editBirth(int* birth) {
 }
 
 void editPhone(int* phone) {
-	getchar();
 
 	char tempPhoneNumber[PHONENUMBER_MAXSIZE + 4] = "";
 
@@ -509,8 +520,6 @@ void editPhone(int* phone) {
 
 		// 메뉴로 이동
 		if (tempPhoneNumber[0] == '~' && strlen(tempPhoneNumber) == 1) {
-			printf("메뉴로 돌아갑니다.\n");
-			system("pause");
 			return;
 		}
 		if (strlen(tempPhoneNumber) > PHONENUMBER_MAXSIZE + 2) {
@@ -518,7 +527,7 @@ void editPhone(int* phone) {
 		}
 		Eliminate(tempPhoneNumber, '-');
 
-		if (tempPhoneNumber[10] == '\n') {
+		if (tempPhoneNumber[10] == '\0') {
 			bool flag = 1;
 			for (int i = 0; i < 10; i++) {
 				if (phone[i] != (tempPhoneNumber[i] - 48)) {
@@ -532,7 +541,7 @@ void editPhone(int* phone) {
 				continue;
 			}
 		}
-		if (tempPhoneNumber[11] == '\n') {
+		else if (tempPhoneNumber[11] == '\0') {
 			bool flag = 1;
 			for (int i = 0; i < 11; i++) {
 				if (phone[i] != (tempPhoneNumber[i] - 48)) {
@@ -549,12 +558,25 @@ void editPhone(int* phone) {
 
 		// fileCheck: 중복된 번호가 있는지 검사하는 함수
 		if (duplicateCheck(tempPhoneNumber, PHONENUMBERCHECK)) {
-			printf("입력하신 휴대폰 번호는 이미 사용 중인 번호입니다.\n");
+			printf("이미 존재하는 휴대폰 번호입니다.\n");
+			system("pause");
 			continue;
 		}
 
 		if (matchPhoneNumber(tempPhoneNumber)) {
-			strcpy_s(phone, PHONENUMBER_MAXSIZE + 2, tempPhoneNumber);
+			//strcpy_s(phone, PHONENUMBER_MAXSIZE + 2, tempPhoneNumber);
+			if (tempPhoneNumber[10] == '\0') {
+				for (int i = 0; i < PHONENUMBER_MAXSIZE-1; i++) {
+					phone[i] = tempPhoneNumber[i] - 48;
+				}
+				phone[10] = -1;
+			}
+			if (tempPhoneNumber[11] == '\0') {
+				for (int i = 0; i < PHONENUMBER_MAXSIZE; i++) {
+					phone[i] = tempPhoneNumber[i] - 48;
+				}
+			}
+			
 			printf("전화번호 수정이 완료되었습니다.\n");
 			system("pause");
 			break;

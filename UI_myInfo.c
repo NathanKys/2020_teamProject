@@ -32,12 +32,12 @@ int uiShowMyInfo(Account* login) {
 	gotoxy(40, 6);
 	printf("휴대폰 번호");
 	gotoxy(40, 7);
-	if ((*login).phone[10] == '\0') {
+	if ((*login).phone[10] == -1) {
 		for (int i = 0; i < 10; i++) {
 			printf("%d", (*login).phone[i]);
 		}
 	}
-	if ((*login).phone[11] == '\0') {
+	else if ((*login).phone[11] == -1) {
 		for (int i = 0; i < 11; i++) {
 			printf("%d", (*login).phone[i]);
 		}
