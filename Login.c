@@ -18,7 +18,7 @@ void login() {
 
 	char c = ' ';
 	char account_id[num_account][13] = { 0, }; // 배열 세로는 char account_id[num_account][12];
-	char account_password[100][17] = { 0, };
+	char account_password[num_account][17] = { 0, };
 
 	int j;
 	for (j = 0; j < num_account; j++) {   // for(j=0;j<num_account;j++)
@@ -76,7 +76,7 @@ void login() {
 			break;
 		}
 
-		if (i == 1)
+		if (i == num_account-1)
 			printf("존재하지 않는 아이디 입니다");
 	}
 
