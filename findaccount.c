@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int main() {
+void findaccount() {
 
     FILE* memlist;
     memlist = fopen("./accountlist.txt", "r");
@@ -14,13 +14,13 @@ int main() {
     }
 
     char c = ' ';
-    char account_id[100][13] = { 0, }; // 배열 세로는 char account_info[num_account][12];
-    char account_password[100][17] = { 0, };
-    char account_nickname[100][13] = { 0, };
-    char account_date[100][13] = { 0, };
+    char account_id[num_account][13] = { 0, }; // 배열 세로는 char account_info[num_account][12];
+    char account_password[num_account][17] = { 0, };
+    char account_nickname[num_account][13] = { 0, };
+    char account_date[num_account][13] = { 0, };
 
     int j;
-    for (j = 0; j < 2; j++) {   //j<??? 로 수정
+    for (j = 0; j < num_account; j++) {   //j<??? 로 수정
 
         int i = 0;
         while (1) {
@@ -85,7 +85,7 @@ int main() {
         printf("닉네임을 입력하세요:");
         gets(stdnickname);
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < num_account; i++) {
             if (strcmp(account_nickname[i], stdnickname) == 0) {
                 printf("\n닉네임 일치\n");
             
@@ -98,13 +98,16 @@ int main() {
                     printf("아이디는 %s 입니다", account_id[i]);
                     break;
                 }
-                else
-                    printf("입력한 정보와 부합하지 않는 생년월일입니다.");
+                else{
+                printf("입력한 정보와 부합하지 않는 생년월일입니다.");
                 break;
+                }
             }
 
-            if (i == 1)
-                printf("“존재하지 않는 닉네임입니다.");
+            if(i==num_account-1){
+                printf("존재하지 않는 닉네임입니다.");
+                break;
+            }
         }
 
 
