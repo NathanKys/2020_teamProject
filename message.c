@@ -107,7 +107,7 @@ Message* readMessageFile(char* id, int count) {
 }
 bool matchMessage(const char* string) {
 	regex_t state;
-	const char* pattern = "^([A-Za-z0-9가-힣.?,\\!]||[[:blank:]]){1,200}$";
+	const char* pattern = "^([A-Za-z0-9가-힣.?,()!]||[[:blank:]]){1,200}$";
 
 	regcomp(&state, pattern, REG_EXTENDED);
 	return regexec(&state, string, 0, NULL, 0) ? false : true;
@@ -129,14 +129,14 @@ char* writeMessage() {
 			printf("메뉴로 돌아갑니다.");
 			gotoxy(41, 11);
 			system("pause");
-			return;
+			return input;
 		}
 		if (strlen(input) > NICKNAME_MAXSIZE) {
 			clearInputBuffer();
 		}
 		if (getLength(input) > 200) {
 			gotoxy(10, 15);
-			printf("쪽지는 최대 200자까지 작성할 수 있습니다!");
+			printf("쪽지는 최대 200자까지 작성할 수 있습니다.");
 			gotoxy(10, 16);
 			system("pause");
 			continue;
@@ -171,8 +171,10 @@ void sendMessage(char* sender, char* receiver) {
 	}
 	char* input;
 	input = writeMessage();
-	fprintf(fp, "%s,%s,%d,%s\n", receiver, sender, 1, input);
-	fclose(fp);
+	if (input[0] != '~'){
+		fprintf(fp, "%s,%s,%d,%s\n", receiver, sender, 1, input);
+		fclose(fp);
+	}
 }
 void showMessage(Message* m, char* id, int count, int index) {
 	int flag = count - index - 1;
