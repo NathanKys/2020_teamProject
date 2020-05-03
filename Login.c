@@ -76,7 +76,7 @@ void login() {
 			break;
 		}
 
-		if (i == num_account-1)
+		if (i == (num_account-1))
 			printf("존재하지 않는 아이디 입니다");
 	}
 
