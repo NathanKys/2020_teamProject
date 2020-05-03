@@ -6,7 +6,7 @@ int checkPW(char* pw) {
 
 	while (1) {
 		system("cls");
-		printf("본인 여부를 확인하기 위해 비밀번호를 다시 입력해주세요.");
+		printf("본인 여부를 확인하기 위해 비밀번호를 다시 입력해주세요: ");
 		char t_pw[16] = "";
 		char temp = ' ';
 		for (int i = 0; i < 16; i++) {
@@ -148,6 +148,7 @@ void editPW(char* pw) {
 				if (!isContainUpperCase(t_pw)) { printf("알파벳 대문자를 하나 이상 포함해야 합니다.\n"); }
 				if (!isContainLowerCase(t_pw)) { printf("알파벳 소문자를 하나 이상 포함해야 합니다.\n"); }
 				if (!isContainNumber(t_pw)) { printf("인도-아라비아 숫자를 하나 이상 포함해야 합니다.\n"); }
+				if (kreng(t_pw, strlen(t_pw))) { printf("비밀번호에는 한글을 허용하지 않습니다.\n"); }
 
 				// 위의 세 조건을 모두 만족할 때
 				if (isContainNumber(t_pw) && isContainUpperCase(t_pw) && isContainLowerCase(t_pw)) {
@@ -254,6 +255,15 @@ void editName(char* name) {
 			continue;
 		}
 		if (matchKorean(t_name, strlen(t_name))) {
+			//if (true) {
+			//	for (int i = 0; i < strlen(t_name); i++) {
+			//		if (t_name[i] == ' ') {
+			//			printf("한글은 공백을 포함할 수 없습니다.\n");
+			//			system("pause");
+			//			break;
+			//		}
+			//	}
+			//}
 			if (!isCompleteKorean(t_name, strlen(t_name))) {
 				printf("올바른 문자를 입력해주세요.\n");
 				system("pause");
@@ -393,7 +403,7 @@ void editEmail(char* email) {
 
 		if (matchEmail(t_email)) {
 			strcpy(email, t_email);
-			printf("이메일이 수정이 완료되었습니다.\n");
+			printf("이메일 주소 수정이 완료되었습니다.\n");
 			system("pause");
 			break;
 		}
