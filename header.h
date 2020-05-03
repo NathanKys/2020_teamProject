@@ -9,6 +9,7 @@
 #include <conio.h>
 
 #include "ReadAccount.h"	//파일에서 계정 읽어와서 구조체에 저장
+//#include "message.h"
 
 #define LEFT 75
 #define RIGHT 77

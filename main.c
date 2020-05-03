@@ -24,7 +24,7 @@ int main() {
 	do {
 		switch (uiMainMenu()) {
 			case 1:
-				signUp();
+				//signUp();
 
 				num_account++;	//회원가입 완료 시 계정 개수 증가
 				break;
@@ -61,12 +61,12 @@ int main() {
 									break;
 
 								case 2:
-									userSearch(&login, num_account);
+									//userSearch(&login, num_account);
 									// 사용자 검색 함수
 									break;
 
 								case 3:
-									messageBox(login.id);
+									//messageBox(login.id);
 									// 쪽지함 함수
 									break;
 

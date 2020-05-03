@@ -25,16 +25,24 @@ int uiShowMyInfo(Account* login) {
 	gotoxy(20, 6);
 	printf("생년월일");
 	gotoxy(20, 7);
-	for (int i = 0; i < 6; i++) {
+	for (int i = 0; i < 8; i++) {
 		printf("%d", (*login).birth[i]);
 	}
 
 	gotoxy(40, 6);
 	printf("휴대폰 번호");
 	gotoxy(40, 7);
-	for (int i = 0; i < 6; i++) {
-		printf("%d", (*login).phone[i]);
+	if ((*login).phone[10] == '\0') {
+		for (int i = 0; i < 10; i++) {
+			printf("%d", (*login).phone[i]);
+		}
 	}
+	if ((*login).phone[11] == '\0') {
+		for (int i = 0; i < 11; i++) {
+			printf("%d", (*login).phone[i]);
+		}
+	}
+	
 
 	gotoxy(60, 6);
 	printf("이메일 주소");
