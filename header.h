@@ -46,7 +46,7 @@ void checkSecondPw();
 bool adminMenu(int num_account, Account* targetAccount, char** oldNick);
 void readAccountInfo2(int startline, Account* a);
 void showAllAccountInfo(int pageNum, int num_account);
-int selectAccountToManage();
+int selectAccountToManage(int num_account, int pageNum, int endPage);
 int selectManageFunction();
 void changeNick(char* nick, bool* changed);
 void changeLock(char* id, bool* lock);
