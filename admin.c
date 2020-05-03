@@ -105,10 +105,16 @@ void readAccountInfo2(int startline, Account* a) {
 		}
 		else { i = 0; break; }
 	}
+	int count = 0;
 	while (true) {
 		int temp = fgetc(fp) - 48;
-		if (temp != -4 && temp != -1) { (*a).phone[i] = temp; i++; }
-		else { i = 0; break; }
+		if (count == 10 && temp == -4) {
+			(*a).phone[i] = -1;
+			break;
+		}
+		else if (temp != -4) { (*a).phone[i] = temp; i++; }
+		else { break; }
+		count++;
 	}
 
 	fscanf(fp, "%d", &(*a).rec);
@@ -159,7 +165,9 @@ void showAllAccountInfo(int pageNum, int num_account) {
 			}
 			gotoxy(102, 3 + (i * 2));	//휴대폰 번호
 			for (int j = 0; j < 11; j++) {
-				printf("%d", a.phone[j]);
+				if (a.phone[j] != -1) {
+					printf("%d", a.phone[j]);
+				}
 			}
 			gotoxy(114, 3 + (i * 2));	//이메일
 			if (a.lock == 0) {
