@@ -261,7 +261,7 @@ void userSearch(Account* login, int num_account) {
 			int accountToManage = 0;
 			Account a;
 			accountToManage = selectAccountToShow(num_account, pageNum, endPage);
-			if (showAccount != -1) {
+			if (accountToManage != -1) {
 				showAccount = ((pageNum - 1) * 10) + (accountToManage + 1);
 				a = readAccountInfo(showAccount);
 				system("cls");
