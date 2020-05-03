@@ -18,9 +18,9 @@ int countMessage(char* id) {
 	while (!feof(fp)) {
 		Message temp = { "", "", 0, "" };
 		while (true) {
-			temp.senderId[i] = fgetc(fp);
-			if (temp.senderId[i] == ',') { temp.senderId[i] = '\0'; i = 0; break; }
-			else if (temp.senderId[i] == EOF) {
+			temp.receiverId[i] = fgetc(fp);
+			if (temp.receiverId[i] == ',') { temp.receiverId[i] = '\0'; i = 0; break; }
+			else if (temp.receiverId[i] == EOF) {
 				fclose(fp);
 				return messageCounter;
 			}
@@ -28,9 +28,9 @@ int countMessage(char* id) {
 
 		}
 		while (true) {
-			temp.receiverId[i] = fgetc(fp);
-			if (temp.receiverId[i] == ',') { temp.receiverId[i] = '\0'; i = 0; break; }
-			else if (temp.receiverId[i] == EOF) {
+			temp.senderId[i] = fgetc(fp);
+			if (temp.senderId[i] == ',') { temp.senderId[i] = '\0'; i = 0; break; }
+			else if (temp.senderId[i] == EOF) {
 				fclose(fp);
 				return messageCounter;
 			}
@@ -69,18 +69,18 @@ Message* readMessageFile(char* id, int count) {
 	while (!feof(fp)) {
 		Message temp = { "", "", 0, "" };
 		while (true) {
-			temp.senderId[i] = fgetc(fp);
-			if (temp.senderId[i] == ',') { temp.senderId[i] = '\0'; i = 0; break; }
-			else if (temp.senderId[i] == EOF) {
+			temp.receiverId[i] = fgetc(fp);
+			if (temp.receiverId[i] == ',') { temp.receiverId[i] = '\0'; i = 0; break; }
+			else if (temp.receiverId[i] == EOF) {
 				fclose(fp);
 				return m_arr;
 			}
 			i++;
 		}
 		while (true) {
-			temp.receiverId[i] = fgetc(fp);
-			if (temp.receiverId[i] == ',') { temp.receiverId[i] = '\0'; i = 0; break; }
-			else if (temp.receiverId[i] == EOF) {
+			temp.senderId[i] = fgetc(fp);
+			if (temp.senderId[i] == ',') { temp.senderId[i] = '\0'; i = 0; break; }
+			else if (temp.senderId[i] == EOF) {
 				fclose(fp);
 				return m_arr;
 			}
@@ -174,51 +174,46 @@ void sendMessage(char* sender, char* receiver) {
 	fprintf(fp, "%s,%s,%d,%s\n", sender, receiver, 1, input);
 	fclose(fp);
 }
-void deleteMessage(Message* m) { //미구현
-	FILE* fp;
-	fp = fopen("./message.txt", "a+");
-	if (fp == NULL)
-	{
-		printf("파일 입출력 실패.\n");
-		exit(1);
+void showMessage(Message* m, char* id, int count, int index) {
+	int flag;
+	if (count >= 10) {
+		flag = count - 10 + index;
 	}
-
-
-	fclose(fp);
-}
-void showMessage(Message* m, char* id, int num) {
+	else {
+		flag = index;
+	}
 	while (true) {
 		system("cls");
 		gotoxy(40, 1);
 		printf("쪽지 확인");
 		gotoxy(10, 3);
-		printf("발신자 : %s", m[num].senderId);
+		printf("발신자 : %s", m[flag].senderId);
 		gotoxy(10, 5);
 		printf("쪽지 내용 : ");
-		if (strlen(m[num].text) > 160) {
+		if (strlen(m[flag].text) > 160) {
 			for (int i = 0; i < 80; i++) {
-				printf("%c", m[num].text[i]);
+				printf("%c", m[flag].text[i]);
 			}
 			gotoxy(22, 6);
 			for (int i = 80; i < 160; i++) {
-				printf("%c", m[num].text[i]);
+				printf("%c", m[flag].text[i]);
 			}
 			gotoxy(22, 7);
-			for (int i = 160; i < strlen(m[num].text); i++) {
-				printf("%c", m[num].text[i]);
+			for (int i = 160; i < strlen(m[flag].text); i++) {
+				printf("%c", m[flag].text[i]);
 			}
 		}
-		else if (strlen(m[num].text) > 80) {
+		else if (strlen(m[flag].text) > 80) {
 			for (int i = 0; i < 80; i++) {
-				printf("%c", m[num].text[i]);
+				printf("%c", m[flag].text[i]);
 			}
 			gotoxy(22, 6);
-			for (int i = 80; i < strlen(m[num].text); i++) {
-				printf("%c", m[num].text[i]);
+			for (int i = 80; i < strlen(m[flag].text); i++) {
+				printf("%c", m[flag].text[i]);
 			}
 		}
 		else {
-			printf("%s", m[num].text);
+			printf("%s", m[flag].text);
 		}
 		gotoxy(3, 25);
 		printf("┌----------------┐");
@@ -282,12 +277,12 @@ void showMessage(Message* m, char* id, int num) {
 		}
 		if (triangle == 1) {
 			system("cls");
-			sendMessage(id, m[num].senderId);
+			sendMessage(id, m[flag].senderId);
 			return;
 		}
 		if (triangle == 31) {
 			system("cls");
-			deleteMessage(&m);
+			deleteMessage(id, count, flag);
 			return;
 		}
 		if (triangle == 61) {
@@ -354,6 +349,195 @@ Message* showMessageList(char* id) {
 		printf("쪽지함이 비어있습니다!");
 	}
 	return m;
+}
+int findLine(char* id, int count, int flag) {
+	FILE* fp;
+	char temp[MAX_LINE_LENGTH];
+	int i = 0;
+	int counter = 0;
+	int line = 1;
+	int ch = 0;
+
+	fp = fopen("./message.txt", "r+");
+	if (fp == NULL)
+	{
+		printf("파일 불러오기 실패\n");
+		exit(1);
+	}
+	while (true) {
+		char temp_id[ID_MAXSIZE + 2] = "";
+		while (true) {
+			temp_id[i] = fgetc(fp);
+			if (temp_id[i] == ',') {
+				temp_id[i] = '\0';
+				i = 0;
+				break;
+			}
+			i++;
+		}
+		if (!strcmp(temp_id, id)) {
+			counter++;
+			if (counter == flag +1) {
+				fclose(fp);
+				return line;
+			}
+			else {
+				fgets(temp, MAX_LINE_LENGTH, fp);
+			}
+		}
+		else {
+			fgets(temp, MAX_LINE_LENGTH, fp);
+		}
+		line++;
+	}
+	fclose(fp);
+}
+void deleteMessage(char* id, int count, int flag) {
+	FILE* fp;
+	int line = 1;
+	int i = 0;
+	int fline = findLine(id, count, flag);
+	char temp[1000] = "";
+	fp = fopen("./message.txt", "r+");
+	if (fp == NULL)
+	{
+		printf("파일 불러오기 실패\n");
+		exit(1);
+	}
+	while (true) {
+		if (line == fline) {
+			temp[i] = fgetc(fp);
+			if (temp[i] == '\n') {
+				line++;
+			}
+		}
+		else {
+			temp[i] = fgetc(fp);
+			if (temp[i] == '\n') {
+				line++;
+			}
+			if (temp[i] == EOF) {
+				temp[i] = '\0';
+				fclose(fp);
+				break;
+			}
+			i++;
+		}
+	}
+	fp = fopen("./message.txt", "w");
+	if (fp == NULL)
+	{
+		printf("파일 불러오기 실패\n");
+		exit(1);
+	}
+	for (int j = 0; j < 1000; j++) {
+		if(temp[j] != '\0')
+			fprintf(fp, "%c", temp[j]);
+	}
+	fclose(fp);
+}
+void readMessage(char* id, int count, int index) {
+	FILE* fp;
+	char temp[MAX_LINE_LENGTH];
+	int i = 0;
+	int flag;
+	int counter = 0;
+	int ch;
+
+	fp = fopen("./message.txt", "r+");
+	if (fp == NULL)
+	{
+		printf("파일 불러오기 실패\n");
+		exit(1);
+	}
+	if (count >= 10) {
+		flag = count - 10 + index;
+		while (true) {
+			char temp_id[ID_MAXSIZE + 2] = "";
+			while (true) {
+				temp_id[i] = fgetc(fp);
+				if (temp_id[i] == ',') {
+					temp_id[i] = '\0';
+					i = 0;
+					break;
+				}
+				else if (temp_id[i] == EOF) {
+					fclose(fp);
+					return;
+				}
+				i++;
+			}
+			if (!strcmp(temp_id, id)) {
+				if (counter == flag) {
+					while (true) {
+						ch = fgetc(fp);
+						if (ch == ',') {
+							break;
+						}
+						else if (ch == EOF) {
+							fclose(fp);
+							return;
+						}
+					}
+					fseek(fp, 0, SEEK_CUR);//없으면 오류 발생
+					fputs("0", fp);
+					fseek(fp, 0, SEEK_CUR);//없으면 오류 발생
+					fclose(fp);
+					return;
+				}
+				counter++;
+			}
+			else {
+				fgets(temp, MAX_LINE_LENGTH, fp);
+			}
+
+		}
+		fclose(fp);
+	}
+	else {
+		flag = index;
+		while (true) {
+			char temp_id[ID_MAXSIZE + 2] = "";
+			while (true) {
+				temp_id[i] = fgetc(fp);
+				if (temp_id[i] == ',') {
+					temp_id[i] = '\0';
+					i = 0;
+					break;
+				}
+				else if (temp_id[i] == EOF) {
+					fclose(fp);
+					return;
+				}
+				i++;
+			}
+			if (!strcmp(temp_id, id)) {
+				if (counter == flag) {
+					while (true) {
+						ch = fgetc(fp);
+						if (ch == ',') {
+							break;
+						}
+						else if (ch == EOF) {
+							fclose(fp);
+							return;
+						}
+					}
+					fseek(fp, 0, SEEK_CUR);//없으면 오류 발생
+					fputs("0", fp);
+					fseek(fp, 0, SEEK_CUR);//없으면 오류 발생
+					fclose(fp);
+					return;
+				}
+				counter++;
+			}
+			else {
+				fgets(temp, MAX_LINE_LENGTH, fp);
+			}
+
+		}
+		fclose(fp);
+	}
 }
 void messageBox(char* id) {
 	while (true) {
@@ -435,68 +619,11 @@ void messageBox(char* id) {
 		int index = (triangleY - 5) / 2;
 		int count = countMessage(id);
 		if (triangleY < 26 && count>index) {
-			showMessage(m, id, index);
+			readMessage(id, count, index);
+			showMessage(m, id, count, index);
 		}
 		else if (triangleY == 26) {
 			break;
 		}
 	}
-}
-
-void readMessage(const char* _string) {
-	// 최대 추천 횟수: 99번
-	FILE* fp;
-	char temp[MAX_LINE_LENGTH];
-	char ch;
-	int i = 0;
-	int j = 0;
-	char string[ID_MAXSIZE + 2] = "";
-
-	// 읽기 우선 쓰기 모드
-	fp = fopen("./message.txt", "r+");
-	if (fp == NULL)
-	{
-		printf("파일 불러오기 실패\n");
-		exit(1);
-	}
-	while (true) {
-		while (true) {
-			// 해당 아이디 확인
-			string[i] = fgetc(fp);
-			if (string[i] == ',') {
-				string[i] = '\0';
-				i = 0;
-				break;
-			}
-			else if (string[i] == EOF) {
-				fclose(fp);
-				return;
-			}
-			i++;
-		}
-		if (!strcmp(string, _string)) {
-			// 읽었는지 확인하는 변수까지 이동
-			for (; j < 1; j++) {
-				while (true) {
-					ch = fgetc(fp);
-					if (ch == ',') {
-						break;
-					}
-					else if (ch == EOF) {
-						fclose(fp);
-						return;
-					}
-				}
-			}
-			fseek(fp, 0, SEEK_CUR);//없으면 오류 발생
-			fputs("0", fp);
-			fseek(fp, 0, SEEK_CUR);//없으면 오류 발생
-		}
-		else {
-			// 아이디가 일치하지 않으면 다음 줄로 넘어감.
-			fgets(temp, MAX_LINE_LENGTH, fp);
-		}
-		j = 0;
-	}
-	fclose(fp);
 }
