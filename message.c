@@ -171,17 +171,11 @@ void sendMessage(char* sender, char* receiver) {
 	}
 	char* input;
 	input = writeMessage();
-	fprintf(fp, "%s,%s,%d,%s\n", sender, receiver, 1, input);
+	fprintf(fp, "%s,%s,%d,%s\n", receiver, sender, 1, input);
 	fclose(fp);
 }
 void showMessage(Message* m, char* id, int count, int index) {
-	int flag;
-	if (count >= 10) {
-		flag = count - 10 + index;
-	}
-	else {
-		flag = index;
-	}
+	int flag = count - index - 1;
 	while (true) {
 		system("cls");
 		gotoxy(40, 1);
@@ -293,20 +287,20 @@ void showMessage(Message* m, char* id, int count, int index) {
 Message* showMessageList(char* id) {
 	int count = countMessage(id);
 	Message* m = readMessageFile(id, count);
-
 	if (count > 0 && count < 10) {
-		for (int i = 0; i < count; i++) {
+		int line = 0;
+		for (int i = count - 1; i >= 0; i--) {
 			if (m[i].read) {
-				gotoxy(34, 5 + (i * 2));
+				gotoxy(34, 5 + (line * 2));
 				printf("안읽음");
 			}
 			else {
-				gotoxy(35, 5 + (i * 2));
+				gotoxy(35, 5 + (line * 2));
 				printf("읽음");
 			}
-			gotoxy(50, 5 + (i * 2));
+			gotoxy(50, 5 + (line * 2));
 			printf("%s", m[i].senderId);
-			gotoxy(70, 5 + (i * 2));
+			gotoxy(70, 5 + (line * 2));
 			if (strlen(m[i].text) > 11) {
 				for (int j = 0; j < 10; j++) {
 					printf("%c", m[i].text[j]);
@@ -316,12 +310,13 @@ Message* showMessageList(char* id) {
 			else {
 				printf("%s", m[i].text);
 			}
+			line++;
 		}
 	}
 	else if (count >= 10) {
 		int line;
-		for (int i = count - 10; i < count; i++) {
-			line = i - count + 10;
+		for (int i = count - 1; i > count - 11; i--) {
+			line = count - i - 1;
 			if (m[i].read) {
 				gotoxy(34, 5 + (line * 2));
 				printf("안읽음");
@@ -440,7 +435,7 @@ void readMessage(char* id, int count, int index) {
 	FILE* fp;
 	char temp[MAX_LINE_LENGTH];
 	int i = 0;
-	int flag;
+	int flag = count - index - 1;
 	int counter = 0;
 	int ch;
 
@@ -450,94 +445,46 @@ void readMessage(char* id, int count, int index) {
 		printf("파일 불러오기 실패\n");
 		exit(1);
 	}
-	if (count >= 10) {
-		flag = count - 10 + index;
+	while (true) {
+		char temp_id[ID_MAXSIZE + 2] = "";
 		while (true) {
-			char temp_id[ID_MAXSIZE + 2] = "";
-			while (true) {
-				temp_id[i] = fgetc(fp);
-				if (temp_id[i] == ',') {
-					temp_id[i] = '\0';
-					i = 0;
-					break;
-				}
-				else if (temp_id[i] == EOF) {
-					fclose(fp);
-					return;
-				}
-				i++;
+			temp_id[i] = fgetc(fp);
+			if (temp_id[i] == ',') {
+				temp_id[i] = '\0';
+				i = 0;
+				break;
 			}
-			if (!strcmp(temp_id, id)) {
-				if (counter == flag) {
-					while (true) {
-						ch = fgetc(fp);
-						if (ch == ',') {
-							break;
-						}
-						else if (ch == EOF) {
-							fclose(fp);
-							return;
-						}
-					}
-					fseek(fp, 0, SEEK_CUR);//없으면 오류 발생
-					fputs("0", fp);
-					fseek(fp, 0, SEEK_CUR);//없으면 오류 발생
-					fclose(fp);
-					return;
-				}
-				counter++;
+			else if (temp_id[i] == EOF) {
+				fclose(fp);
+				return;
 			}
-			else {
-				fgets(temp, MAX_LINE_LENGTH, fp);
-			}
-
+			i++;
 		}
-		fclose(fp);
-	}
-	else {
-		flag = index;
-		while (true) {
-			char temp_id[ID_MAXSIZE + 2] = "";
-			while (true) {
-				temp_id[i] = fgetc(fp);
-				if (temp_id[i] == ',') {
-					temp_id[i] = '\0';
-					i = 0;
-					break;
-				}
-				else if (temp_id[i] == EOF) {
-					fclose(fp);
-					return;
-				}
-				i++;
-			}
-			if (!strcmp(temp_id, id)) {
-				if (counter == flag) {
-					while (true) {
-						ch = fgetc(fp);
-						if (ch == ',') {
-							break;
-						}
-						else if (ch == EOF) {
-							fclose(fp);
-							return;
-						}
+		if (!strcmp(temp_id, id)) {
+			if (counter == flag) {
+				while (true) {
+					ch = fgetc(fp);
+					if (ch == ',') {
+						break;
 					}
-					fseek(fp, 0, SEEK_CUR);//없으면 오류 발생
-					fputs("0", fp);
-					fseek(fp, 0, SEEK_CUR);//없으면 오류 발생
-					fclose(fp);
-					return;
+					else if (ch == EOF) {
+						fclose(fp);
+						return;
+					}
 				}
-				counter++;
+				fseek(fp, 0, SEEK_CUR);//없으면 오류 발생
+				fputs("0", fp);
+				fseek(fp, 0, SEEK_CUR);//없으면 오류 발생
+				fclose(fp);
+				return;
 			}
-			else {
-				fgets(temp, MAX_LINE_LENGTH, fp);
-			}
-
+			counter++;
 		}
-		fclose(fp);
+		else {
+			fgets(temp, MAX_LINE_LENGTH, fp);
+		}
 	}
+	fclose(fp);
 }
 void messageBox(char* id) {
 	while (true) {
