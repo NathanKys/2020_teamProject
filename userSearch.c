@@ -19,7 +19,7 @@ void showAllAccountInfo2(int pageNum, int num_account) {
 		}
 	}
 }
-int selectAccountToShow() {
+int selectAccountToShow(int num_account, int pageNum, int endPage) {
 	bool flag = 0;
 	int in = 0;
 	do {
@@ -29,6 +29,8 @@ int selectAccountToShow() {
 			printf("                                                           ");
 			printf("                                                           ");
 		}
+		gotoxy(3, 28);
+		printf("                                                                                                       ");
 		gotoxy(3, 25);
 		printf("열람할 계정의 아이디 번호를 선택하세요.");
 		char input = ' ';
@@ -36,9 +38,25 @@ int selectAccountToShow() {
 		scanf("%c", &input);
 		scanf("%c", &temp);
 
+		if (input == '~'){
+			system("pause");
+		return -1;
+		}
+
 		in = input - 48;
 		if (temp != '\n' || !(0 <= in && in <= 9)) {
+			gotoxy(3, 26);
 			printf("잘못된 입력입니다. 숫자 하나만을 입력하세요.\n");
+			system("pause");
+			gotoxy(3, 26);
+			printf("                                              ");
+			gotoxy(3, 27);
+			printf("                                              ");
+			flag = 1;
+		}
+		if (pageNum == endPage && num_account % 10 <= in) {
+			gotoxy(3, 26);
+			printf("존재하지 않는 아이디 번호입니다.\n");
 			system("pause");
 			flag = 1;
 		}
@@ -141,7 +159,7 @@ void userSearch(Account* login, int num_account) {
 
 	while (true) {
 		system("cls");
-		gotoxy(40, 1);
+		gotoxy(55, 1);
 		printf("사용자 검색");
 		gotoxy(37, 3);
 		printf("아이디");
@@ -172,6 +190,8 @@ void userSearch(Account* login, int num_account) {
 		printf("│     번호 선택    │");
 		gotoxy(93, 27);
 		printf("└------------------┘");
+		gotoxy(36, 28);
+		printf("계정 정보를 열람하려면 번호 입력을 선택하세요.");
 
 		int triangle;
 		char ch;
@@ -224,7 +244,7 @@ void userSearch(Account* login, int num_account) {
 				pageNum--;
 			}
 		}
-		if (triangle == 31) { 
+		if (triangle == 31) {
 			if (pageNum == endPage) {
 				system("cls");
 				printf("더 이상 표시할 계정이 없습니다.");
@@ -238,18 +258,21 @@ void userSearch(Account* login, int num_account) {
 			return;
 		if (triangle == 91) {
 			int showAccount = 0;
+			int accountToManage = 0;
 			Account a;
-			showAccount = ((pageNum - 1) * 10) + (selectAccountToShow() + 1);
-			a = readAccountInfo(showAccount);
-			system("cls");
-			int menu = 0;
-			menu = accountInfo_Menu(&a);
-			switch (menu) {
-			case 1:
-				sendMessage(login->id, a.id);
-				break;
-			case 2:
-				return;
+			accountToManage = selectAccountToShow(num_account, pageNum, endPage);
+			if (showAccount != -1) {
+				showAccount = ((pageNum - 1) * 10) + (accountToManage + 1);
+				a = readAccountInfo(showAccount);
+				system("cls");
+				int menu = 0;
+				menu = accountInfo_Menu(&a);
+				switch (menu) {
+				case 1:
+					sendMessage(login->id, a.id);
+				case 2:
+					continue;
+				}
 			}
 		}
 	}
