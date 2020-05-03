@@ -474,6 +474,7 @@ void ret(char* _string) {
 				//ch = fgetc(tempfp);
 				//printf("%c", ch);
 				fseek(fp, -2, SEEK_CUR);
+				// 10을 쓴 이후의 데이터를 tempfp에서 받아들여서 fp로 전부 복사
 				while (true) {
 					ch = fgetc(tempfp);
 					if (feof(tempfp) != 0)
