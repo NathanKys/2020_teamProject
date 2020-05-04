@@ -54,66 +54,64 @@ int loginFunction(int* num_account) {
 		}
 	}
 	
-	int row=0;
+	int row = 0;
 	char stdid[14];
 	char stdpassword[18];
 
-	printf("아이디를 입력하세요:");
-	fgets(stdid, 14, stdin);
+	while (row == 0) {
+		printf("아이디를 입력하세요:");
+		fgets(stdid, 14, stdin);
 
-	// 배열 크기가 넘어가면 입력 버퍼를 비움.
-	if (strlen(stdid) > 12) {
-		while (getchar() != '\n');
-	}
-	stdid[strcspn(stdid, "\n")] = 0;
-	for (int i = 0; i < *num_account; i++) {       //i<num_account 로 수정
-		if (strcmp(account_id[i], stdid) == 0) {
-			
-
-			printf("\n비밀번호를 입력하세요:");
-			fgets(stdpassword, 18, stdin);
-			if (strlen(stdid) > 12) {
-				while (getchar() != '\n');
-			}
-			stdpassword[strcspn(stdpassword, "\n")] = 0;
-			if (strcmp(account_password[i], stdpassword) == 0) {
-				printf("로그인 성공\n");
-				row = i + 1;
-				break;
-			}
-			else {
-				printf("비밀번호가 틀립니다.");
-				break;
-			}
+		// 배열 크기가 넘어가면 입력 버퍼를 비움.
+		if (strlen(stdid) > 12) {
+			while (getchar() != '\n');
 		}
-		else if (strcmp(admin_id, stdid) == 0) {
-			printf("관리자 비밀번호를 입력해주세요:");
-			fgets(stdpassword, 18, stdin);
-			if (strlen(stdid) > 12) {
-				while (getchar() != '\n');
+		stdid[strcspn(stdid, "\n")] = 0;
+		for (int i = 0; i < num_account; i++) {       //i<num_account 로 수정
+			if (strcmp(account_id[i], stdid) == 0) {
+
+				
+					pass: printf("\n비밀번호를 입력하세요:");
+					fgets(stdpassword, 18, stdin);
+					if (strlen(stdid) > 12) {
+						while (getchar() != '\n');
+					}
+					stdpassword[strcspn(stdpassword, "\n")] = 0;
+					if (strcmp(account_password[i], stdpassword) == 0) {
+						printf("\n로그인 성공\n");
+						system("pause");
+						row = i + 1;
+						break;
+					}
+					else {
+						printf("비밀번호가 틀립니다.\n");
+						system("pause");
+						goto pass;
+					}
+				
 			}
-			stdpassword[strcspn(stdpassword, "\n")] = 0;
-			if (strcmp(admin_password, stdpassword) == 0) {
-				printf("\n로그인 성공\n");
-				row = -1;
-				break;
+			else if (strcmp(admin_id, stdid) == 0) {
+				pass_admin: printf("관리자 비밀번호를 입력해주세요:");
+				fgets(stdpassword, 18, stdin);
+				if (strlen(stdid) > 12) {
+					while (getchar() != '\n');
+				}
+				stdpassword[strcspn(stdpassword, "\n")] = 0;
+				if (strcmp(admin_password, stdpassword) == 0) {
+					printf("\n로그인 성공\n");
+					row = -1;
+					break;
+				}
+				else {
+					printf("비밀번호가 틀립니다.");
+					system("pause");
+					goto pass_admin;
+				}
 			}
-			else {
-				printf("비밀번호가 틀립니다.");
-				break;
-			}
+
+			if (i == (num_account - 1))
+				printf("존재하지 않는 아이디 입니다\n");
 		}
-
-		if (i == (*num_account - 1))
-			printf("존재하지 않는 아이디 입니다");
-	}
-
-
-	for (int i = 0; i < *num_account; i++) {
-		free(account_id[i]);
-	}
-	for (int i = 0; i < *num_account; i++) {
-		free(account_password[i]);
 	}
 
 	free(account_id);
