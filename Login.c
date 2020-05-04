@@ -86,5 +86,5 @@ void login() {
 
 
 	fclose(memlist);
-	return row;
+	return row+1;
 }
