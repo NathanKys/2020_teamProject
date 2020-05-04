@@ -86,3 +86,5 @@ void showAllAccountInfo2(int pageNum, int num_account);
 int selectAccountToShow(int num_account, int pageNum, int endPage);
 int accountInfo_Menu(Account* a);
 void userSearch(Account* login, int num_account);
+
+int writeMessage(Account tt,char *s_Nickname);
