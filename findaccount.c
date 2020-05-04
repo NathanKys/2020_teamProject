@@ -189,7 +189,7 @@ void findaccount(int num_account) {
                     gets(stddate);
 
                     if (strcmp(account_date[i], stddate) == 0) {
-                        printf("아이디는 %s 입니다", account_id[i]);
+                        printf("아이디는 %s 입니다\n", account_id[i]);
                         count++;
                         system("pause");
                         break;
