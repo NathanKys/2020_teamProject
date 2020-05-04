@@ -11,7 +11,6 @@ typedef struct Message {
 int countMessage(char* id);
 Message* readMessageFile(char* id, int count);
 bool matchMessage(const char* string);
-char* writeMessage();
 void sendMessage(char* sender, char* receiver);
 void showMessage(Message* m, char* id, int count, int index);
 Message* showMessageList(char* id);
