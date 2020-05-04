@@ -15,7 +15,6 @@ int main() {
 	int login_id_num = 0;	//현재 로그인된 아이디의 DB상 순서. 1부터 시작. -1은 관리자 아이디
 	//로그인한 아이디 번호(= 로그인한 계정이 DB 상 몇번째 줄인지. 1번부터 시작)
 	//이 값을 내 정보 보기 함수에서 인자로 받아, DB 상 해당 줄에 정보 출력
-	int nextMenu = 0;
 	bool flag = 0;	//로그인 상태
 	int num_account = 0;	//DB에 등록된 계정의 총 개수
 	char** oldNick = (char**)malloc(sizeof(char*) * num_account);			//닉네임 변경된 계정의 기존 닉네임 목록
@@ -31,6 +30,7 @@ int main() {
 
 			case 2:
 				login_id_num = loginFunction(&num_account); // return 값을 login_id_num에 복사
+				system("cls");
 				// 관리자 로그인의 경우 -1을 리턴
 				//login_id_num = 1;
 				flag = 1;
@@ -79,7 +79,7 @@ int main() {
 					}
 				}
 				else {	//관리자 로그인
-					//checkSecondPw();
+					checkSecondPw();
 					for (int i = 0; i < num_account; i++) {
 						oldNick[i] = (char*)malloc(sizeof(char) * (NICKNAME_MAXSIZE + 2));
 					}
