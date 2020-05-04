@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #include "header.h"
 #include "Message.h"
@@ -112,7 +112,14 @@ bool matchMessage(const char* string) {
 	regcomp(&state, pattern, REG_EXTENDED);
 	return regexec(&state, string, 0, NULL, 0) ? false : true;
 }
-char* writeMessage() {
+void sendMessage(char* sender, char* receiver) {
+	FILE* fp;
+	fp = fopen("./message.txt", "a+");
+	if (fp == NULL)
+	{
+		printf("파일 입출력 실패.\n");
+		exit(1);
+	}
 	char* input = malloc(sizeof(char) * 201);
 	while (true) {
 		system("cls");
@@ -159,19 +166,7 @@ char* writeMessage() {
 			continue;
 		}
 	}
-	return input;
-}
-void sendMessage(char* sender, char* receiver) {
-	FILE* fp;
-	fp = fopen("./message.txt", "a+");
-	if (fp == NULL)
-	{
-		printf("파일 입출력 실패.\n");
-		exit(1);
-	}
-	char* input;
-	input = writeMessage();
-	if (input[0] != '~'){
+	if (input[0] != '~') {
 		fprintf(fp, "%s,%s,%d,%s\n", receiver, sender, 1, input);
 		fclose(fp);
 	}
@@ -374,7 +369,7 @@ int findLine(char* id, int count, int flag) {
 		}
 		if (!strcmp(temp_id, id)) {
 			counter++;
-			if (counter == flag +1) {
+			if (counter == flag + 1) {
 				fclose(fp);
 				return line;
 			}
@@ -428,7 +423,7 @@ void deleteMessage(char* id, int count, int flag) {
 		exit(1);
 	}
 	for (int j = 0; j < 1000; j++) {
-		if(temp[j] != '\0')
+		if (temp[j] != '\0')
 			fprintf(fp, "%c", temp[j]);
 	}
 	fclose(fp);
