@@ -110,7 +110,10 @@ int loginFunction(int* num_account) {
 			}
 
 			if (i == (num_account - 1))
+			{
 				printf("존재하지 않는 아이디 입니다\n");
+				system("pause");
+			}
 		}
 	}
 
