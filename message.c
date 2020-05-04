@@ -188,7 +188,7 @@ int sendMessage(char* sender, char* receiver) {
 				gotoxy(x, y);
 				printf("~");
 				gotoxy(30, 30);
-				printf("사용자 검색 메뉴로 이동합니다.");
+				printf("메뉴로 돌아갑니다.");
 				gotoxy(30, 31);
 				system("pause");
 				return 0;  // 합칠때 리턴값을 통하여 돌아갈 위치 정하기 #######################################################################
@@ -228,7 +228,7 @@ int sendMessage(char* sender, char* receiver) {
 					_getch();
 				}
 				gotoxy(40, 24);
-				printf("더이상 입력하지 못합니다\n");
+				printf("쪽지는 최대 200자까지 작성할 수 있습니다.");
 				checkk = true;
 				gotoxy(x, y);
 				continue;
@@ -268,8 +268,10 @@ int sendMessage(char* sender, char* receiver) {
 						}
 						continue;
 					}
+					gotoxy(10, 29);
+					printf("허용되지 않는 문자가 포함되었습니다..");
 					gotoxy(30, 30);
-					printf("혀용되지 않는 문자가 포함되었습니다..\n");
+					printf("허용하는 문자: 한글, 영어, 숫자, ‘?’, ‘!’, ‘.’, ‘,’, ‘(‘, ‘)’, 띄어쓰기");
 					gotoxy(30, 31);
 					system("pause");
 					gotoxy(30, 30);
@@ -307,8 +309,10 @@ int sendMessage(char* sender, char* receiver) {
 				while (_kbhit()) { // f1 ~ f10사이의 키 입력이 출력되는 경우가 있어 제한하기 위해 추가.
 					_getch();
 				}
-				gotoxy(30, 30);
-				printf("혀용되지 않는 문자가 포함되었습니다.\n");
+				gotoxy(30, 29);
+				printf("허용되지 않는 문자가 포함되었습니다..");
+				gotoxy(10, 30);
+				printf("허용하는 문자: 한글, 영어, 숫자, ‘?’, ‘!’, ‘.’, ‘,’, ‘(‘, ‘)’, 띄어쓰기");
 				gotoxy(30, 31);
 				system("pause");
 				gotoxy(30, 30);
