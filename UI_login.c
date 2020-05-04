@@ -17,7 +17,7 @@ int uiAfterLogin(char * nick) {
 	gotoxy(32, 12);
 	printf("|\t┌------------------------------┐  \t|\n");
 	gotoxy(32, 13);
-	printf("|\t│          내정보  보기        │ \t|\n");
+	printf("|\t│         내정보  보기         │ \t|\n");
 	gotoxy(32, 14);
 	printf("|\t└------------------------------┘  \t|\n");
 	gotoxy(32, 15);
@@ -25,7 +25,7 @@ int uiAfterLogin(char * nick) {
 	gotoxy(32, 16);
 	printf("|\t┌------------------------------┐  \t|\n");
 	gotoxy(32, 17);
-	printf("|\t│          사용자  검색        │ \t|\n");
+	printf("|\t│         사용자  검색         │ \t|\n");
 	gotoxy(32, 18);
 	printf("|\t└------------------------------┘  \t|\n");
 	gotoxy(32, 19);
