@@ -73,42 +73,78 @@ void findaccount() {
     }
 
 
+        char stdid[13];
         char stdnickname[13];
         char stddate[9];
 
-        /*printf("아이디를 찾으시려면 1번을, 비밀번호를 찾으시려면 2번을 입력해주세요\n");
-        int n;
-        scanf("%d", &n);
+        int n = interface();
 
-        switch(n)*/
-
+    switch (n) {
+    case 1:
+    {
         printf("닉네임을 입력하세요:");
         gets(stdnickname);
 
+        int i;
         for (int i = 0; i < num_account; i++) {
             if (strcmp(account_nickname[i], stdnickname) == 0) {
-                printf("\n닉네임 일치\n");
-            
                 printf("\n생년월일을 입력하세요:");
                 gets(stddate);
 
-
                 if (strcmp(account_date[i], stddate) == 0) {
-                    printf("\n생년월일 일치\n");
-                    printf("아이디는 %s 입니다", account_id[i]);
+                    printf("\n아이디는 %s 입니다", account_id[i]);
                     break;
                 }
-                else{
-                printf("입력한 정보와 부합하지 않는 생년월일입니다.");
-                break;
+                else {
+                    printf("\n입력한 정보와 부합하지 않는 생년월일입니다.");
+                    break;
                 }
             }
+            else if (i == num_account-1) {
+                printf("\n존재하지 않는 닉네임입니다.");
+                break;
+            }
 
-            if(i==num_account-1){
-                printf("존재하지 않는 닉네임입니다.");
+        }
+        break;
+    }
+    case 2:
+    {
+        printf("아이디를 입력하세요:");
+        gets(stdid);
+
+        int i;
+        for (i = 0; i < num_account; i++) {
+            if (strcmp(account_id[i], stdid) == 0) {
+                printf("\n닉네임을 입력하세요:");
+                gets(stdnickname);
+
+                if (strcmp(account_nickname[i], stdnickname) == 0) {
+                    printf("\n생년월일을 입력하세요:");
+                    gets(stddate);
+
+                    if (strcmp(account_date[i], stddate) == 0) {
+                        printf("\n비밀번호는 %s 입니다", account_password[i]);
+                        break;
+                    }
+                    else {
+                        printf("\n입력한 정보와 부합하지 않는 생년월일입니다.");
+                        break;
+                    }
+                }
+                else {
+                    printf("\n존재하지 않는 닉네임입니다.");
+                    break;
+                }
+            }
+            else if (i == num_account-1) {
+                printf("\n존재하지 않는 아이디입니다.");
                 break;
             }
         }
+        break;
+    }
+    }
 
 
         fclose(memlist);
