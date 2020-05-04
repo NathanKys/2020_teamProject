@@ -1,8 +1,7 @@
-#pragma once
+﻿#pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #include "header.h"
 #include "ReadAccount.h"
-#define MAX_LINE_LENGTH 130
 
 void checkSecondPw() {
 	int adminSecondPw[6] = { 1, 3, 5, 7, 9, 0 };	//2차 비밀번호
@@ -120,9 +119,11 @@ void readAccountInfo2(int startline, Account* a) {
 	fscanf(fp, "%d", &(*a).rec);
 	fgetc(fp);
 	(*a).lock = (fgetc(fp) - 48);
+	fgetc(fp);
+	(*a).changed = (fgetc(fp) - 48);
+
 
 	fclose(fp);
-
 }
 
 

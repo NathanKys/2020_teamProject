@@ -8,7 +8,7 @@ int checkPW(char* pw) {
 		system("cls");
 
 		gotoxy(5, 5);
-		printf("ë³¸ì¸ ì—¬ë¶€ë¥¼ í™•ì¸í•˜ê¸° ìœ„í•´ ë¹„ë°€ë²ˆí˜¸ë¥¼ ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì„¸ìš”");
+		printf("º»ÀÎ ¿©ºÎ¸¦ È®ÀÎÇÏ±â À§ÇØ ºñ¹Ğ¹øÈ£¸¦ ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä");
 		gotoxy(7, 8);
 		printf("-----------------------------------------------");
 		gotoxy(6, 9);
@@ -33,7 +33,8 @@ int checkPW(char* pw) {
 			return 1;
 		}
 		else {
-			printf("ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë¦½ë‹ˆë‹¤.");
+			gotoxy(7, 11);
+			printf("ºñ¹Ğ¹øÈ£°¡ Æ²¸³´Ï´Ù.");
 			system("pause");
 		}
 	}
@@ -48,37 +49,37 @@ void selectEdit(Account* login) {
 		gotoxy(5, 3);
 		printf("===================================================================================");
 		gotoxy(5, 4);
-		printf("\t\t\t\t\tìˆ˜ì •í•  ì •ë³´ ì„ íƒ"); // í… 5ê°œ
+		printf("\t\t\t\t\t¼öÁ¤ÇÒ Á¤º¸ ¼±ÅÃ"); // ÅÜ 5°³
 		gotoxy(5, 5);
 		printf("===================================================================================");
 
 		gotoxy(40, 7);
-		printf("ë¹„ë°€ë²ˆí˜¸(0)");
+		printf("ºñ¹Ğ¹øÈ£(0)");
 
 		gotoxy(20, 9);
-		printf("ì•„ì´ë””");
+		printf("¾ÆÀÌµğ");
 		gotoxy(20, 10);
 		printf("%s\t", (*login).id);
 
 		gotoxy(40, 9);
-		printf("ì´ë¦„(1)");
+		printf("ÀÌ¸§(1)");
 		gotoxy(40, 10);
 		printf("%s\t", (*login).name);
 
 		gotoxy(61, 9);
-		printf("ë‹‰ë„¤ì„(2)");
+		printf("´Ğ³×ÀÓ(2)");
 		gotoxy(61, 10);
 		printf("%s\t", (*login).nick);
 
 		gotoxy(20, 12);
-		printf("ìƒë…„ì›”ì¼(4)");
+		printf("»ı³â¿ùÀÏ(4)");
 		gotoxy(20, 13);
 		for (int i = 0; i < 8; i++) {
 			printf("%d", (*login).birth[i]);
 		}
 
 		gotoxy(40, 12);
-		printf("íœ´ëŒ€í° ë²ˆí˜¸(5)");
+		printf("ÈŞ´ëÆù ¹øÈ£(5)");
 		gotoxy(40, 13);
 		if ((*login).phone[10] == -1) {
 			for (int i = 0; i < 10; i++) {
@@ -92,12 +93,12 @@ void selectEdit(Account* login) {
 		}
 
 		gotoxy(61, 12);
-		printf("ì´ë©”ì¼ ì£¼ì†Œ(3)");
+		printf("ÀÌ¸ŞÀÏ ÁÖ¼Ò(3)");
 		gotoxy(61, 13);
 		printf("%s\t", (*login).email);
 
 		gotoxy(10, 16);
-		printf("ìˆ˜ì •ì„ ì›í•˜ëŠ” í•­ëª©ì˜ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ");
+		printf("¼öÁ¤À» ¿øÇÏ´Â Ç×¸ñÀÇ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
 
 		char num;
 		scanf("%c", &num);
@@ -114,27 +115,28 @@ void selectEdit(Account* login) {
 		num = num - 48;
 		if (!(0 <= num && num <= 5) || test != '\n') {
 			gotoxy(10, 17);
-			printf("ì¡´ì¬í•˜ì§€ ì•ŠëŠ” í•­ëª© ë²ˆí˜¸ì…ë‹ˆë‹¤.\n");
+			printf("Á¸ÀçÇÏÁö ¾Ê´Â Ç×¸ñ ¹øÈ£ÀÔ´Ï´Ù.\n");
+			gotoxy(10, 18);
 			system("pause");
 		}
 		else {
 			switch (num) {
-				case 0:	//ë¹„ë°€ë²ˆí˜¸
+				case 0:	//ºñ¹Ğ¹øÈ£
 					editPW(&((*login).pw));
 					break;
-				case 1:	//ì´ë¦„
+				case 1:	//ÀÌ¸§
 					editName(&((*login).name));
 					break;
-				case 2:	//ë‹‰ë„¤ì„
+				case 2:	//´Ğ³×ÀÓ
 					editNick(&((*login).nick));
 					break;
-				case 3:	//ì´ë©”ì¼ ì£¼ì†Œ
+				case 3:	//ÀÌ¸ŞÀÏ ÁÖ¼Ò
 					editEmail(&((*login).email));
 					break;
-				case 4:	//ìƒë…„ì›”ì¼
+				case 4:	//»ı³â¿ùÀÏ
 					editBirth(&((*login).birth));
 					break;
-				case 5:	//íœ´ëŒ€í° ë²ˆí˜¸
+				case 5:	//ÈŞ´ëÆù ¹øÈ£
 					editPhone(&((*login).phone));
 					break;
 			}
@@ -147,15 +149,15 @@ void editPW(char* pw) {
 
 	char t_pw[PASSWORD_MAXSIZE + 2] = "";
 
-	// ë¹„ë°€ë²ˆí˜¸ ì…ë ¥
+	// ºñ¹Ğ¹øÈ£ ÀÔ·Â
 	while (true) {
 		system("cls");
-		printf("ìƒˆë¡œìš´ ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ");
+		printf("»õ·Î¿î ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
 		fgets(t_pw, PASSWORD_MAXSIZE + 2, stdin);
 
 		t_pw[strcspn(t_pw, "\n")] = 0;
 
-		// ë©”ë‰´ë¡œ ì´ë™
+		// ¸Ş´º·Î ÀÌµ¿
 		if (t_pw[0] == '~' && strlen(t_pw) == 1) {
 			return;
 		}
@@ -163,42 +165,42 @@ void editPW(char* pw) {
 			clearInputBuffer();
 		}
 		if (!strcmp(pw, t_pw)) {
-			printf("ê¸°ì¡´ ì •ë³´ì™€ ë™ì¼í•©ë‹ˆë‹¤.");
+			printf("±âÁ¸ Á¤º¸¿Í µ¿ÀÏÇÕ´Ï´Ù.");
 			system("pause");
 			continue;
 		}
 
 		if (matchPassword(t_pw)) {
 			if (strlen(t_pw) < 8 || strlen(t_pw) > 16) {
-				printf("ê¸€ììˆ˜ ë²”ìœ„(ìµœì†Œ 8ì~ìµœëŒ€ 16ì) ì´ˆê³¼ì…ë‹ˆë‹¤.\n");
+				printf("±ÛÀÚ¼ö ¹üÀ§(ÃÖ¼Ò 8ÀÚ~ÃÖ´ë 16ÀÚ) ÃÊ°úÀÔ´Ï´Ù.\n");
 				system("pause");
 				continue;
 			}
 			else {
-				// ëŒ€ë¬¸ì í•˜ë‚˜ ì´ìƒ
-				// ì†Œë¬¸ì í•˜ë‚˜ ì´ìƒ
-				// ìˆ«ì í•˜ë‚˜ ì´ìƒ
-				if (!isContainUpperCase(t_pw)) { printf("ì•ŒíŒŒë²³ ëŒ€ë¬¸ìë¥¼ í•˜ë‚˜ ì´ìƒ í¬í•¨í•´ì•¼ í•©ë‹ˆë‹¤.\n"); }
-				if (!isContainLowerCase(t_pw)) { printf("ì•ŒíŒŒë²³ ì†Œë¬¸ìë¥¼ í•˜ë‚˜ ì´ìƒ í¬í•¨í•´ì•¼ í•©ë‹ˆë‹¤.\n"); }
-				if (!isContainNumber(t_pw)) { printf("ì¸ë„-ì•„ë¼ë¹„ì•„ ìˆ«ìë¥¼ í•˜ë‚˜ ì´ìƒ í¬í•¨í•´ì•¼ í•©ë‹ˆë‹¤.\n"); }
-				if (kreng(t_pw, strlen(t_pw))) { printf("ë¹„ë°€ë²ˆí˜¸ì—ëŠ” í•œê¸€ì„ í—ˆìš©í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.\n"); }
+				// ´ë¹®ÀÚ ÇÏ³ª ÀÌ»ó
+				// ¼Ò¹®ÀÚ ÇÏ³ª ÀÌ»ó
+				// ¼ıÀÚ ÇÏ³ª ÀÌ»ó
+				if (!isContainUpperCase(t_pw)) { printf("¾ËÆÄºª ´ë¹®ÀÚ¸¦ ÇÏ³ª ÀÌ»ó Æ÷ÇÔÇØ¾ß ÇÕ´Ï´Ù.\n"); }
+				if (!isContainLowerCase(t_pw)) { printf("¾ËÆÄºª ¼Ò¹®ÀÚ¸¦ ÇÏ³ª ÀÌ»ó Æ÷ÇÔÇØ¾ß ÇÕ´Ï´Ù.\n"); }
+				if (!isContainNumber(t_pw)) { printf("ÀÎµµ-¾Æ¶óºñ¾Æ ¼ıÀÚ¸¦ ÇÏ³ª ÀÌ»ó Æ÷ÇÔÇØ¾ß ÇÕ´Ï´Ù.\n"); }
+				if (kreng(t_pw, strlen(t_pw))) { printf("ºñ¹Ğ¹øÈ£¿¡´Â ÇÑ±ÛÀ» Çã¿ëÇÏÁö ¾Ê½À´Ï´Ù.\n"); }
 
-				// ìœ„ì˜ ì„¸ ì¡°ê±´ì„ ëª¨ë‘ ë§Œì¡±í•  ë•Œ
+				// À§ÀÇ ¼¼ Á¶°ÇÀ» ¸ğµÎ ¸¸Á·ÇÒ ¶§
 				if (isContainNumber(t_pw) && isContainUpperCase(t_pw) && isContainLowerCase(t_pw)) {
-					// ë°˜ë³µëœ ë¬¸ì ì²´í¬
+					// ¹İº¹µÈ ¹®ÀÚ Ã¼Å©
 					if (isRepeat(t_pw, strlen(t_pw))) {
-						printf("ë¹„ë°€ë²ˆí˜¸ì— ë°˜ë³µëœ ë¬¸ìê°€ ìˆìŠµë‹ˆë‹¤.\n");
+						printf("ºñ¹Ğ¹øÈ£¿¡ ¹İº¹µÈ ¹®ÀÚ°¡ ÀÖ½À´Ï´Ù.\n");
 						system("pause");
 						continue;
 					}
-					// ì—°ì†ëœ ë¬¸ì ì²´í¬
+					// ¿¬¼ÓµÈ ¹®ÀÚ Ã¼Å©
 					if (isConti(t_pw, strlen(t_pw))) {
-						printf("ë¹„ë°€ë²ˆí˜¸ì— ì—°ì†ëœ ë¬¸ìê°€ ìˆìŠµë‹ˆë‹¤.\n");
+						printf("ºñ¹Ğ¹øÈ£¿¡ ¿¬¼ÓµÈ ¹®ÀÚ°¡ ÀÖ½À´Ï´Ù.\n");
 						system("pause");
 						continue;
 					}
 
-					printf("ë¹„ë°€ë²ˆí˜¸ ì…ë ¥ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.\n");
+					printf("ºñ¹Ğ¹øÈ£ ÀÔ·ÂÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.\n");
 					system("pause");
 					break;
 				}
@@ -208,7 +210,7 @@ void editPW(char* pw) {
 
 		}
 		else {
-			printf("ë‹¤ìŒì˜ ë¬¸ìë¥¼ ì œì™¸í•œ íŠ¹ìˆ˜ë¬¸ìëŠ” í—ˆìš©í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.!@#$%^&*\n");
+			printf("´ÙÀ½ÀÇ ¹®ÀÚ¸¦ Á¦¿ÜÇÑ Æ¯¼ö¹®ÀÚ´Â Çã¿ëÇÏÁö ¾Ê½À´Ï´Ù.!@#$%^&*\n");
 			system("pause");
 			continue;
 		}
@@ -216,30 +218,30 @@ void editPW(char* pw) {
 
 	}
 
-	//ë¹„ë°€ë²ˆí˜¸ í™•ì¸
+	//ºñ¹Ğ¹øÈ£ È®ÀÎ
 	while (true) {
 		system("cls");
 		char checkPassword[PASSWORD_MAXSIZE + 2] = { 0, };
-		printf("ë¹„ë°€ë²ˆí˜¸ í™•ì¸ì„ ìœ„í•´ ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì„¸ìš”.");
+		printf("ºñ¹Ğ¹øÈ£ È®ÀÎÀ» À§ÇØ ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä.");
 		fgets(checkPassword, PASSWORD_MAXSIZE + 2, stdin);
 		checkPassword[strcspn(checkPassword, "\n")] = 0;
 		if (strlen(checkPassword) > PASSWORD_MAXSIZE) {
 			clearInputBuffer();
 		}
 
-		// ë©”ë‰´ë¡œ ì´ë™
+		// ¸Ş´º·Î ÀÌµ¿
 		if (checkPassword[0] == '~' && strlen(checkPassword) == 1) {
 			return;
 		}
 
 		if (!strcmp(checkPassword, t_pw)) {
 			strcpy(pw, t_pw);
-			printf("ë¹„ë°€ë²ˆí˜¸ í™•ì¸&ìˆ˜ì •ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.\n");
+			printf("ºñ¹Ğ¹øÈ£ È®ÀÎ&¼öÁ¤ÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.\n");
 			system("pause");
 			break;
 		}
 		else {
-			printf("ë¹„ë°€ë²ˆí˜¸ì™€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.\n");
+			printf("ºñ¹Ğ¹øÈ£¿Í ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.\n");
 			system("pause");
 			continue;
 		}
@@ -250,19 +252,19 @@ void editPW(char* pw) {
 void editName(char* name) {
 
 	char t_name[NAME_MAXSIZE + 2] = "";
-	// ì´ë¦„ ì…ë ¥
+	// ÀÌ¸§ ÀÔ·Â
 	while (true) {
 		system("cls");
 		gotoxy(0, 1);
-		printf("ì´ë¦„ì€ í•œê¸€(ìµœì†Œ 2ì~ìµœëŒ€ 5ì) ë˜ëŠ” ì˜ì–´ ëŒ€ì†Œë¬¸ì(ìµœì†Œ 3ì~ìµœëŒ€ 20ì)ë¡œ êµ¬ì„±ë©ë‹ˆë‹¤.\n");
-		printf("í•œê¸€ì™€ ì˜ì–´ëŠ” í˜¼ìš©í•˜ì—¬ ì‚¬ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ì˜ì–´ì˜ ê²½ìš° ë„ì–´ì“°ê¸°ê°€ ê°€ëŠ¥í•©ë‹ˆë‹¤.\n");
+		printf("ÀÌ¸§Àº ÇÑ±Û(ÃÖ¼Ò 2ÀÚ~ÃÖ´ë 5ÀÚ) ¶Ç´Â ¿µ¾î ´ë¼Ò¹®ÀÚ(ÃÖ¼Ò 3ÀÚ~ÃÖ´ë 20ÀÚ)·Î ±¸¼ºµË´Ï´Ù.\n");
+		printf("ÇÑ±Û¿Í ¿µ¾î´Â È¥¿ëÇÏ¿© »ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù. ¿µ¾îÀÇ °æ¿ì ¶ç¾î¾²±â°¡ °¡´ÉÇÕ´Ï´Ù.\n");
 		gotoxy(0, 0);
-		printf("ìƒˆë¡œìš´ ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”: ");
+		printf("»õ·Î¿î ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä: ");
 		fgets(t_name, NAME_MAXSIZE + 2, stdin);
 		t_name[strcspn(t_name, "\n")] = 0;
 
 		gotoxy(0, 4);
-		// ë©”ë‰´ë¡œ ì´ë™
+		// ¸Ş´º·Î ÀÌµ¿
 		if (t_name[0] == '~' && strlen(t_name) == 1) {
 			return;
 		}
@@ -270,18 +272,18 @@ void editName(char* name) {
 			clearInputBuffer();
 		}
 		if (!strcmp(name, t_name)) {
-			printf("ê¸°ì¡´ ì •ë³´ì™€ ë™ì¼í•©ë‹ˆë‹¤.");
+			printf("±âÁ¸ Á¤º¸¿Í µ¿ÀÏÇÕ´Ï´Ù.");
 			system("pause");
 			continue;
 		}
 
 		if (kreng(t_name, strlen(t_name))) {
 			if (isContainEng(t_name)) {
-				printf("í•œê¸€ê³¼ ì˜ì–´ëŠ” í•¨ê»˜ ì‚¬ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.\n");
+				printf("ÇÑ±Û°ú ¿µ¾î´Â ÇÔ²² »ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.\n");
 			}
 			else {
 				gotoxy(0, 4);
-				printf("ì˜¬ë°”ë¥¸ ë¬¸ìë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.\n");
+				printf("¿Ã¹Ù¸¥ ¹®ÀÚ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.\n");
 			}
 			system("pause");
 			continue;
@@ -289,18 +291,18 @@ void editName(char* name) {
 		if (matchKorean(t_name, strlen(t_name))) {
 
 			if (!isCompleteKorean(t_name, strlen(t_name))) {
-				printf("ì˜¬ë°”ë¥¸ ë¬¸ìë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.\n");
+				printf("¿Ã¹Ù¸¥ ¹®ÀÚ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.\n");
 				system("pause");
 				continue;
 			}
 			if (getLength(t_name) >= 2 && getLength(t_name) <= 5) {
 				strcpy(name, t_name);
-				printf("ì´ë¦„ ìˆ˜ì •ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.\n");
+				printf("ÀÌ¸§ ¼öÁ¤ÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.\n");
 				system("pause");
 				break;
 			}
 			else {
-				printf("í•œê¸€ì€ ê³µë°±ì„ í¬í•¨í•˜ì§€ ì•Šê³  2~5ìë¥¼ ì…ë ¥í•´ì•¼ í•©ë‹ˆë‹¤.\n");
+				printf("ÇÑ±ÛÀº °ø¹éÀ» Æ÷ÇÔÇÏÁö ¾Ê°í 2~5ÀÚ¸¦ ÀÔ·ÂÇØ¾ß ÇÕ´Ï´Ù.\n");
 				system("pause");
 				continue;
 			}
@@ -309,18 +311,18 @@ void editName(char* name) {
 			if (matchEngName(t_name)) {
 				if (getLength(t_name) >= 3 && getLength(t_name) <= 20) {
 					strcpy(name, t_name);
-					printf("ì´ë¦„ ìˆ˜ì •ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.\n");
+					printf("ÀÌ¸§ ¼öÁ¤ÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.\n");
 					system("pause");
 					break;
 				}
 				else {
-					printf("ì˜ì–´ëŠ” ê³µë°±ì„ í¬í•¨í•˜ì—¬ 3~20ìë¥¼ ì…ë ¥í•´ì•¼ í•©ë‹ˆë‹¤.\n");
+					printf("¿µ¾î´Â °ø¹éÀ» Æ÷ÇÔÇÏ¿© 3~20ÀÚ¸¦ ÀÔ·ÂÇØ¾ß ÇÕ´Ï´Ù.\n");
 					system("pause");
 					continue;
 				}
 			}
 			else {
-				printf("ì˜¬ë°”ë¥¸ ë¬¸ìë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.\n");
+				printf("¿Ã¹Ù¸¥ ¹®ÀÚ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.\n");
 				system("pause");
 				continue;
 			}
@@ -333,50 +335,50 @@ void editNick(char* nick) {
 
 	char t_nick[NICKNAME_MAXSIZE + 2] = "";
 
-	// ë‹‰ë„¤ì„ ì…ë ¥
+	// ´Ğ³×ÀÓ ÀÔ·Â
 	while (true) {
 		system("cls");
 		gotoxy(0, 1);
-		printf("ë‹‰ë„¤ì„ì—ëŠ” í•œê¸€, ì˜ì–´, ìˆ«ì, ë„ì–´ì“°ê¸°ë¥¼ ì‚¬ìš©í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.(ìµœì†Œ2ì~ìµœëŒ€12ì)\n");
+		printf("´Ğ³×ÀÓ¿¡´Â ÇÑ±Û, ¿µ¾î, ¼ıÀÚ, ¶ç¾î¾²±â¸¦ »ç¿ëÇÒ ¼ö ÀÖ½À´Ï´Ù.(ÃÖ¼Ò2ÀÚ~ÃÖ´ë12ÀÚ)\n");
 		gotoxy(0, 0);
-		printf("ìƒˆë¡œìš´ ë‹‰ë„¤ì„ì„ ì…ë ¥í•˜ì„¸ìš”: ");
+		printf("»õ·Î¿î ´Ğ³×ÀÓÀ» ÀÔ·ÂÇÏ¼¼¿ä: ");
 
 		fgets(t_nick, NICKNAME_MAXSIZE + 2, stdin);
 		t_nick[strcspn(t_nick, "\n")] = 0;
 
 		gotoxy(0, 3);
 		if (t_nick[0] == '~' && strlen(t_nick) == 1) {
-			// ë©”ë‰´ë¡œ ì´ë™
+			// ¸Ş´º·Î ÀÌµ¿
 			return;
 		}
 		if (strlen(t_nick) > NICKNAME_MAXSIZE) {
 			clearInputBuffer();
 		}
 		if (!strcmp(nick, t_nick)) {
-			printf("ê¸°ì¡´ ì •ë³´ì™€ ë™ì¼í•©ë‹ˆë‹¤.");
+			printf("±âÁ¸ Á¤º¸¿Í µ¿ÀÏÇÕ´Ï´Ù.");
 			system("pause");
 			continue;
 		}
 
-		// fileCheck: ì¤‘ë³µëœ ì•„ì´ë””ê°€ ìˆëŠ”ì§€ ê²€ì‚¬í•˜ëŠ” í•¨ìˆ˜
+		// fileCheck: Áßº¹µÈ ¾ÆÀÌµğ°¡ ÀÖ´ÂÁö °Ë»çÇÏ´Â ÇÔ¼ö
 		if (duplicateCheck(t_nick, NICKNAMECHECK)) {
-			printf("ì´ë¯¸ ì¡´ì¬í•˜ëŠ” ë‹‰ë„¤ì„ì…ë‹ˆë‹¤.\n");
+			printf("ÀÌ¹Ì Á¸ÀçÇÏ´Â ´Ğ³×ÀÓÀÔ´Ï´Ù.\n");
 			system("pause");
 			continue;
 		}
 		if (getLength(t_nick) < 2 || getLength(t_nick) > 12) {
-			printf("ë‹‰ë„¤ì„ì€ í•œê¸€, ì˜ì–´, ìˆ«ìë¡œ ì´ë£¨ì–´ì§„ 2ì~12ìë¥¼ ì…ë ¥í•´ì•¼í•©ë‹ˆë‹¤.\n");
+			printf("´Ğ³×ÀÓÀº ÇÑ±Û, ¿µ¾î, ¼ıÀÚ·Î ÀÌ·ç¾îÁø 2ÀÚ~12ÀÚ¸¦ ÀÔ·ÂÇØ¾ßÇÕ´Ï´Ù.\n");
 			system("pause");
 			continue;
 		}
 		if (matchNickname(t_nick)) {
 			strcpy(nick, t_nick);
-			printf("ë‹‰ë„¤ì„ ìˆ˜ì •ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.\n");
+			printf("´Ğ³×ÀÓ ¼öÁ¤ÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.\n");
 			system("pause");
 			break;
 		}
 		else {
-			printf("ì˜¬ë°”ë¥¸ ë¬¸ìë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.\n");
+			printf("¿Ã¹Ù¸¥ ¹®ÀÚ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.\n");
 			system("pause");
 			continue;
 		}
@@ -388,15 +390,15 @@ void editNick(char* nick) {
 void editEmail(char* email) {
 
 	char t_email[EMAILADDRESS_MAXSIZE + 2] = "";
-	// ì´ë©”ì¼ ì£¼ì†Œ ì…ë ¥
+	// ÀÌ¸ŞÀÏ ÁÖ¼Ò ÀÔ·Â
 	while (true) {
 		system("cls");
-		printf("ìƒˆë¡œìš´ ì´ë©”ì¼ ì£¼ì†Œë¥¼ ì…ë ¥í•˜ì„¸ìš”: ");
+		printf("»õ·Î¿î ÀÌ¸ŞÀÏ ÁÖ¼Ò¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
 
 		fgets(t_email, EMAILADDRESS_MAXSIZE + 2, stdin);
 		t_email[strcspn(t_email, "\n")] = 0;
 
-		// ë©”ë‰´ë¡œ ì´ë™
+		// ¸Ş´º·Î ÀÌµ¿
 		if (t_email[0] == '~' && strlen(t_email) == 1) {
 			return;
 		}
@@ -404,32 +406,32 @@ void editEmail(char* email) {
 			clearInputBuffer();
 		}
 		if (!strcmp(email, t_email)) {
-			printf("ê¸°ì¡´ ì •ë³´ì™€ ë™ì¼í•©ë‹ˆë‹¤.");
+			printf("±âÁ¸ Á¤º¸¿Í µ¿ÀÏÇÕ´Ï´Ù.");
 			system("pause");
 			continue;
 		}
 
-		// fileCheck: ì¤‘ë³µëœ ì•„ì´ë””ê°€ ìˆëŠ”ì§€ ê²€ì‚¬í•˜ëŠ” í•¨ìˆ˜
+		// fileCheck: Áßº¹µÈ ¾ÆÀÌµğ°¡ ÀÖ´ÂÁö °Ë»çÇÏ´Â ÇÔ¼ö
 		if (duplicateCheck(t_email, EMAILCHECK)) {
-			printf("ì´ë¯¸ ì¡´ì¬í•˜ëŠ” ì´ë©”ì¼ì…ë‹ˆë‹¤.\n");
+			printf("ÀÌ¹Ì Á¸ÀçÇÏ´Â ÀÌ¸ŞÀÏÀÔ´Ï´Ù.\n");
 			system("pause");
 			continue;
 		}
 
 		if (getLength(t_email) > 30) {
-			printf("ì´ë©”ì¼ì€ 30ìë¥¼ ì´ˆê³¼í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.\n");
+			printf("ÀÌ¸ŞÀÏÀº 30ÀÚ¸¦ ÃÊ°úÇÒ ¼ö ¾ø½À´Ï´Ù.\n");
 			system("pause");
 			continue;
 		}
 
 		if (matchEmail(t_email)) {
 			strcpy(email, t_email);
-			printf("ì´ë©”ì¼ ì£¼ì†Œ ìˆ˜ì •ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.\n");
+			printf("ÀÌ¸ŞÀÏ ÁÖ¼Ò ¼öÁ¤ÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.\n");
 			system("pause");
 			break;
 		}
 		else {
-			printf("ì˜¬ë°”ë¥¸ í˜•ì‹ì˜ ì´ë©”ì¼ ì£¼ì†Œë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.\n");
+			printf("¿Ã¹Ù¸¥ Çü½ÄÀÇ ÀÌ¸ŞÀÏ ÁÖ¼Ò¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.\n");
 			system("pause");
 			continue;
 		}
@@ -440,15 +442,15 @@ void editEmail(char* email) {
 void editBirth(int* birth) {
 
 	char tempBirthNumber[BIRTHDAY_MAXSIZE + 2];
-	//ìƒë…„ì›”ì¼ ì…ë ¥
+	//»ı³â¿ùÀÏ ÀÔ·Â
 	while (true) {
 		system("cls");
-		printf("ìƒˆë¡œìš´ ìƒë…„ì›”ì¼ì„ ì…ë ¥í•˜ì„¸ìš”: ");
+		printf("»õ·Î¿î »ı³â¿ùÀÏÀ» ÀÔ·ÂÇÏ¼¼¿ä: ");
 
 		fgets(tempBirthNumber, BIRTHDAY_MAXSIZE + 2, stdin);
 		tempBirthNumber[strcspn(tempBirthNumber, "\n")] = 0;
 
-		// ë©”ë‰´ë¡œ ì´ë™
+		// ¸Ş´º·Î ÀÌµ¿
 		if (tempBirthNumber[0] == '~' && strlen(tempBirthNumber) == 1) {
 			return;
 		}
@@ -464,7 +466,7 @@ void editBirth(int* birth) {
 				}
 			}
 			if (flag) {
-				printf("ê¸°ì¡´ ì •ë³´ì™€ ë™ì¼í•©ë‹ˆë‹¤.");
+				printf("±âÁ¸ Á¤º¸¿Í µ¿ÀÏÇÕ´Ï´Ù.");
 				system("pause");
 				continue;
 			}
@@ -472,28 +474,28 @@ void editBirth(int* birth) {
 
 		if (isOnlyNumber(tempBirthNumber)) {
 			if (strlen(tempBirthNumber) > 8) {
-				printf("ê¸€ììˆ˜ ë²”ìœ„(ìˆ«ì 8ì) ì´ˆê³¼ì…ë‹ˆë‹¤.\n");
+				printf("±ÛÀÚ¼ö ¹üÀ§(¼ıÀÚ 8ÀÚ) ÃÊ°úÀÔ´Ï´Ù.\n");
 				system("pause");
 				continue;
 			}
 			else if (strlen(tempBirthNumber) == 8) {
 				if (!isRightDate(tempBirthNumber)) {
-					printf("ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ë‚ ì§œì…ë‹ˆë‹¤.\n");
+					printf("Á¸ÀçÇÏÁö ¾Ê´Â ³¯Â¥ÀÔ´Ï´Ù.\n");
 					system("pause");
 					continue;
 				}
 			}
 		}
 		if (matchBirthday(tempBirthNumber)) {
-			// ìœ¤ë…„ ê³ ë ¤í•´ì„œ ì—†ëŠ” ë‚ ì§œ íŒë‹¨
+			// À±³â °í·ÁÇØ¼­ ¾ø´Â ³¯Â¥ ÆÇ´Ü
 			if (isInTheFuture(tempBirthNumber)) {
-				printf("ì˜ëª»ëœ ìƒë…„ì›”ì¼ì…ë‹ˆë‹¤.\n");
+				printf("Àß¸øµÈ »ı³â¿ùÀÏÀÔ´Ï´Ù.\n");
 				system("pause");
 				continue;
 			}
-			// í”„ë¡œê·¸ë¨ ì‹¤í–‰ ì´í›„ ë‚ ì§œ íŒë‹¨
+			// ÇÁ·Î±×·¥ ½ÇÇà ÀÌÈÄ ³¯Â¥ ÆÇ´Ü
 			if (!isRightDate(tempBirthNumber)) {
-				printf("ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ë‚ ì§œì…ë‹ˆë‹¤.\n");
+				printf("Á¸ÀçÇÏÁö ¾Ê´Â ³¯Â¥ÀÔ´Ï´Ù.\n");
 				system("pause");
 				continue;
 			}
@@ -501,12 +503,12 @@ void editBirth(int* birth) {
 			for (int i = 0; i < BIRTHDAY_MAXSIZE; i++) {
 				birth[i] = tempBirthNumber[i] - 48;
 			}
-			printf("ìƒë…„ì›”ì¼ ìˆ˜ì •ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.\n");
+			printf("»ı³â¿ùÀÏ ¼öÁ¤ÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.\n");
 			system("pause");
 			break;
 		}
 		else {
-			printf("ìˆ«ìë¡œë§Œ ì´ë£¨ì–´ì§„ 8ìë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.\n");
+			printf("¼ıÀÚ·Î¸¸ ÀÌ·ç¾îÁø 8ÀÚ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.\n");
 			system("pause");
 			continue;
 		}
@@ -519,15 +521,15 @@ void editPhone(int* phone) {
 
 	char tempPhoneNumber[PHONENUMBER_MAXSIZE + 4] = "";
 
-	// íœ´ëŒ€í° ë²ˆí˜¸ ì…ë ¥
+	// ÈŞ´ëÆù ¹øÈ£ ÀÔ·Â
 	while (true) {
 		system("cls");
-		printf("ìƒˆë¡œìš´ íœ´ëŒ€í° ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ");
-
+		printf("»õ·Î¿î ÈŞ´ëÆù ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+		tempPhoneNumber[10] = '\0';
 		fgets(tempPhoneNumber, PHONENUMBER_MAXSIZE + 4, stdin);
 		tempPhoneNumber[strcspn(tempPhoneNumber, "\n")] = 0;
 
-		// ë©”ë‰´ë¡œ ì´ë™
+		// ¸Ş´º·Î ÀÌµ¿
 		if (tempPhoneNumber[0] == '~' && strlen(tempPhoneNumber) == 1) {
 			return;
 		}
@@ -545,7 +547,7 @@ void editPhone(int* phone) {
 				}
 			}
 			if (flag) {
-				printf("ê¸°ì¡´ ì •ë³´ì™€ ë™ì¼í•©ë‹ˆë‹¤.");
+				printf("±âÁ¸ Á¤º¸¿Í µ¿ÀÏÇÕ´Ï´Ù.");
 				system("pause");
 				continue;
 			}
@@ -559,15 +561,15 @@ void editPhone(int* phone) {
 				}
 			}
 			if (flag) {
-				printf("ê¸°ì¡´ ì •ë³´ì™€ ë™ì¼í•©ë‹ˆë‹¤.");
+				printf("±âÁ¸ Á¤º¸¿Í µ¿ÀÏÇÕ´Ï´Ù.");
 				system("pause");
 				continue;
 			}
 		}
 
-		// fileCheck: ì¤‘ë³µëœ ë²ˆí˜¸ê°€ ìˆëŠ”ì§€ ê²€ì‚¬í•˜ëŠ” í•¨ìˆ˜
+		// fileCheck: Áßº¹µÈ ¹øÈ£°¡ ÀÖ´ÂÁö °Ë»çÇÏ´Â ÇÔ¼ö
 		if (duplicateCheck(tempPhoneNumber, PHONENUMBERCHECK)) {
-			printf("ì´ë¯¸ ì¡´ì¬í•˜ëŠ” íœ´ëŒ€í° ë²ˆí˜¸ì…ë‹ˆë‹¤.\n");
+			printf("ÀÌ¹Ì Á¸ÀçÇÏ´Â ÈŞ´ëÆù ¹øÈ£ÀÔ´Ï´Ù.\n");
 			system("pause");
 			continue;
 		}
@@ -586,16 +588,16 @@ void editPhone(int* phone) {
 				}
 			}
 			
-			printf("ì „í™”ë²ˆí˜¸ ìˆ˜ì •ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.\n");
+			printf("ÀüÈ­¹øÈ£ ¼öÁ¤ÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.\n");
 			system("pause");
 			break;
 		}
 		else {
 			if (isOnlyNumber(tempPhoneNumber) && strchr(tempPhoneNumber, '-') || isOnlyNumber(tempPhoneNumber)) {
-				printf("ì „í™”ë²ˆí˜¸ëŠ” 10ìë¦¬ ë˜ëŠ” 11ìë¦¬ë¡œ ì…ë ¥í•´ì£¼ì„¸ìš”.\n");
+				printf("ÀüÈ­¹øÈ£´Â 10ÀÚ¸® ¶Ç´Â 11ÀÚ¸®·Î ÀÔ·ÂÇØÁÖ¼¼¿ä.\n");
 			}
 			else {
-				printf("ì˜¬ë°”ë¥´ì§€ ì•Šì€ ë¬¸ìê°€ í¬í•¨ë˜ì–´ ìˆìŠµë‹ˆë‹¤.\n");
+				printf("¿Ã¹Ù¸£Áö ¾ÊÀº ¹®ÀÚ°¡ Æ÷ÇÔµÇ¾î ÀÖ½À´Ï´Ù.\n");
 			}
 			system("pause");
 			continue;
