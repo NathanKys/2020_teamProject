@@ -7,31 +7,39 @@ int uiShowMyInfo(Account* login) {
 	char ch;
 	system("cls");
 
-	gotoxy(20, 3);
+	gotoxy(5, 3);
+	printf("=====================================================================================\n");
+	gotoxy(5, 4);
+	printf("\t\t\t\t\t  내 정보"); // 텝 5개 스페이스바 2개
+	gotoxy(5, 5);
+	printf("=====================================================================================\n");
+	
+	
+	gotoxy(20, 7);
 	printf("아이디");
-	gotoxy(20, 4);
+	gotoxy(20, 8);
 	printf("%s\t", (*login).id);
 
-	gotoxy(40, 3);
+	gotoxy(40, 7);
 	printf("이름");
-	gotoxy(40, 4);
+	gotoxy(40, 8);
 	printf("%s\t", (*login).name);
 
-	gotoxy(60, 3);
+	gotoxy(60, 7);
 	printf("닉네임");
-	gotoxy(60, 4);
+	gotoxy(60, 8);
 	printf("%s\t", (*login).nick);
 
-	gotoxy(20, 6);
+	gotoxy(20, 10);
 	printf("생년월일");
-	gotoxy(20, 7);
+	gotoxy(20, 11);
 	for (int i = 0; i < 8; i++) {
 		printf("%d", (*login).birth[i]);
 	}
 
-	gotoxy(40, 6);
+	gotoxy(40, 10);
 	printf("휴대폰 번호");
-	gotoxy(40, 7);
+	gotoxy(40, 11);
 	if ((*login).phone[10] == -1) {
 		for (int i = 0; i < 10; i++) {
 			printf("%d", (*login).phone[i]);
@@ -44,9 +52,9 @@ int uiShowMyInfo(Account* login) {
 	}
 	
 
-	gotoxy(60, 6);
+	gotoxy(60, 10);
 	printf("이메일 주소");
-	gotoxy(60, 7);
+	gotoxy(60, 11);
 	printf("%s\t", (*login).email);
 
 	gotoxy(10, 16);
