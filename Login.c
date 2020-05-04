@@ -68,7 +68,7 @@ int login(int* num_account) {
 	stdid[strcspn(stdid, "\n")] = 0;
 	for (int i = 0; i < *num_account; i++) {       //i<num_account 로 수정
 		if (strcmp(account_id[i], stdid) == 0) {
-			printf("\n아이디 일치\n");
+			
 
 			printf("\n비밀번호를 입력하세요:");
 			fgets(stdpassword, 18, stdin);
@@ -77,7 +77,7 @@ int login(int* num_account) {
 			}
 			stdpassword[strcspn(stdpassword, "\n")] = 0;
 			if (strcmp(account_password[i], stdpassword) == 0) {
-				printf("\n비밀번호 일치\n");
+				printf("\로그인 성공\n");
 				row = i + 1;
 				break;
 			}
@@ -94,7 +94,7 @@ int login(int* num_account) {
 			}
 			stdpassword[strcspn(stdpassword, "\n")] = 0;
 			if (strcmp(admin_password, stdpassword) == 0) {
-				printf("\n비밀번호 일치\n");
+				printf("\n로그인 성공\n");
 				row = -1;
 				break;
 			}
