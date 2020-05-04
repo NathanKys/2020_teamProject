@@ -389,7 +389,7 @@ void deleteMessage(char* id, int count, int flag) {
 	int line = 1;
 	int i = 0;
 	int fline = findLine(id, count, flag);
-	char temp[1000] = "";
+	char temp[10000] = "";
 	fp = fopen("./message.txt", "r+");
 	if (fp == NULL)
 	{
