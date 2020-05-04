@@ -261,6 +261,29 @@ void userSearch(Account* login, int num_account) {
 			int showAccount = 0;
 			int accountToManage = 0;
 			Account a;
+			int temp = 0;
+			do {  // ############################################################## 수정
+				system("cls");
+				showAllAccountInfo2(pageNum, num_account);
+				accountToManage = selectAccountToShow(num_account, pageNum, endPage);
+				if (accountToManage != -1) {
+					showAccount = ((pageNum - 1) * 10) + (accountToManage + 1);
+					a = readAccountInfo(showAccount);
+					system("cls");
+					int menu = 0;
+					menu = accountInfo_Menu(&a);
+					switch (menu) {
+					case 1:
+						temp = sendMessage(login->id, a.id);
+						break; 
+					case 2:
+						temp = 0;
+						break;
+					}
+				}
+			} while (temp == 1); // ############################################################## 수정
+
+			/*
 			accountToManage = selectAccountToShow(num_account, pageNum, endPage);
 			if (accountToManage != -1) {
 				showAccount = ((pageNum - 1) * 10) + (accountToManage + 1);
@@ -274,7 +297,7 @@ void userSearch(Account* login, int num_account) {
 				case 2:
 					continue;
 				}
-			}
+			}*/
 		}
 	}
 }
