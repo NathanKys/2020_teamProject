@@ -229,6 +229,7 @@ void findaccount(int num_account) {
                         gets(stddate);
 
                         if (strcmp(account_date[i], stddate) == 0) {
+                            system("cls");
                             printf("비밀번호는 %s 입니다\n", account_password[i]);
                             count++;
                             system("pause");
