@@ -15,7 +15,7 @@
 #define RIGHT 77
 #define UP 72 // 방향키 위 아스키코드
 #define DOWN 80 // 방향키 아래 아스키코드
-#define MAX_LINE_LENGTH 150
+#define MAX_LINE_LENGTH 220
 // 한 계정당 가능한 최소 데이터 길이(51byte)
 // 한 계정당 가능한 최대 데이터 길이(120byte)
 // 최소 길이로 회원가입하고, 그 계정의 닉네임이 관리자에 의해 최대 길이로 수정될 경우

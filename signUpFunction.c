@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+﻿#define _CRT_SECURE_NO_WARNINGS
 #include "header.h"
 
 // 메뉴로 돌아가는 기능 추가
@@ -532,7 +532,7 @@ void writeAccount(Account user) {
 	else {
 		fprintf(fp, "%s,%s,%s,%s,%s,%s,%s,%d,%d,%d",
 			user.id, user.pw, user.name, user.nick, user.email, user.birth, user.phone, user.rec, user.lock, user.changed);
-		fprintf(fp, "                         \n");
+		fprintf(fp, "                                                                                \n");
 		//최소 길이의 닉네임(2byte)으로 회원가입 하고, 관리자에 의해 최대 길이의 닉네임(24byte)으로 수정될 경우를 대비하여
 		//이에 필요한 여유 공간을 미리 확보해둬야 함.
 		//그렇지 않으면 다음 줄의 데이터를 덮어쓰게 됨.
@@ -550,20 +550,10 @@ void signUp() {
 	// 아이디 입력
 	while (true) {
 		system("cls");
-		gotoxy(5, 5);
 		printf("생성할 계정의 아이디를 입력합니다.");
-		gotoxy(7, 8);
-		printf("-----------------------------------------------");
-		gotoxy(6, 9);
-		printf("-> ");
-		gotoxy(7, 10);
-		printf("-----------------------------------------------");
-		gotoxy(9, 9);
-
 		fgets(u1.id, ID_MAXSIZE + 2, stdin);
-		u1.id[strcspn(u1.id, "\n")] = 0;
 
-		gotoxy(0, 12);
+		u1.id[strcspn(u1.id, "\n")] = 0;
 
 		// 메뉴로 이동
 		if (u1.id[0] == '~' && strlen(u1.id) == 1) {
@@ -606,22 +596,11 @@ void signUp() {
 	// 비밀번호 입력
 	while (true) {
 		system("cls");
-		
-		gotoxy(5, 5);
 		printf("생성할 계정의 비밀번호를 입력합니다.");
-		gotoxy(7, 8);
-		printf("-----------------------------------------------");
-		gotoxy(6, 9);
-		printf("-> ");
-		gotoxy(7, 10);
-		printf("-----------------------------------------------");
-		gotoxy(9, 9);
-		
 		fgets(u1.pw, PASSWORD_MAXSIZE + 2, stdin);
 
 		u1.pw[strcspn(u1.pw, "\n")] = 0;
-		gotoxy(0, 12);
-		
+
 		// 메뉴로 이동
 		if (u1.pw[0] == '~' && strlen(u1.pw) == 1) {
 			printf("메뉴로 돌아갑니다.\n");
@@ -683,22 +662,9 @@ void signUp() {
 	while (true) {
 		system("cls");
 		char checkPassword[PASSWORD_MAXSIZE + 2] = { 0, };
-		
-		
-		gotoxy(5, 5);
 		printf("비밀번호 확인을 위해 다시 입력해주세요.");
-		gotoxy(7, 8);
-		printf("-----------------------------------------------");
-		gotoxy(6, 9);
-		printf("-> ");
-		gotoxy(7, 10);
-		printf("-----------------------------------------------");
-		gotoxy(9, 9);
-				
 		fgets(checkPassword, PASSWORD_MAXSIZE + 2, stdin);
 		checkPassword[strcspn(checkPassword, "\n")] = 0;
-		gotoxy(0, 12);
-		
 		if (strlen(checkPassword) > PASSWORD_MAXSIZE) {
 			clearInputBuffer();
 		}
@@ -734,24 +700,12 @@ void signUp() {
 	// 이름 입력
 	while (true) {
 		system("cls");
-		gotoxy(5, 3);
 		printf("이름을 입력합니다.\n");
-		gotoxy(5, 4);
 		printf("이름은 한글(최소 2자~최대 5자) 또는 영어 대소문자(최소 3자~최대 20자)로 구성됩니다.\n");
-		gotoxy(5, 5);
 		printf("한글와 영어는 혼용하여 사용할 수 없습니다. 영어의 경우 띄어쓰기가 가능합니다.\n");
-
-		gotoxy(7, 8);
-		printf("-----------------------------------------------");
-		gotoxy(6, 9);
-		printf("-> ");
-		gotoxy(7, 10);
-		printf("-----------------------------------------------");
-		gotoxy(9, 9);
 		fgets(u1.name, NAME_MAXSIZE + 2, stdin);
 		u1.name[strcspn(u1.name, "\n")] = 0;
-		gotoxy(0, 12);
-		
+
 		// 메뉴로 이동
 		if (u1.name[0] == '~' && strlen(u1.name) == 1) {
 			printf("메뉴로 돌아갑니다.\n");
@@ -813,22 +767,11 @@ void signUp() {
 	// 닉네임 입력
 	while (true) {
 		system("cls");
-		gotoxy(5, 4);
 		printf("생성할 계정의 닉네임을 입력합니다.\n");
-		gotoxy(5, 5);
 		printf("닉네임에는 한글, 영어, 숫자, 띄어쓰기를 사용할 수 있습니다.(최소2자~최대12자)\n");
-		gotoxy(7, 8);
-		printf("-----------------------------------------------");
-		gotoxy(6, 9);
-		printf("-> ");
-		gotoxy(7, 10);
-		printf("-----------------------------------------------");
-		gotoxy(9, 9);
 
 		fgets(u1.nick, NICKNAME_MAXSIZE + 2, stdin);
 		u1.nick[strcspn(u1.nick, "\n")] = 0;
-		
-		gotoxy(0, 12);
 
 		if (u1.nick[0] == '~' && strlen(u1.nick) == 1) {
 			// 메뉴로 이동
@@ -867,20 +810,11 @@ void signUp() {
 	// 이메일 주소 입력
 	while (true) {
 		system("cls");
-		gotoxy(5, 5);
 		printf("생성할 계정의 이메일 주소를 입력합니다.");
-		gotoxy(7, 8);
-		printf("-----------------------------------------------");
-		gotoxy(6, 9);
-		printf("-> ");
-		gotoxy(7, 10);
-		printf("-----------------------------------------------");
-		gotoxy(9, 9);
 
 		fgets(u1.email, EMAILADDRESS_MAXSIZE + 2, stdin);
 		u1.email[strcspn(u1.email, "\n")] = 0;
-		gotoxy(0, 12);
-		
+
 		// 메뉴로 이동
 		if (u1.email[0] == '~' && strlen(u1.email) == 1) {
 			printf("메뉴로 돌아갑니다.\n");
@@ -919,19 +853,10 @@ void signUp() {
 	//생년월일 입력
 	while (true) {
 		system("cls");
-		gotoxy(5, 5);
 		printf("생성할 계정의 생년월일을 입력합니다.");
-		gotoxy(7, 8);
-		printf("-----------------------------------------------");
-		gotoxy(6, 9);
-		printf("-> ");
-		gotoxy(7, 10);
-		printf("-----------------------------------------------");
-		gotoxy(9, 9);
 
 		fgets(tempBirthNumber, BIRTHDAY_MAXSIZE + 2, stdin);
 		tempBirthNumber[strcspn(tempBirthNumber, "\n")] = 0;
-		gotoxy(0, 12);
 
 		// 메뉴로 이동
 		if (tempBirthNumber[0] == '~' && strlen(tempBirthNumber) == 1) {
@@ -987,20 +912,11 @@ void signUp() {
 	// 휴대폰 번호 입력
 	while (true) {
 		system("cls");
-		gotoxy(5, 5);
 		printf("생성할 계정의 휴대폰 번호를 입력합니다.");
-		gotoxy(7, 8);
-		printf("-----------------------------------------------");
-		gotoxy(6, 9);
-		printf("-> ");
-		gotoxy(7, 10);
-		printf("-----------------------------------------------");
-		gotoxy(9, 9);
 
 		fgets(tempPhoneNumber, PHONENUMBER_MAXSIZE + 4, stdin);
 		tempPhoneNumber[strcspn(tempPhoneNumber, "\n")] = 0;
-		gotoxy(0, 12);
-		
+
 		// 메뉴로 이동
 		if (tempPhoneNumber[0] == '~' && strlen(tempPhoneNumber) == 1) {
 			printf("메뉴로 돌아갑니다.\n");
@@ -1042,19 +958,10 @@ void signUp() {
 		system("cls");
 		// 파일에 
 		char* retId = malloc(sizeof(char) * ID_MAXSIZE + 2);
-		gotoxy(5, 5);
 		printf("추천인 아이디를 입력합니다.");
-		gotoxy(7, 8);
-		printf("-----------------------------------------------");
-		gotoxy(6, 9);
-		printf("-> ");
-		gotoxy(7, 10);
-		printf("-----------------------------------------------");
-		gotoxy(9, 9);
 		fgets(retId, ID_MAXSIZE + 2, stdin);
 
 		retId[strcspn(retId, "\n")] = 0;
-		gotoxy(0, 12);
 
 		// 메뉴로 이동
 		if (retId[0] == '~' && strlen(retId) == 1) {
