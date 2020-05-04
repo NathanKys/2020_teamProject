@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define admin_id 1234
-#
+#define admin_password 1234
 
 void login() {
 
