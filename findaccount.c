@@ -100,7 +100,7 @@ void findaccount() {
                     break;
                 }
             }
-            else if (i == num_account-1) {
+            else if (i == (num_account-1)) {
                 printf("\n존재하지 않는 닉네임입니다.");
                 break;
             }
@@ -137,7 +137,7 @@ void findaccount() {
                     break;
                 }
             }
-            else if (i == num_account-1) {
+            else if (i == (num_account-1)) {
                 printf("\n존재하지 않는 아이디입니다.");
                 break;
             }
