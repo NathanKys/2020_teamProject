@@ -87,6 +87,8 @@ void writeAccountInfo(int line, Account* login) {
 	j = 0;
 
 	for (int j = 0; j < 11; j++) {
+		if ((*login).phone[j] == -1)
+			break;
 		infoString[i++] = (*login).phone[j] + 48;
 	}
 	infoString[i++] = ',';

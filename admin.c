@@ -330,7 +330,7 @@ void changeNick(char* nick, bool* changed) {
 		fgets(input, NICKNAME_MAXSIZE + 2, stdin);
 		input[strcspn(input, "\n")] = 0;
 
-		gotoxy(10, 9);
+		gotoxy(10, 10);
 
 		if (strlen(input) > NICKNAME_MAXSIZE) {
 			clearInputBuffer();
@@ -352,9 +352,10 @@ void changeNick(char* nick, bool* changed) {
 			continue;
 		}
 		if (matchNickname(input)) {
-			printf("닉네임 입력이 완료되었습니다.\n");
-			gotoxy(10, 10);
+			printf("닉네임 변경이 완료되었습니다.\n");
+			gotoxy(10, 11);
 			printf("변경 이후 닉네임: %s\n", input);
+			gotoxy(10, 13);
 			system("pause");
 			break;
 		}
@@ -403,6 +404,8 @@ void changeLock(char* id, bool* lock) {
 					break;
 			}
 		}
+		gotoxy(0, 1);
+		printf("계정 잠금 여부: O -> X");
 		gotoxy(3, 9);
 		printf("잠금 해제 처리되었습니다.");
 	}
@@ -426,6 +429,8 @@ void changeLock(char* id, bool* lock) {
 					break;
 			}
 		}
+		gotoxy(0, 1);
+		printf("계정 잠금 여부: X -> O");
 		gotoxy(3, 9);
 		printf("계정 잠금 처리되었습니다.");
 	}
