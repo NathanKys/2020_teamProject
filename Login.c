@@ -5,6 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define admin_id 1234
+#
+
 void login() {
 
 	FILE* memlist;
@@ -73,9 +76,21 @@ void login() {
 				row=i;
 				break;
 			}
-			else
+			else{
 				printf("비밀번호가 틀립니다.");
-			break;
+			break;}
+		}
+		else if(strcmp(admin_id,stdid)==0){
+			printf("관리자 비밀번호를 입력해주세요:");
+			fgets(stdpassword, 18, stdin);
+			if (strcmp(admin_password, stdpassword) == 0) {
+				printf("\n비밀번호 일치\n");
+				row=-1;
+				break;
+			}
+			else{
+				printf("비밀번호가 틀립니다.");
+			break;}
 		}
 
 		if (i == (num_account-1))
