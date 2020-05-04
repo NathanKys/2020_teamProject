@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-char admin_id[4] ="1234";
-char admin_password[4] ="1234";
+char admin_id[] ="1234";
+char admin_password[] ="1234";
 
 void login(num_account) {
 
@@ -73,27 +73,33 @@ void login(num_account) {
 			stdpassword[strcspn(stdpassword, "\n")] = 0;
 			if (strcmp(account_password[i], stdpassword) == 0) {
 				printf("\n비밀번호 일치\n");
-				row=i+1;
+				row = i + 1;
 				break;
 			}
-			else{
+			else {
 				printf("비밀번호가 틀립니다.");
-			break;}
+				break;
+			}
 		}
-		else if(strcmp(admin_id,stdid)==0){
+		else if (strcmp(admin_id, stdid) == 0) {
 			printf("관리자 비밀번호를 입력해주세요:");
 			fgets(stdpassword, 18, stdin);
+			if (strlen(stdid) > 12) {
+				while (getchar() != '\n');
+			}
+			stdpassword[strcspn(stdpassword, "\n")] = 0;
 			if (strcmp(admin_password, stdpassword) == 0) {
 				printf("\n비밀번호 일치\n");
-				row=-1;
+				row = -1;
 				break;
 			}
-			else{
+			else {
 				printf("비밀번호가 틀립니다.");
-			break;}
+				break;
+			}
 		}
 
-		if (i == (num_account-1))
+		if (i == (num_account - 1))
 			printf("존재하지 않는 아이디 입니다");
 	}
 
