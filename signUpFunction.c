@@ -3,7 +3,7 @@
 
 // 메뉴로 돌아가는 기능 추가
 
-int pow(int a, int b) {
+int pow1(int a, int b) {
 	if (b == 0) return 1;
 	int c;
 	int d;
@@ -237,14 +237,14 @@ bool isRightDate(const char* string) {
 
 
 	for (index;index < 4;index++) {
-		year += ((string[index] - '0') * pow(10, 3 - index));
+		year += ((string[index] - '0') * pow1(10, 3 - index));
 	}
 	for (index;index < 6;index++) {
-		month += ((string[index] - '0') * pow(10, 5 - index));
+		month += ((string[index] - '0') * pow1(10, 5 - index));
 	}
 
 	for (index;index < 8;index++) {
-		day += ((string[index] - '0') * pow(10, 7 - index));
+		day += ((string[index] - '0') * pow1(10, 7 - index));
 	}
 
 	if (month < 1 || month>12) {
