@@ -20,12 +20,12 @@ int loginFunction(int* num_account) {
 	}
 
 	char c = ' ';
-	char** account_id = (char**)malloc(*num_account);
-	char** account_password = (char**)malloc(*num_account);
+	char** account_id = (char**)malloc(sizeof(char*) * (*num_account));
+	char** account_password = (char**)malloc(sizeof(char*) * (*num_account));
 
 	for (int i = 0; i < *num_account; i++) {
-		account_id[i] = (char*)malloc(13);
-		account_password[i] = (char*)malloc(13);
+		account_id[i] = (char*)malloc(sizeof(char) * 13);
+		account_password[i] = (char*)malloc(sizeof(char) * 13);
 	}
 
 	int j;
@@ -111,6 +111,8 @@ int loginFunction(int* num_account) {
 
 	for (int i = 0; i < *num_account; i++) {
 		free(account_id[i]);
+	}
+	for (int i = 0; i < *num_account; i++) {
 		free(account_password[i]);
 	}
 
