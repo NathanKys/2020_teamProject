@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void findaccount() {
+void findaccount(num_account) {
 
     FILE* memlist;
     memlist = fopen("./accountlist.txt", "r");
