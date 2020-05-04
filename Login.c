@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+﻿#define _CRT_SECURE_NO_WARNINGS
 
 #include "header.h"
 #include <windows.h>
@@ -8,7 +8,7 @@
 char admin_id[] ="1234";
 char admin_password[] ="1234";
 
-int login(int* num_account) {
+int loginFunction(int* num_account) {
 
 	FILE* memlist;
 	

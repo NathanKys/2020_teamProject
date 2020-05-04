@@ -24,13 +24,13 @@ int main() {
 	do {
 		switch (uiMainMenu()) {
 			case 1:
-				//signUp();
+				signUp();
 
 				num_account++;	//회원가입 완료 시 계정 개수 증가
 				break;
 
 			case 2:
-				login_id_num = login(num_account); // return 값을 login_id_num에 복사
+				login_id_num = loginFunction(&num_account); // return 값을 login_id_num에 복사
 				// 관리자 로그인의 경우 -1을 리턴
 				flag = 1;
 
