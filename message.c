@@ -112,7 +112,7 @@ bool matchMessage(const char* string) {
 	regcomp(&state, pattern, REG_EXTENDED);
 	return regexec(&state, string, 0, NULL, 0) ? false : true;
 }
-void sendMessage(char* sender, char* receiver) {
+int sendMessage(char* sender, char* receiver) {
 	
 	FILE* fp;
 	fp = fopen("./message.txt", "at"); // 같은 프로젝트 파일 내에 존재하면 쓸 필요X
