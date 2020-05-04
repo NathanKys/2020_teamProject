@@ -2,8 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "header.h"
 
-void findaccount(num_account) {
+void findaccount(int num_account) {
 
     FILE* memlist;
     memlist = fopen("./accountlist.txt", "r");
@@ -14,10 +15,28 @@ void findaccount(num_account) {
     }
 
     char c = ' ';
-    char account_id[num_account][13] = { 0, }; // 배열 세로는 char account_info[num_account][12];
-    char account_password[num_account][17] = { 0, };
-    char account_nickname[num_account][13] = { 0, };
-    char account_date[num_account][13] = { 0, };
+    char** account_id = malloc(sizeof(char*) * num_account);
+    char** account_password = malloc(sizeof(char*) * num_account);
+    char** account_nickname = malloc(sizeof(char*) * num_account);
+    char** account_date = malloc(sizeof(char*) * num_account);
+
+    for (int i = 0; i < num_account; i++) {
+        account_id[i] = (char*)malloc(sizeof(int) * 13);
+    }
+    for (int i = 0; i < num_account; i++) {
+        account_password[i] = (char*)malloc(sizeof(int) * 17);
+    }
+    for (int i = 0; i < num_account; i++) {
+        account_nickname[i] = (char*)malloc(sizeof(int) * 13);
+    }
+    for (int i = 0; i < num_account; i++) {
+        account_date[i] = (char*)malloc(sizeof(int) * 13);
+    }
+
+    //char account_id[num_account][13] = { 0, }; // 배열 세로는 char account_info[num_account][12];
+    //char account_password[num_account][17] = { 0, };
+    //char account_nickname[num_account][13] = { 0, };
+    //char account_date[num_account][13] = { 0, };
 
     int j;
     for (j = 0; j < num_account; j++) {   //j<??? 로 수정
@@ -51,7 +70,7 @@ void findaccount(num_account) {
                 break;
             }
             account_nickname[j][i++] = c;
-           
+
         }
         while (fgetc(memlist) != ',') {
 
@@ -65,19 +84,19 @@ void findaccount(num_account) {
             }
             account_date[j][i++] = c;
         }
-           
-        
+
+
         while (fgetc(memlist) != '\n') {
             c = fgetc(memlist);
         }
     }
 
 
-        char stdid[13];
-        char stdnickname[13];
-        char stddate[9];
+    char stdid[13];
+    char stdnickname[13];
+    char stddate[9];
 
-        int n = interface();
+    int n = interface();
 
     switch (n) {
     case 1:
@@ -100,7 +119,7 @@ void findaccount(num_account) {
                     break;
                 }
             }
-            else if (i == (num_account-1)) {
+            else if (i == (num_account - 1)) {
                 printf("\n존재하지 않는 닉네임입니다.");
                 break;
             }
@@ -137,7 +156,7 @@ void findaccount(num_account) {
                     break;
                 }
             }
-            else if (i == (num_account-1)) {
+            else if (i == (num_account - 1)) {
                 printf("\n존재하지 않는 아이디입니다.");
                 break;
             }
@@ -147,6 +166,6 @@ void findaccount(num_account) {
     }
 
 
-        fclose(memlist);
-    
+    fclose(memlist);
+
 }
