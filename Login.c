@@ -67,7 +67,7 @@ int loginFunction(int* num_account) {
 			while (getchar() != '\n');
 		}
 		stdid[strcspn(stdid, "\n")] = 0;
-		for (int i = 0; i < num_account; i++) {       //i<num_account 로 수정
+		for (int i = 0; i < *num_account; i++) {       //i<num_account 로 수정
 			if (strcmp(account_id[i], stdid) == 0) {
 
 				
@@ -109,7 +109,7 @@ int loginFunction(int* num_account) {
 				}
 			}
 
-			if (i == (num_account - 1))
+			if (i == (*num_account - 1))
 			{
 				printf("존재하지 않는 아이디 입니다\n");
 				system("pause");
