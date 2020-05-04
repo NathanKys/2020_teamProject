@@ -1,4 +1,4 @@
-#include "header.h"
+﻿#include "header.h"
 
 
 
@@ -13,8 +13,7 @@ int uiShowMyInfo(Account* login) {
 	printf("\t\t\t\t\t  내 정보"); // 텝 5개 스페이스바 2개
 	gotoxy(5, 5);
 	printf("=====================================================================================\n");
-	
-	
+
 	gotoxy(20, 7);
 	printf("아이디");
 	gotoxy(20, 8);
@@ -25,9 +24,9 @@ int uiShowMyInfo(Account* login) {
 	gotoxy(40, 8);
 	printf("%s\t", (*login).name);
 
-	gotoxy(60, 7);
+	gotoxy(61, 7);
 	printf("닉네임");
-	gotoxy(60, 8);
+	gotoxy(61, 8);
 	printf("%s\t", (*login).nick);
 
 	gotoxy(20, 10);
@@ -52,9 +51,9 @@ int uiShowMyInfo(Account* login) {
 	}
 	
 
-	gotoxy(60, 10);
+	gotoxy(61, 10);
 	printf("이메일 주소");
-	gotoxy(60, 11);
+	gotoxy(61, 11);
 	printf("%s\t", (*login).email);
 
 	gotoxy(10, 16);
