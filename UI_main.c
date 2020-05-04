@@ -12,35 +12,35 @@ int uiMainMenu() {
 	gotoxy(32, 11);
 	printf("|\t\t\t\t\t\t|\n");
 	gotoxy(32, 12);
-	printf("|\t¶£------------------------------¶§  \t|\n");
+	printf("|\t‚îå------------------------------‚îê  \t|\n");
 	gotoxy(32, 13);
-	printf("|\t¶¢           »∏ø¯∞°¿‘           ¶¢ \t|\n");
+	printf("|\t‚îÇ           ÌöåÏõêÍ∞ÄÏûÖ           ‚îÇ \t|\n");
 	gotoxy(32, 14);
-	printf("|\t¶¶------------------------------¶•  \t|\n");
+	printf("|\t‚îî------------------------------‚îò  \t|\n");
 	gotoxy(32, 15);
 	printf("|\t\t\t\t\t\t|\n");
 	gotoxy(32, 16);
-	printf("|\t¶£------------------------------¶§  \t|\n");
+	printf("|\t‚îå------------------------------‚îê  \t|\n");
 	gotoxy(32, 17);
-	printf("|\t¶¢            ∑Œ±◊¿Œ            ¶¢ \t|\n");
+	printf("|\t‚îÇ            Î°úÍ∑∏Ïù∏            ‚îÇ \t|\n");
 	gotoxy(32, 18);
-	printf("|\t¶¶------------------------------¶•  \t|\n");
+	printf("|\t‚îî------------------------------‚îò  \t|\n");
 	gotoxy(32, 19);
 	printf("|\t\t\t\t\t\t|\n");
 	gotoxy(32, 20);
-	printf("|\t¶£------------------------------¶§  \t|\n");
+	printf("|\t‚îå------------------------------‚îê  \t|\n");
 	gotoxy(32, 21);
-	printf("|\t¶¢       æ∆¿Ãµ π◊ ∫Òπ¯√£±‚     ¶¢  \t|\n");
+	printf("|\t‚îÇ       ÏïÑÏù¥Îîî Î∞è ÎπÑÎ≤àÏ∞æÍ∏∞     ‚îÇ  \t|\n");
 	gotoxy(32, 22);
-	printf("|\t¶¶------------------------------¶•  \t|\n");
+	printf("|\t‚îî------------------------------‚îò  \t|\n");
 	gotoxy(32, 23);
 	printf("|\t\t\t\t\t\t|\n");
 	gotoxy(32, 24);
-	printf("|\t¶£------------------------------¶§  \t|\n");
+	printf("|\t‚îå------------------------------‚îê  \t|\n");
 	gotoxy(32, 25);
-	printf("|\t¶¢            ≥°≥ª±‚            ¶¢  \t|\n");
+	printf("|\t‚îÇ            ÎÅùÎÇ¥Í∏∞            ‚îÇ  \t|\n");
 	gotoxy(32, 26);
-	printf("|\t¶¶------------------------------¶•  \t|\n");
+	printf("|\t‚îî------------------------------‚îò  \t|\n");
 	gotoxy(32, 27);
 	printf("|\t\t\t\t\t\t|\n");
 	gotoxy(32, 28);
@@ -49,7 +49,7 @@ int uiMainMenu() {
 
 	triangle = 13;
 	gotoxy(37, triangle);
-	printf("¢∫");
+	printf("‚ñ∂");
 	while (1)
 	{
 		Sleep(300);
@@ -68,7 +68,7 @@ int uiMainMenu() {
 							printf(" ");
 							triangle = triangle - 4;
 							gotoxy(37, triangle);
-							printf("¢∫");
+							printf("‚ñ∂");
 						}
 						break;
 					case DOWN:
@@ -78,7 +78,7 @@ int uiMainMenu() {
 							printf(" ");
 							triangle = triangle + 4;
 							gotoxy(37, triangle);
-							printf("¢∫");
+							printf("‚ñ∂");
 						}
 						break;
 				}

@@ -7,7 +7,7 @@ Account readAccountInfo(int line) {
 	fp = fopen("./accountlist.txt", "r");
 	if (fp == NULL)
 	{
-		printf("ÆÄÀÏ ÀĞ±â ½ÇÆĞ\n");
+		printf("íŒŒì¼ ì½ê¸° ì‹¤íŒ¨\n");
 		exit(1);
 	}
 	char temp[MAX_LINE_LENGTH];
