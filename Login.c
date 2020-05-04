@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define admin_id 1234
-#define admin_password 1234
+char admin_id[4] ="1234";
+char admin_password[4] ="1234";
 
 void login(num_account) {
 
@@ -49,7 +49,7 @@ void login(num_account) {
 		}
 	}
 	
-	int row;
+	int row=0;
 	char stdid[14];
 	char stdpassword[18];
 
