@@ -3,7 +3,6 @@
 #include "header.h"
 #include "ReadAccount.h"
 #include "message.h"
-#define MAX_LINE_LENGTH 130
 
 void showAllAccountInfo2(int pageNum, int num_account) {
 	for (int i = 1; i <= 10; i++) {
