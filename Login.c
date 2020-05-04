@@ -64,10 +64,12 @@ int loginFunction(int* num_account) {
 		fgets(stdid, 14, stdin);
 
 		// 배열 크기가 넘어가면 입력 버퍼를 비움.
-		if (strlen(stdid) > 13) {
+
+		stdid[strcspn(stdid, "\n")] = 0;
+		
+		if (strlen(stdid) > 12) {
 			while (getchar() != '\n');
 		}
-		stdid[strcspn(stdid, "\n")] = 0;
 		for (int i = 0; i < *num_account; i++) {       //i<num_account 로 수정
 			if (strcmp(account_id[i], stdid) == 0) {
 
