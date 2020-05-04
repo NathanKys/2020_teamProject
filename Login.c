@@ -64,7 +64,7 @@ int loginFunction(int* num_account) {
 		fgets(stdid, 14, stdin);
 
 		// 배열 크기가 넘어가면 입력 버퍼를 비움.
-		if (strlen(stdid) > 12) {
+		if (strlen(stdid) > 13) {
 			while (getchar() != '\n');
 		}
 		stdid[strcspn(stdid, "\n")] = 0;
