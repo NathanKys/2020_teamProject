@@ -77,7 +77,7 @@ int loginFunction(int* num_account) {
 			}
 			stdpassword[strcspn(stdpassword, "\n")] = 0;
 			if (strcmp(account_password[i], stdpassword) == 0) {
-				printf("\로그인 성공\n");
+				printf("로그인 성공\n");
 				row = i + 1;
 				break;
 			}
