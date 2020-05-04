@@ -72,8 +72,8 @@ int loginFunction(int* num_account) {
 			if (strcmp(account_id[i], stdid) == 0) {
 
 				
-					pass: printf("\n비밀번호를 입력하세요:");
 				system("cls");
+					pass: printf("비밀번호를 입력하세요:");
 					fgets(stdpassword, 18, stdin);
 					if (strlen(stdid) > 12) {
 						while (getchar() != '\n');
