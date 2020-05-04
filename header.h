@@ -55,7 +55,7 @@ void changeNick(char* nick, bool* changed);
 void changeLock(char* id, bool* lock);
 
 // 회원가입 관련 함수
-int pow(int, int);
+int pow1(int, int);
 bool matchEmail(const char*);
 bool matchPassword(const char*);
 bool matchId(const char*);
