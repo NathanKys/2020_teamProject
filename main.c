@@ -30,7 +30,7 @@ int main() {
 				break;
 
 			case 2:
-				login_id_num = login(); // return 값을 login_id_num에 복사
+				login_id_num = login(num_account); // return 값을 login_id_num에 복사
 				// 관리자 로그인의 경우 -1을 리턴
 				flag = 1;
 
@@ -90,7 +90,7 @@ int main() {
 
 				break;
 			case 3:
-				findaccount();
+				findaccount(num_account);
 				break;
 			case 4:
 				programFlag = 0;
