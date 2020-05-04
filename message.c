@@ -183,7 +183,7 @@ int sendMessage(char* sender, char* receiver) {
 			}
 
 
-			ch = getch(); // 입력값을 ch에 저장
+			ch = _getch(); // 입력값을 ch에 저장
 			if (i == 0 && ch == '~') { // 첫번째 칸일 경우 ~을 입력하면 뒤로 돌아감.
 				gotoxy(x, y);
 				printf("~");
@@ -224,8 +224,8 @@ int sendMessage(char* sender, char* receiver) {
 				}
 			}
 			else if (i >= 400 || k >= 200) { // -> 최대 입력 갯수 제한
-				while (kbhit()) {
-					getch();
+				while (_kbhit()) {
+					_getch();
 				}
 				gotoxy(40, 24);
 				printf("더이상 입력하지 못합니다\n");
@@ -234,8 +234,8 @@ int sendMessage(char* sender, char* receiver) {
 				continue;
 			}
 			else if (ch == -32) { // 방향키 및 f11, f12 제한
-				if (kbhit()) {
-					ch = getch();
+				if (_kbhit()) {
+					ch = _getch();
 					if (ch == DOWN || ch == UP) {
 						if (cy == 10 && ch == DOWN) {
 							gotoxy(2, cy);
@@ -244,13 +244,13 @@ int sendMessage(char* sender, char* receiver) {
 							gotoxy(32, cy);
 							printf("▶");
 							while (1) {
-								if (kbhit()) {
-									ch = getch();
+								if (_kbhit()) {
+									ch = _getch();
 									if (ch == 13) {
 										return 1; //합칠때 리턴값을 통하여 돌아갈 위치 정하기 #######################################################################
 									}
 									else if (ch == -32) {
-										ch = getch();
+										ch = _getch();
 										if (ch == UP) {
 											gotoxy(32, cy);
 											printf(" ");
@@ -282,8 +282,8 @@ int sendMessage(char* sender, char* receiver) {
 			}
 			else if (ch & 0x80) { // 한글 ;
 				input[i++] = ch;
-				if (kbhit()) {
-					ch = getch();
+				if (_kbhit()) {
+					ch = _getch();
 					input[i++] = ch;
 					int g = i - 2;
 					gotoxy(x, y);
@@ -304,8 +304,8 @@ int sendMessage(char* sender, char* receiver) {
 				gotoxy(x, y);
 			}
 			else {
-				while (kbhit()) { // f1 ~ f10사이의 키 입력이 출력되는 경우가 있어 제한하기 위해 추가.
-					getch();
+				while (_kbhit()) { // f1 ~ f10사이의 키 입력이 출력되는 경우가 있어 제한하기 위해 추가.
+					_getch();
 				}
 				gotoxy(30, 30);
 				printf("혀용되지 않는 문자가 포함되었습니다.\n");
