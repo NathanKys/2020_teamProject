@@ -45,7 +45,8 @@ void login() {
 
 		}
 	}
-
+	
+	int row;
 	char stdid[14];
 	char stdpassword[18];
 
@@ -69,6 +70,7 @@ void login() {
 			stdpassword[strcspn(stdpassword, "\n")] = 0;
 			if (strcmp(account_password[i], stdpassword) == 0) {
 				printf("\n비밀번호 일치\n");
+				row=i;
 				break;
 			}
 			else
@@ -84,5 +86,5 @@ void login() {
 
 
 	fclose(memlist);
-	return;
+	return row;
 }
