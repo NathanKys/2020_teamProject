@@ -73,7 +73,7 @@ void login() {
 			stdpassword[strcspn(stdpassword, "\n")] = 0;
 			if (strcmp(account_password[i], stdpassword) == 0) {
 				printf("\n비밀번호 일치\n");
-				row=i;
+				row=i+1;
 				break;
 			}
 			else{
@@ -101,5 +101,5 @@ void login() {
 
 
 	fclose(memlist);
-	return row+1;
+	return row;
 }
