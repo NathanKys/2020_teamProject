@@ -441,17 +441,17 @@ void showMessage(Message* m, char* id, int count, int index) {
 			printf("%s", m[flag].text);
 		}
 		gotoxy(3, 25);
-		printf("┌----------------┐");
+		printf("┌-----------------┐");
 		gotoxy(3, 26);
-		printf("│     답장    │");
+		printf("│       답장      │");
 		gotoxy(3, 27);
-		printf("└----------------┘");
+		printf("└-----------------┘");
 		gotoxy(33, 25);
-		printf("┌----------------┐");
+		printf("┌-----------------┐");
 		gotoxy(33, 26);
-		printf("│     삭제    │");
+		printf("│       삭제      │");
 		gotoxy(33, 27);
-		printf("└----------------┘");
+		printf("└-----------------┘");
 		gotoxy(63, 25);
 		printf("┌------------------┐");
 		gotoxy(63, 26);
