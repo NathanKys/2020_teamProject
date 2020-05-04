@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #include "header.h"
 #include "ReadAccount.h"
@@ -9,11 +9,11 @@ void showAllAccountInfo2(int pageNum, int num_account) {
 		if ((pageNum - 1) * 10 + i <= num_account) {
 			Account a = { "", "", "", "", "", {0, }, {0, }, 0, 0, 0 };
 			readAccountInfo2((pageNum - 1) * 10 + i, &a);
-			gotoxy(35, 3 + (i * 2));
-			printf("%d", i - 1);
 			gotoxy(37, 3 + (i * 2));
+			printf("%d", i - 1);
+			gotoxy(43, 3 + (i * 2));
 			printf("%s", a.id);
-			gotoxy(62, 3 + (i * 2));
+			gotoxy(70, 3 + (i * 2));
 			printf("%d", a.rec);
 		}
 	}
@@ -37,9 +37,9 @@ int selectAccountToShow(int num_account, int pageNum, int endPage) {
 		scanf("%c", &input);
 		scanf("%c", &temp);
 
-		if (input == '~'){
+		if (input == '~') {
 			system("pause");
-		return -1;
+			return -1;
 		}
 
 		in = input - 48;
@@ -68,7 +68,7 @@ int accountInfo_Menu(Account* a) {
 	printf("사용자 정보 조회");
 	gotoxy(19, 6);
 	printf("==============================================================================");
-	gotoxy(23, 8);
+	gotoxy(25, 8);
 	printf("아이디");
 	gotoxy(37, 8);
 	printf("닉네임");
@@ -160,9 +160,11 @@ void userSearch(Account* login, int num_account) {
 		system("cls");
 		gotoxy(55, 1);
 		printf("사용자 검색");
-		gotoxy(37, 3);
+		gotoxy(35, 3);
+		printf("번호");
+		gotoxy(44, 3);
 		printf("아이디");
-		gotoxy(62, 3);
+		gotoxy(68, 3);
 		printf("추천 횟수");
 		showAllAccountInfo2(pageNum, num_account);
 		gotoxy(3, 25);
