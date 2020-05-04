@@ -114,7 +114,6 @@ bool matchMessage(const char* string) {
 }
 void sendMessage(char* sender, char* receiver) {
 	
-	
 	FILE* fp;
 	fp = fopen("./message.txt", "at"); // 같은 프로젝트 파일 내에 존재하면 쓸 필요X
 	if (fp == NULL)
@@ -192,8 +191,7 @@ void sendMessage(char* sender, char* receiver) {
 				printf("사용자 검색 메뉴로 이동합니다.");
 				gotoxy(30, 31);
 				system("pause");
-
-				return;  // 합칠때 리턴값을 통하여 돌아갈 위치 정하기 #######################################################################
+				return 0;  // 합칠때 리턴값을 통하여 돌아갈 위치 정하기 #######################################################################
 			}
 			else if (ch == 13) { // 아스키코드로 enter
 				break;
@@ -249,7 +247,7 @@ void sendMessage(char* sender, char* receiver) {
 								if (kbhit()) {
 									ch = getch();
 									if (ch == 13) {
-										return 0; //합칠때 리턴값을 통하여 돌아갈 위치 정하기 #######################################################################
+										return 1; //합칠때 리턴값을 통하여 돌아갈 위치 정하기 #######################################################################
 									}
 									else if (ch == -32) {
 										ch = getch();
@@ -345,8 +343,8 @@ void sendMessage(char* sender, char* receiver) {
 	fputs(input, fp);
 	fputs("\n", fp);
 	fclose(fp);
+	return 0;  // ############################################################## 수정
 
-	return 0;
 	
 	/*FILE* fp;
 	fp = fopen("./message.txt", "a+");
