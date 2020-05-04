@@ -160,7 +160,7 @@ void findaccount(int num_account) {
 
 
         while (fgetc(memlist) != '\n') {
-            c = fgetc(memlist);
+            
         }
     }
 
