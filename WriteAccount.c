@@ -1,6 +1,5 @@
 ﻿#pragma once
 #define _CRT_SECURE_NO_WARNINGS
-#define MAX_LINE_LENGTH 130
 #include "header.h"
 
 void writeAccountInfo(int line, Account* login) {
