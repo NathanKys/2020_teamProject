@@ -73,6 +73,7 @@ int loginFunction(int* num_account) {
 
 				
 					pass: printf("\n비밀번호를 입력하세요:");
+				system("cls");
 					fgets(stdpassword, 18, stdin);
 					if (strlen(stdid) > 12) {
 						while (getchar() != '\n');
