@@ -709,6 +709,9 @@ void readMessage(char* id, int count, int index) {
 				fclose(fp);
 				return;
 			}
+			else{
+				fgets(temp, MAX_LINE_LENGTH, fp);
+			}
 			counter++;
 		}
 		else {
