@@ -4,77 +4,77 @@
 #include <string.h>
 #include "header.h"
 
-int interface(){
+int interfaceFindAccount() {
     int triangle;
     char ch;
     system("cls");
     gotoxy(32, 10);
-	printf("-------------------------------------------------\n");
-	gotoxy(32, 11);
-	printf("|\t\t\t\t\t\t|\n");
-	gotoxy(32, 12);
-	printf("|\t -------------------------------  \t|\n");
-	gotoxy(32, 13);
-	printf("|\t-          아이디 찾기          - \t|\n");
-	gotoxy(32, 14);
-	printf("|\t -------------------------------  \t|\n");
-	gotoxy(32, 15);
-	printf("|\t\t\t\t\t\t|\n");
-	gotoxy(32, 16);
-	printf("|\t -------------------------------  \t|\n");
-	gotoxy(32, 17);
-	printf("|\t-         비밀번호 찾기          - \t|\n");
-	gotoxy(32, 18);
-	printf("|\t -------------------------------  \t|\n");
-	gotoxy(32, 19);
-	printf("|\t\t\t\t\t\t|\n");
-	gotoxy(32, 20);
-	printf("--------------------------------------------------\n");
+    printf("-------------------------------------------------\n");
+    gotoxy(32, 11);
+    printf("|\t\t\t\t\t\t|\n");
+    gotoxy(32, 12);
+    printf("|\t -------------------------------  \t|\n");
+    gotoxy(32, 13);
+    printf("|\t-          아이디 찾기          - \t|\n");
+    gotoxy(32, 14);
+    printf("|\t -------------------------------  \t|\n");
+    gotoxy(32, 15);
+    printf("|\t\t\t\t\t\t|\n");
+    gotoxy(32, 16);
+    printf("|\t -------------------------------  \t|\n");
+    gotoxy(32, 17);
+    printf("|\t-         비밀번호 찾기          - \t|\n");
+    gotoxy(32, 18);
+    printf("|\t -------------------------------  \t|\n");
+    gotoxy(32, 19);
+    printf("|\t\t\t\t\t\t|\n");
+    gotoxy(32, 20);
+    printf("--------------------------------------------------\n");
 
 
-	triangle = 13;
-	gotoxy(37, triangle);
-	printf("▶");
-	while (1)
-	{
-		if (_kbhit())
-		{
-			ch = _getch();
-			if (ch == -32)
-			{
-				ch = _getch();
-				switch (ch)
-				{
-				case UP:
-					if (triangle > 13)
-					{
-						gotoxy(37, triangle);
-						printf(" ");
-						triangle = triangle - 4;
-						gotoxy(37, triangle);
-						printf("▶");
-					}
-					break;
-				case DOWN:
-					if (triangle < 17)
-					{
-						gotoxy(37, triangle);
-						printf(" ");
-						triangle = triangle + 4;
-						gotoxy(37, triangle);
-						printf("▶");
-					}
-					break;
-				}
-			}
-			if (ch == 13)
-				break;
-		}
-	}
-	if (triangle == 13)
-		return 1;
-	if (triangle == 17)
-		return 2;
+    triangle = 13;
+    gotoxy(37, triangle);
+    printf("▶");
+    while (1)
+    {
+        if (_kbhit())
+        {
+            ch = _getch();
+            if (ch == -32)
+            {
+                ch = _getch();
+                switch (ch)
+                {
+                case UP:
+                    if (triangle > 13)
+                    {
+                        gotoxy(37, triangle);
+                        printf(" ");
+                        triangle = triangle - 4;
+                        gotoxy(37, triangle);
+                        printf("▶");
+                    }
+                    break;
+                case DOWN:
+                    if (triangle < 17)
+                    {
+                        gotoxy(37, triangle);
+                        printf(" ");
+                        triangle = triangle + 4;
+                        gotoxy(37, triangle);
+                        printf("▶");
+                    }
+                    break;
+                }
+            }
+            if (ch == 13)
+                break;
+        }
+    }
+    if (triangle == 13)
+        return 1;
+    if (triangle == 17)
+        return 2;
 }
 
 void findaccount(int num_account) {
@@ -169,7 +169,7 @@ void findaccount(int num_account) {
     char stdnickname[13];
     char stddate[9];
 
-    int n = interface();
+    int n = interfaceFindAccount();
 
     switch (n) {
     case 1:
@@ -237,8 +237,16 @@ void findaccount(int num_account) {
         break;
     }
     }
-
-
-    fclose(memlist);
-
+    for (int i = 0; i < num_account; i++)
+        free(account_date[i]);
+    free(account_date);
+    for (int i = 0; i < num_account; i++)
+        free(account_nickname[i]);
+    free(account_nickname);
+    for (int i = 0; i < num_account; i++)
+        free(account_password[i]);
+    free(account_password);
+    for (int i = 0; i < num_account; i++)
+        free(account_id[i]);
+    free(account_id);
 }
