@@ -8,7 +8,7 @@
 char admin_id[] ="1234";
 char admin_password[] ="1234";
 
-void login(num_account) {
+int login(int* num_account) {
 
 	FILE* memlist;
 	
@@ -20,11 +20,16 @@ void login(num_account) {
 	}
 
 	char c = ' ';
-	char account_id[num_account][13] = { 0, }; // 배열 세로는 char account_id[num_account][12];
-	char account_password[num_account][17] = { 0, };
+	char** account_id = (char**)malloc(*num_account);
+	char** account_password = (char**)malloc(*num_account);
+
+	for (int i = 0; i < *num_account; i++) {
+		account_id[i] = (char*)malloc(13);
+		account_password[i] = (char*)malloc(13);
+	}
 
 	int j;
-	for (j = 0; j < num_account; j++) {   // for(j=0;j<num_account;j++)
+	for (j = 0; j < *num_account; j++) {   // for(j=0;j<num_account;j++)
 
 		int i = 0;
 		while (1) {
@@ -61,7 +66,7 @@ void login(num_account) {
 		while (getchar() != '\n');
 	}
 	stdid[strcspn(stdid, "\n")] = 0;
-	for (int i = 0; i < num_account; i++) {       //i<num_account 로 수정
+	for (int i = 0; i < *num_account; i++) {       //i<num_account 로 수정
 		if (strcmp(account_id[i], stdid) == 0) {
 			printf("\n아이디 일치\n");
 
@@ -99,12 +104,18 @@ void login(num_account) {
 			}
 		}
 
-		if (i == (num_account - 1))
+		if (i == (*num_account - 1))
 			printf("존재하지 않는 아이디 입니다");
 	}
 
 
+	for (int i = 0; i < *num_account; i++) {
+		free(account_id[i]);
+		free(account_password[i]);
+	}
 
+	free(account_id);
+	free(account_password);
 
 	fclose(memlist);
 	return row;
