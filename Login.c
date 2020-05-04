@@ -8,7 +8,7 @@
 #define admin_id 1234
 #define admin_password 1234
 
-void login() {
+void login(num_account) {
 
 	FILE* memlist;
 	
