@@ -30,8 +30,8 @@ int main() {
 				break;
 
 			case 2:
-				// 로그인 함수 - 리턴값은 DB상 몇번째 줄에 있는 계정인지.(1부터 시작)
-				// return 값을 login_id_num에 복사
+				login();// 로그인 함수 - 리턴값은 DB상 몇번째 줄에 있는 계정인지.(1부터 시작)
+				login_id_num = login(); // return 값을 login_id_num에 복사
 				// 관리자 로그인의 경우 -1을 리턴
 				flag = 1;
 
@@ -91,7 +91,7 @@ int main() {
 
 				break;
 			case 3:
-				// 아이디 및 비밀번호 찾기 함수
+				findaccount();
 				break;
 			case 4:
 				programFlag = 0;
