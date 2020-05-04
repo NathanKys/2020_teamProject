@@ -185,23 +185,23 @@ void findaccount(int num_account) {
             for (int i = 0; i < num_account; i++) {
                 if (strcmp(account_nickname[i], stdnickname) == 0) {
                 date: system("cls");
-                    printf("\n생년월일을 입력하세요:");
+                    printf("생년월일을 입력하세요:");
                     gets(stddate);
 
                     if (strcmp(account_date[i], stddate) == 0) {
-                        printf("\n아이디는 %s 입니다", account_id[i]);
+                        printf("아이디는 %s 입니다", account_id[i]);
                         count++;
                         system("pause");
                         break;
                     }
                     else {
-                        printf("\n입력한 정보와 부합하지 않는 생년월일입니다.");
+                        printf("입력한 정보와 부합하지 않는 생년월일입니다.\n");
                         system("pause");
                         goto date;
                     }
                 }
                 else if (i == (num_account - 1)) {
-                    printf("\n존재하지 않는 닉네임입니다.");
+                    printf("존재하지 않는 닉네임입니다.\n");
                     system("pause");
                 }
 
@@ -220,34 +220,34 @@ void findaccount(int num_account) {
             for (i = 0; i < num_account; i++) {
                 if (strcmp(account_id[i], stdid) == 0) {
                 pass_nick: system("cls");
-                    printf("\n닉네임을 입력하세요:");
+                    printf("닉네임을 입력하세요:");
                     gets(stdnickname);
 
                     if (strcmp(account_nickname[i], stdnickname) == 0) {
                     pass_date: system("cls");
-                        printf("\n생년월일을 입력하세요:");
+                        printf("생년월일을 입력하세요:");
                         gets(stddate);
 
                         if (strcmp(account_date[i], stddate) == 0) {
-                            printf("\n비밀번호는 %s 입니다\n", account_password[i]);
+                            printf("비밀번호는 %s 입니다\n", account_password[i]);
                             count++;
                             system("pause");
                             break;
                         }
                         else {
-                            printf("\n입력한 정보와 부합하지 않는 생년월일입니다.");
+                            printf("입력한 정보와 부합하지 않는 생년월일입니다.\n");
                             system("pause");
                             goto pass_date;
                         }
                     }
                     else {
-                        printf("\n존재하지 않는 닉네임입니다.");
+                        printf("존재하지 않는 닉네임입니다.\n");
                         system("pause");
                         goto pass_nick;
                     }
                 }
                 else if (i == (num_account - 1)) {
-                    printf("\n존재하지 않는 아이디입니다.");
+                    printf("존재하지 않는 아이디입니다.\n");
                     system("pause");
                     break;
                 }
