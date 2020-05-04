@@ -9,7 +9,7 @@
 #include <conio.h>
 
 #include "ReadAccount.h"	//파일에서 계정 읽어와서 구조체에 저장
-//#include "message.h"
+#include "message.h"
 
 #define LEFT 75
 #define RIGHT 77
@@ -29,6 +29,9 @@ void gotoxy(int x, int y);
 int uiMainMenu();
 int uiAfterLogin(char* nick);
 int uiShowMyInfo(Account* login);
+
+// 로그인 함수
+int loginFunction(int* num_account);
 
 // 내 정보 수정 관련 함수
 int checkPW(char* pw);
@@ -89,3 +92,4 @@ void userSearch(Account* login, int num_account);
 
 //int writeMessage(Account tt,char *s_Nickname);
 //
+void findaccount(int num_account);
