@@ -281,6 +281,8 @@ void userSearch(Account* login, int num_account) {
 						break;
 					}
 				}
+				else
+					break;
 			} while (temp == 1); // ############################################################## 수정
 
 			/*
