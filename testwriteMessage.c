@@ -1,4 +1,4 @@
-int writeMessage(Account tt,char *s_Nickname) { // 현재 로그인 한 사람의 정보 / 쪽지 받을 사람의 닉네임.
+int writeMessage(char *ID_Nickname,char *s_Nickname) { // 현재 로그인 한 사람의 정보 / 쪽지 받을 사람의 닉네임.
 	
 	//tt.nick;
 	
@@ -212,7 +212,7 @@ int writeMessage(Account tt,char *s_Nickname) { // 현재 로그인 한 사람�
 
 	
 	//fputs(tt.nick, fp);
-	fputs(tt.nick, fp); // 쪽지 보내는 사람 즉 지금 로그인 한 사람 닉네임
+	fputs(ID_Nickname, fp); // 쪽지 보내는 사람 즉 지금 로그인 한 사람 닉네임
 	fputs(",",fp);
 	fputs(s_Nickname, fp); // 쪽지 받는 사람 닉네임
 	fputs(",1,", fp); // 0 읽음   #  1 안 읽음
