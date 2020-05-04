@@ -59,6 +59,7 @@ int loginFunction(int* num_account) {
 	char stdpassword[18];
 
 	while (row == 0) {
+		system("cls");
 		printf("아이디를 입력하세요:");
 		fgets(stdid, 14, stdin);
 
