@@ -8,6 +8,23 @@ void gotoxy(int x, int y) {
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
 }
 
+int checkit() {
+	FILE* fp;
+	fp = fopen("./accountlist.txt", "r");
+	if (fp == NULL)
+	{
+		printf("파일 입출력 실패\n");
+		exit(1);
+	}
+	char buffer[200];
+	int nu = 0;
+	while (fgets(buffer, 200, fp) != NULL) {
+		nu++;
+	}
+	printf("실햄됨");
+	return nu;
+}
+
 int main() {
 
 	Account login;	//로그인한 계정의 계정 정보 저장.
@@ -18,7 +35,9 @@ int main() {
 	bool flag = 0;	//로그인 상태
 	int num_account = 0;	//DB에 등록된 계정의 총 개수
 	char** oldNick = (char**)malloc(sizeof(char*) * num_account);			//닉네임 변경된 계정의 기존 닉네임 목록
-
+	int num = checkit();
+	num_account = num;
+	
 	bool programFlag = 1;
 	do {
 		switch (uiMainMenu()) {
