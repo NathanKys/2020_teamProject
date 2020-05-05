@@ -48,6 +48,11 @@ int main() {
 				break;
 
 			case 2:
+				if (num_account == 0) {
+					printf("현재 존재하는 계정이 없습니다.\n");
+					system("pause");
+					break;   ////////////////////############################################################
+				}
 				login_id_num = loginFunction(&num_account); // return 값을 login_id_num에 복사
 				system("cls");
 				// 관리자 로그인의 경우 -1을 리턴
@@ -110,6 +115,11 @@ int main() {
 
 				break;
 			case 3:
+				if (num_account == 0) {
+					printf("현재 존재하는 계정이 없습니다.\n");
+					system("pause");
+					break;   ////////////////////############################################################
+				}
 				findaccount(num_account);
 				break;
 			case 4:
