@@ -94,16 +94,16 @@ void findaccount(int num_account) {
     char** account_date = malloc(sizeof(char*) * num_account);
 
     for (int i = 0; i < num_account; i++) {
-        account_id[i] = (char*)malloc(sizeof(char) * 13);
+        account_id[i] = (char*)malloc(sizeof(char) * 50);
     }
     for (int i = 0; i < num_account; i++) {
-        account_password[i] = (char*)malloc(sizeof(char) * 17);
+        account_password[i] = (char*)malloc(sizeof(char) * 50);
     }
     for (int i = 0; i < num_account; i++) {
-        account_nickname[i] = (char*)malloc(sizeof(char) * 13);
+        account_nickname[i] = (char*)malloc(sizeof(char) * 50);
     }
     for (int i = 0; i < num_account; i++) {
-        account_date[i] = (char*)malloc(sizeof(char) * 13);
+        account_date[i] = (char*)malloc(sizeof(char) * 50);
     }
 
     //char account_id[num_account][13] = { 0, }; // 배열 세로는 char account_info[num_account][12];
