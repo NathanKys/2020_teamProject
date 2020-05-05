@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include "header.h"
 
 void gotoxy(int x, int y) {
@@ -6,23 +6,6 @@ void gotoxy(int x, int y) {
 	Pos.X = x;
 	Pos.Y = y;
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
-}
-
-int checkit() {
-	FILE* fp;
-	fp = fopen("./accountlist.txt", "r");
-	if (fp == NULL)
-	{
-		printf("파일 입출력 실패\n");
-		exit(1);
-	}
-	char buffer[200];
-	int nu = 0;
-	while (fgets(buffer, 200, fp) != NULL) {
-		nu++;
-	}
-	printf("실햄됨");
-	return nu;
 }
 
 int main() {
@@ -34,10 +17,9 @@ int main() {
 	//이 값을 내 정보 보기 함수에서 인자로 받아, DB 상 해당 줄에 정보 출력
 	bool flag = 0;	//로그인 상태
 	int num_account = 0;	//DB에 등록된 계정의 총 개수
+	num_account = readAccountNum();
 	char** oldNick = (char**)malloc(sizeof(char*) * num_account);			//닉네임 변경된 계정의 기존 닉네임 목록
-	int num = checkit();
-	num_account = num;
-	
+
 	bool programFlag = 1;
 	do {
 		switch (uiMainMenu()) {
@@ -48,11 +30,7 @@ int main() {
 				break;
 
 			case 2:
-				if (num_account == 0) {
-					printf("현재 존재하는 계정이 없습니다.\n");
-					system("pause");
-					break;   ////////////////////############################################################
-				}
+
 				login_id_num = loginFunction(&num_account); // return 값을 login_id_num에 복사
 				system("cls");
 				// 관리자 로그인의 경우 -1을 리턴
@@ -104,21 +82,25 @@ int main() {
 				}
 				else {	//관리자 로그인
 					checkSecondPw();
+					oldNick = (char**)malloc(sizeof(char*) * num_account);
 					for (int i = 0; i < num_account; i++) {
 						oldNick[i] = (char*)malloc(sizeof(char) * (NICKNAME_MAXSIZE + 2));
 					}
 					while (flag) {
 						flag = adminMenu(num_account, &targetAccount, oldNick);
 					}
+					for (int i = 0; i < num_account; i++) {
+						free(oldNick[i]);
+					}
 
+					free(oldNick);
 				}
 
 				break;
 			case 3:
 				if (num_account == 0) {
-					printf("현재 존재하는 계정이 없습니다.\n");
-					system("pause");
-					break;   ////////////////////############################################################
+					printf("계정 없음");
+					break;
 				}
 				findaccount(num_account);
 				break;
@@ -129,9 +111,5 @@ int main() {
 		}
 	} while (programFlag);
 
-	for (int i = 0; i < num_account; i++) {
-		free(oldNick[i]);
-	}
 
-	free(oldNick);
 }

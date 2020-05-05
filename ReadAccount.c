@@ -2,12 +2,35 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "header.h"
 
+int readAccountNum() {
+	FILE* fp;
+	fp = fopen("./accountlist.txt", "r");
+	if (fp == NULL)
+	{
+		printf("ÆÄÀÏ ÀĞ±â ½ÇÆĞ\n");
+		exit(1);
+	}
+	int lineCounter = 0;
+	char tempc = ' ';
+	while (true) {
+		tempc = fgetc(fp);
+		if (tempc == '\n')
+			lineCounter++;
+		if (feof(fp))
+			break;
+	}
+
+	fclose(fp);
+
+	return lineCounter;
+}
+
 Account readAccountInfo(int line) {
 	FILE* fp;
 	fp = fopen("./accountlist.txt", "r");
 	if (fp == NULL)
 	{
-		printf("íŒŒì¼ ì½ê¸° ì‹¤íŒ¨\n");
+		printf("ÆÄÀÏ ÀĞ±â ½ÇÆĞ\n");
 		exit(1);
 	}
 	char temp[MAX_LINE_LENGTH];

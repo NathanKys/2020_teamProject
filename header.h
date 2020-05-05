@@ -25,6 +25,9 @@
 
 enum { IDCHECK = 0, NICKNAMECHECK = 3, EMAILCHECK = 4, PHONENUMBERCHECK = 6, RETCHECK = 7 };
 
+// 계정 개수 구하는 함수
+int readAccountNum();
+
 void gotoxy(int x, int y);
 int uiMainMenu();
 int uiAfterLogin(char* nick);
