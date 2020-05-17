@@ -8,7 +8,7 @@ int pow1(int a, int b) {
 	int c;
 	int d;
 	d = a;
-	for (c = 1;c < b;c++) {
+	for (c = 1; c < b; c++) {
 		d = d * a;
 	}
 	return d;
@@ -86,7 +86,7 @@ bool matchBirthday(const char* string) {
 bool matchKorean(const char* string, int n) {
 	// 문자열 내에 한글이 있으면 true
 	// 없으면 false
-	for (int i = 0;i < n;i++) {
+	for (int i = 0; i < n; i++) {
 		if (string[i] & 0x80) return true;
 	}
 	return false;
@@ -96,7 +96,7 @@ bool kreng(const char* string, int n) {
 	// 한글과 영어를 같이 쓰면 true, 아니면 false
 	int a = string[0] & 0x80;
 
-	for (int i = 1;i < n;i++) {
+	for (int i = 1; i < n; i++) {
 		if (a != (string[i] & 0x80)) {
 			return true;
 		}
@@ -122,22 +122,22 @@ bool isCompleteKorean(const char* string, int n) {
 		"ㅆ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"
 	};
 
-	for (int i = 0;i < n;i++) {
-		for (int j = 0;j < sizeof(initial_array) / sizeof(char*);j++) {
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < sizeof(initial_array) / sizeof(char*); j++) {
 			temp[0] = string[i];
 			temp[1] = string[i + 1];
 			if (!strcmp(temp, initial_array[j])) {
 				return false;
 			}
 		}
-		for (int j = 0;j < sizeof(medial_array) / sizeof(char*);j++) {
+		for (int j = 0; j < sizeof(medial_array) / sizeof(char*); j++) {
 			temp[0] = string[i];
 			temp[1] = string[i + 1];
 			if (!strcmp(temp, medial_array[j])) {
 				return false;
 			}
 		}
-		for (int j = 0;j < sizeof(final_array) / sizeof(char*);j++) {
+		for (int j = 0; j < sizeof(final_array) / sizeof(char*); j++) {
 			temp[0] = string[i];
 			temp[1] = string[i + 1];
 			if (!strcmp(temp, final_array[j])) {
@@ -171,7 +171,7 @@ bool isOnlyNumber(const char* string) {
 	return regexec(&state, string, 0, NULL, 0) ? false : true;
 }
 
-// 파일체크하는 함수
+// 중복체크하는 함수
 bool duplicateCheck(char* _string, int option) {
 	// _string: 중복 검사할 문자열
 	//  option: 중복 검사할 유형
@@ -189,7 +189,7 @@ bool duplicateCheck(char* _string, int option) {
 		exit(1);
 	}
 	while (true) {
-		for (;j < option;j++) {
+		for (; j < option; j++) {
 			while (true) {
 				ch = fgetc(fp);
 				if (ch == ',') {
@@ -236,14 +236,14 @@ bool isRightDate(const char* string) {
 
 
 
-	for (index;index < 4;index++) {
+	for (index; index < 4; index++) {
 		year += ((string[index] - '0') * pow1(10, 3 - index));
 	}
-	for (index;index < 6;index++) {
+	for (index; index < 6; index++) {
 		month += ((string[index] - '0') * pow1(10, 5 - index));
 	}
 
-	for (index;index < 8;index++) {
+	for (index; index < 8; index++) {
 		day += ((string[index] - '0') * pow1(10, 7 - index));
 	}
 
@@ -275,14 +275,14 @@ bool isInTheFuture(const char* string) {
 	month = 0;
 	day = 0;
 
-	for (index;index < 4;index++) {
+	for (index; index < 4; index++) {
 		year += ((string[index] - '0') * pow(10, 3 - index));
 	}
-	for (index;index < 6;index++) {
+	for (index; index < 6; index++) {
 		month += ((string[index] - '0') * pow(10, 5 - index));
 	}
 
-	for (index;index < 8;index++) {
+	for (index; index < 8; index++) {
 		day += ((string[index] - '0') * pow(10, 7 - index));
 	}
 
@@ -327,7 +327,7 @@ bool isContainNumber(const char* string) {
 }
 
 bool isRepeat(const char* string, int length) {
-	for (int i = 0;i < length - 2;i++) {
+	for (int i = 0; i < length - 2; i++) {
 		if ((string[i] - string[i + 1] == 1) && (string[i + 1] - string[i + 2] == 1)) {
 			return  true;
 		}
@@ -339,7 +339,7 @@ bool isRepeat(const char* string, int length) {
 }
 
 bool isConti(const char* string, int length) {
-	for (int i = 0;i < length - 2;i++) {
+	for (int i = 0; i < length - 2; i++) {
 		if (string[i] == string[i + 1] && string[i + 1] == string[i + 2]) { return true; }
 	}
 	return false;
@@ -349,7 +349,7 @@ int getLength(const char* string) {
 	int a = strlen(string);
 	int temp = 0;
 
-	for (int i = 0;i < strlen(string);i++) {
+	for (int i = 0; i < strlen(string); i++) {
 		if (string[i] & 0x80) {
 			temp++;
 		}
@@ -366,7 +366,7 @@ void clearInputBuffer()
 // 문자열 내의 특정 문자 제거
 void Eliminate(char* string, char ch) {
 	int len = strlen(string) + 1;
-	for (;*string != '\0';string++, len--) {
+	for (; *string != '\0'; string++, len--) {
 		if (*string == ch) {
 			strcpy_s(string, len, string + 1);
 			string--;
@@ -401,12 +401,12 @@ void ret(char* _string) {
 			string[i] = fgetc(fp);
 			fgetc(tempfp);
 			if (string[i] == ',') { string[i] = '\0'; i = 0; break; }
-			else if (string[i] == EOF) { fclose(fp);fclose(tempfp); return; }
+			else if (string[i] == EOF) { fclose(fp); fclose(tempfp); return; }
 			i++;
 		}
 		if (!strcmp(string, _string)) {
 			// 위에서 아이디를 먼저 읽었기 때문에 -1해줘야 함.
-			for (;j < RETCHECK-1;j++) {
+			for (; j < RETCHECK - 1; j++) {
 				while (true) {
 					ch = fgetc(fp);
 					fgetc(tempfp);
@@ -424,7 +424,7 @@ void ret(char* _string) {
 				string[i] = fgetc(fp);
 				fgetc(tempfp);
 				if (string[i] == ',') { string[i] = '\0'; i = 0; break; }
-				else if (string[i] == EOF) { fclose(fp);fclose(tempfp); return; }
+				else if (string[i] == EOF) { fclose(fp); fclose(tempfp); return; }
 				i++;
 			}
 			tempRet = atoi(string);
@@ -530,7 +530,7 @@ void writeAccount(Account user) {
 		exit(1);
 	}
 	else {
-		fprintf(fp, "%s,%s,%s,%s,%s,%s,%s,%d,%d,%d",
+		fprintf(fp, "%s,%s,%s,%s,%s,%s,%s,%d,%d,%d,0",
 			user.id, user.pw, user.name, user.nick, user.email, user.birth, user.phone, user.rec, user.lock, user.changed);
 		fprintf(fp, "                                                                                \n");
 		//최소 길이의 닉네임(2byte)으로 회원가입 하고, 관리자에 의해 최대 길이의 닉네임(24byte)으로 수정될 경우를 대비하여
@@ -542,7 +542,7 @@ void writeAccount(Account user) {
 }
 
 void signUp() {
-	Account u1 = {0, };
+	Account u1 = { 0, };
 	u1.lock = false;
 	u1.changed = false;
 	char tempPhoneNumber[PHONENUMBER_MAXSIZE + 4];
@@ -621,15 +621,15 @@ void signUp() {
 				// 대문자 하나 이상
 				// 소문자 하나 이상
 				// 숫자 하나 이상
-				if (!isContainUpperCase(u1.pw)) {printf("알파벳 대문자를 하나 이상 포함해야 합니다.\n");}
-				if (!isContainLowerCase(u1.pw)) {printf("알파벳 소문자를 하나 이상 포함해야 합니다.\n");}
-				if (!isContainNumber(u1.pw)) {printf("인도-아라비아 숫자를 하나 이상 포함해야 합니다.\n");}
+				if (!isContainUpperCase(u1.pw)) { printf("알파벳 대문자를 하나 이상 포함해야 합니다.\n"); }
+				if (!isContainLowerCase(u1.pw)) { printf("알파벳 소문자를 하나 이상 포함해야 합니다.\n"); }
+				if (!isContainNumber(u1.pw)) { printf("인도-아라비아 숫자를 하나 이상 포함해야 합니다.\n"); }
 
 				// 위의 세 조건을 모두 만족할 때
 				if (isContainNumber(u1.pw) && isContainUpperCase(u1.pw) && isContainLowerCase(u1.pw)) {
 					// 반복된 문자 체크
-					if (isRepeat(u1.pw, strlen(u1.pw))) { 
-						printf("비밀번호에 반복된 문자가 있습니다.\n"); 
+					if (isRepeat(u1.pw, strlen(u1.pw))) {
+						printf("비밀번호에 반복된 문자가 있습니다.\n");
 						system("pause");
 						continue;
 					}

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 typedef enum { false, true } bool;
 
@@ -21,6 +21,7 @@ typedef struct Account {
 	unsigned int rec;
 	bool lock;
 	bool changed;	//관리자에 의한 계정 변경 여부
+	bool admin
 } Account;
 
 Account readAccountInfo(int line);
