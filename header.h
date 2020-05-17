@@ -31,14 +31,14 @@ int readAccountNum();
 void gotoxy(int x, int y);
 int uiMainMenu();
 int uiAfterLogin(char* nick);
-int uiShowMyInfo(Account* login);
+int uiShowMyInfo(Account* login, int login_id_num);
 
 // 로그인 함수
 int loginFunction(int* num_account);
 
 // 내 정보 수정 관련 함수
 int checkPW(char* pw);
-void selectEdit(Account* login);
+void selectEdit(Account* login, int login_id_num);
 void editPW(char* pw);
 void editName(char* name);
 void editNick(char* nick);
