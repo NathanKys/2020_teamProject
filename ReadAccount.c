@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #include "header.h"
 
@@ -7,7 +7,7 @@ int readAccountNum() {
 	fp = fopen("./accountlist.txt", "r");
 	if (fp == NULL)
 	{
-		printf("ÆÄÀÏ ÀĞ±â ½ÇÆĞ\n");
+		printf("íŒŒì¼ ì½ê¸° ì‹¤íŒ¨\n");
 		exit(1);
 	}
 	int lineCounter = 0;
@@ -30,7 +30,7 @@ Account readAccountInfo(int line) {
 	fp = fopen("./accountlist.txt", "r");
 	if (fp == NULL)
 	{
-		printf("ÆÄÀÏ ÀĞ±â ½ÇÆĞ\n");
+		printf("íŒŒì¼ ì½ê¸° ì‹¤íŒ¨\n");
 		exit(1);
 	}
 	char temp[MAX_LINE_LENGTH];

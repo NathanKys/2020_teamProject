@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #define ID_MAXSIZE 12
 #define TEXT_MAXSIZE 200
 

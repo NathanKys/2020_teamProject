@@ -1,4 +1,4 @@
-1111,a1cdeabcde12,0,123123123123123
+﻿1111,a1cdeabcde12,0,123123123123123
 2222,a1cdeabcde12,0,abcabcabcabcabcabc
 a1cdeabcde12,1111,0,ㄱㄴㄷㄱㄴㄷㄱㄴㄷ
 a1cdeabcde12,2222,0,123123123123123
