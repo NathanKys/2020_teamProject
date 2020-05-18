@@ -123,21 +123,27 @@ void selectEdit(Account* login) {
 			switch (num) {
 				case 0:	//비밀번호
 					editPW(&((*login).pw));
+					recordHistory((*login).id, (*login).pw), PASSWORDCHECK);
 					break;
 				case 1:	//이름
 					editName(&((*login).name));
+					recordHistory((*login).id, (*login).name), NAMECHECK);
 					break;
 				case 2:	//닉네임
 					editNick(&((*login).nick));
+					recordHistory((*login).id, (*login).nick), NICKNAMECHECK);
 					break;
 				case 3:	//이메일 주소
 					editEmail(&((*login).email));
+					recordHistory((*login).id, (*login).email), EMAILCHECK);
 					break;
 				case 4:	//생년월일
 					editBirth(&((*login).birth));
+					recordHistory((*login).id, (*login).birth), BIRTHDAYCHECK);
 					break;
 				case 5:	//휴대폰 번호
 					editPhone(&((*login).phone));
+					recordHistory((*login).id, (*login).phone), PHONENUMBERCHECK);
 					break;
 			}
 		}
