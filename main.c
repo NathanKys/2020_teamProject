@@ -1,4 +1,5 @@
-﻿#include <stdio.h>
+
+#include <stdio.h>
 #include "header.h"
 
 void gotoxy(int x, int y) {
@@ -23,91 +24,98 @@ int main() {
 	bool programFlag = 1;
 	do {
 		switch (uiMainMenu()) {
-			case 1:
-				signUp();
+		case 1:
+			signUp();
 
-				num_account++;	//회원가입 완료 시 계정 개수 증가
-				break;
+			num_account++;	//회원가입 완료 시 계정 개수 증가
+			break;
 
-			case 2:
+		case 2:
 
-				login_id_num = loginFunction(&num_account); // return 값을 login_id_num에 복사
-				system("cls");
-				// 관리자 로그인의 경우 -1을 리턴
-				//login_id_num = 1;
-				flag = 1;
+			login_id_num = loginFunction(&num_account); // return 값을 login_id_num에 복사
+			system("cls");
+			// 관리자 로그인의 경우 -1을 리턴
+			//login_id_num = 1;
+			flag = 1;
 
-				if (login_id_num != -1) {	//관리자가 아닌 일반 회원 로그인일 경우
+			if (login_id_num != -1) {	//관리자가 아닌 일반 회원 로그인일 경우
 
-					login = readAccountInfo(login_id_num); //로그인한 계정 정보 구조체에 저장
-					if (login.lock) {
-						printf("잠긴 계정입니다. 서비스를 이용할 수 없습니다.\n");
+				login = readAccountInfo(login_id_num); //로그인한 계정 정보 구조체에 저장
+				if (login.lock) {
+					printf("잠긴 계정입니다. 서비스를 이용할 수 없습니다.\n");
+					system("pause");
+					system("cls");
+				}
+				else {
+					if (login.changed) {
+						printf("닉네임이 변경되었습니다.\n");
+						printf("기존 닉네임: %s\n", oldNick[login_id_num - 1]);
+						printf("새로운 닉네임: %s\n", login.nick);
+						login.changed = 0;
 						system("pause");
 						system("cls");
 					}
-					else {
-						if (login.changed) {
-							printf("닉네임이 변경되었습니다.\n");
-							printf("기존 닉네임: %s\n", oldNick[login_id_num - 1]);
-							printf("새로운 닉네임: %s\n", login.nick);
-							login.changed = 0;
-							system("pause");
-							system("cls");
-						}
-						while (flag) {
-							switch (uiAfterLogin(login.nick)) {
-								case 1:	// 내 정보 보기 함수
-									while (uiShowMyInfo(&login) != 2) {
+					while (flag) {
+						switch (uiAfterLogin(login.nick)) {
+						case 1:	// 내 정보 보기 함수
+							while (uiShowMyInfo(&login) != 2) {
 
-									}
-									break;
+							}
+							break;
 
-								case 2:
-									userSearch(&login, num_account);
-									// 사용자 검색 함수
-									break;
+						case 2:
+							userSearch(&login, num_account);
+							// 사용자 검색 함수
+							break;
 
-								case 3:
-									messageBox(login.id);
-									// 쪽지함 함수
-									break;
+						case 3:
+							messageBox(login.id);
+							// 쪽지함 함수
+							break;
 
-								case 4:
-									flag = 0;
-									writeAccountInfo(login_id_num, &login);
-									break; //로그아웃
+						case 4:
+							flag = 0;
+							writeAccountInfo(login_id_num, &login);
+							break; //로그아웃
+						case 5:
+							while (flag) {
+								login = readAccountInfo(login_id_num);
+								flag = subAdminMenu(num_account, &targetAccount, oldNick, &login);
+								// 관리자 메뉴
+								break;
 							}
 						}
 					}
 				}
-				else {	//관리자 로그인
-					checkSecondPw();
-					oldNick = (char**)malloc(sizeof(char*) * num_account);
-					for (int i = 0; i < num_account; i++) {
-						oldNick[i] = (char*)malloc(sizeof(char) * (NICKNAME_MAXSIZE + 2));
-					}
-					while (flag) {
-						flag = adminMenu(num_account, &targetAccount, oldNick);
-					}
-					for (int i = 0; i < num_account; i++) {
-						free(oldNick[i]);
-					}
-
-					free(oldNick);
+			}
+			else {	//관리자 로그인
+				checkSecondPw();
+				oldNick = (char**)malloc(sizeof(char*) * num_account);
+				for (int i = 0; i < num_account; i++) {
+					oldNick[i] = (char*)malloc(sizeof(char) * (NICKNAME_MAXSIZE + 2));
+				}
+				while (flag) {
+					flag = adminMenu(num_account, &targetAccount, oldNick);
+				}
+				for (int i = 0; i < num_account; i++) {
+					free(oldNick[i]);
 				}
 
+				free(oldNick);
+			}
+
+			break;
+		case 3:
+			if (num_account == 0) {
+				printf("계정 없음");
 				break;
-			case 3:
-				if (num_account == 0) {
-					printf("계정 없음");
-					break;
-				}
-				findaccount(num_account);
-				break;
-			case 4:
-				programFlag = 0;
-				system("cls");
-				break; // 종료하기
+			}
+			findaccount(num_account);
+			break;
+		case 4:
+			programFlag = 0;
+			system("cls");
+			break; // 종료하기
 		}
 	} while (programFlag);
 
