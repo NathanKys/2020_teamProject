@@ -182,17 +182,9 @@ void recordHistory(char* id, char* _string, int option) {
 				else if (string[i] == EOF) { fclose(fp); fclose(tempfp); return; }
 				i++;
 			}
-			fseek(fp, -1, SEEK_CUR);
-			fwrite("/", 1, 1, fp);
-			fseek(fp, 1, SEEK_CUR);
-
-			//fwrite(_string, strlen(_string), 1, fp);
-			fseek(fp, -1, SEEK_CUR);
-			fwrite(_string, strlen(_string), 1, fp);
-			fseek(fp, 1, SEEK_CUR);
 
 			fseek(fp, -1, SEEK_CUR);
-			fwrite(",", 1, 1, fp);
+			fprintf("/%s,", _string);
 			fseek(fp, 1, SEEK_CUR);
 
 			fseek(fp, -1, SEEK_CUR);
