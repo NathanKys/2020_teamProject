@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #include "header.h"
 #include "ReadAccount.h"
@@ -275,13 +275,13 @@ void userSearch(Account* login, int num_account) {
 					switch (menu) {
 					case 1:
 						temp = sendMessage(login->id, a.id);
-						break; 
+						break;
 					case 2:
 						temp = 0;
 						break;
 					}
 				}
-				else{
+				else {
 					break;
 				}
 			} while (temp == 1); // ############################################################## 수정
