@@ -46,7 +46,6 @@ void editEmail(char* email);
 void editBirth(int* birth);
 void editPhone(int* phone);
 void writeAccountInfo(int, Account*);
-void recordHistory(char*, char*, int);
 
 // 관리자 기능 관련 함수
 void checkSecondPw();
