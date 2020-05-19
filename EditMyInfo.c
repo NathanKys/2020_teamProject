@@ -122,34 +122,28 @@ void selectEdit(Account* login, int login_id_num) {
 		else {
 			switch (num) {
 				case 0:	//비밀번호
-					editPW(&((*login).pw));
 					writeBreakdownChar(num, &((*login).id), &((*login).pw));
-					//recordHistory((*login).id, (*login).pw, PASSWORDCHECK);
+					editPW(&((*login).pw));
 					break;
 				case 1:	//이름
-					editName(&((*login).name));
 					writeBreakdownChar(num, &((*login).id), &((*login).name));
-					//recordHistory((*login).id, (*login).name, NAMECHECK);
+					editName(&((*login).name));
 					break;
 				case 2:	//닉네임
-					editNick(&((*login).nick));
 					writeBreakdownChar(num, &((*login).id), &((*login).nick));
-					//recordHistory((*login).id, (*login).nick, NICKNAMECHECK);
+					editNick(&((*login).nick));
 					break;
 				case 3:	//이메일 주소
-					editEmail(&((*login).email));
 					writeBreakdownChar(num, &((*login).id), &((*login).email));
-					//recordHistory((*login).id, (*login).email, EMAILCHECK);
+					editEmail(&((*login).email));
 					break;
 				case 4:	//생년월일
-					editBirth(&((*login).birth));
 					writeBreakdownInt(num, &((*login).id), &((*login).birth));
-					//recordHistory((*login).id, (*login).birth, BIRTHDAYCHECK);
+					editBirth(&((*login).birth));
 					break;
 				case 5:	//휴대폰 번호
-					editPhone(&((*login).phone));
 					writeBreakdownInt(num, &((*login).id), &((*login).phone));
-					//recordHistory((*login).id, (*login).phone, PHONENUMBERCHECK);
+					editPhone(&((*login).phone));
 					break;
 			}
 			writeAccountInfo(login_id_num, login);
@@ -644,7 +638,7 @@ void editPhone(int* phone) {
 				}
 				phone[10] = -1;
 			}
-			if (tempPhoneNumber[11] == '\0') {
+			else if (tempPhoneNumber[11] == '\0') {
 				for (int i = 0; i < PHONENUMBER_MAXSIZE; i++) {
 					phone[i] = tempPhoneNumber[i] - 48;
 				}
