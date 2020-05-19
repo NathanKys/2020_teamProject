@@ -63,6 +63,8 @@ int selectAccountToManage(int num_account, int pageNum, int endPage);
 int selectManageFunction();
 void changeNick(char* nick, bool* changed);
 void changeLock(char* id, bool* lock);
+bool checkAdmin(Account* targetAccount, int login_id_num);
+void subAdminMenu(int num_account, Account* targetAccount, char** oldNick, int login_id_num);
 
 // 회원가입 관련 함수
 int pow1(int, int);
