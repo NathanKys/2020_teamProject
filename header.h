@@ -48,9 +48,11 @@ void editPhone(int* phone);
 void writeAccountInfo(int, Account*);
 void recordHistory(char*, char*, int);
 //문자열 형태(비밀번호 등)의 내 정보 수정 시 수정 이전의 정보 breakdown 파일로 출력
+//보조 또는 최고 관리자에 의해 닉네임 수정 시에도 이 함수 사용
 void writeBreakdownChar(int num, char* id, char* info);
 //숫자 형태(휴대폰 번호 등)의 내 정보 수정 시
 void writeBreakdownInt(int num, char* id, int* info);
+
 
 // 관리자 기능 관련 함수
 void checkSecondPw();

@@ -563,7 +563,7 @@ bool adminMenu(int num_account, Account * targetAccount, char** oldNick) {
 				switch (menu) {
 					case 1:
 						strcpy(oldNick[manageAccount - 1], (*targetAccount).nick);
-
+						writeBreakdownChar(9, &((*targetAccount).id), &((*targetAccount).nick));
 						changeNick((*targetAccount).nick, &((*targetAccount).changed));
 						writeAccountInfo(manageAccount, targetAccount);
 						break;

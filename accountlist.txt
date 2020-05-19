@@ -1,1 +1,4 @@
-ï»¿
+abc189,temp,zyx,fy,1@n.co,20001010,0101234567,10,0,1,0                                                                                 
+abc289,temp,±è±è,±â»Ý,0@x.ko,20001010,01062346376,10,0,0,0                                                                                
+abc389abc789,temp,abcdeabcdeabcdeabcde,supersuperco,12345abcde@navernavernaver.com,20001010,0109876876,10,0,0,0                                                                                
+abc489abc789,temp,±è³¯¾Æ¿Ã¶ó,¿­µÎ±ÛÀÚ¿­µÎ±ÛÀÚ¿­µÎ±ÛÀÚ,abcde12345@navernavernaver.com,20001010,0104754476,10,1,0,0                                                                                

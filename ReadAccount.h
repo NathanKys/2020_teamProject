@@ -21,7 +21,7 @@ typedef struct Account {
 	unsigned int rec;
 	bool lock;
 	bool changed;	//관리자에 의한 계정 변경 여부
-	bool admin;
+	bool subAdmin;	//중간관리자 여부
 } Account;
 
 Account readAccountInfo(int line);
