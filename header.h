@@ -23,7 +23,7 @@
 // 따라서, 최소 길이로 회원가입해도, DB 상에서 이에 필요한 여유 공간은 22byte 이상 빈칸으로 처리해둬야 함.
 // -> 120 byte + 22byte의 여유있는 값으로 150 설정
 
-enum { IDCHECK, PASSWORDCHECK, NAMECHECK, NICKNAMECHECK, EMAILCHECK, BIRTHDAYCHECK, PHONENUMBERCHECK, RETCHECK};
+enum { IDCHECK = 0, NICKNAMECHECK = 3, EMAILCHECK = 4, PHONENUMBERCHECK = 6, RETCHECK = 7 };
 
 // 계정 개수 구하는 함수
 int readAccountNum();
