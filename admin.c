@@ -580,3 +580,168 @@ bool adminMenu(int num_account, Account * targetAccount, char** oldNick) {
 	}
 
 }
+bool checkAdmin(Account* targetAccount, int login_id_num) {
+	Account login;
+	system("cls");
+	login = readAccountInfo(login_id_num);
+	if (!login.subAdmin) {
+		system("cls");
+		gotoxy(50, 10);
+		printf("접근 권한이 없습니다!");
+		gotoxy(40, 12);
+		system("pause");
+		system("cls");
+		return true;
+	}
+	else
+		return false;
+}
+
+void subAdminMenu(int num_account, Account* targetAccount, char** oldNick, int login_id_num) {
+	int pageNum = 1;
+	int endPage = ((num_account - 1) / 10) + 1;
+
+	while (true) {
+		if (checkAdmin(&targetAccount, login_id_num)) { // check
+			break;
+		}
+
+		showAllAccountInfo(pageNum, num_account);
+
+		gotoxy(3, 25);
+		printf("┌--------------------┐\n");
+		gotoxy(3, 26);
+		printf("│     이전 페이지    │\n");
+		gotoxy(3, 27);
+		printf("└--------------------┘\n");
+		gotoxy(33, 25);
+		printf("┌--------------------┐\n");
+		gotoxy(33, 26);
+		printf("│     다음 페이지    │\n");
+		gotoxy(33, 27);
+		printf("└--------------------┘\n");
+		gotoxy(63, 25);
+		printf("┌------------------┐\n");
+		gotoxy(63, 26);
+		printf("│     뒤로 가기     │\n");
+		gotoxy(63, 27);
+		printf("└------------------┘\n");
+		gotoxy(93, 25);
+		printf("┌------------------┐\n");
+		gotoxy(93, 26);
+		printf("│     번호 선택    │\n");
+		gotoxy(93, 27);
+		printf("└------------------┘\n");
+
+
+		int triangle;
+		char ch;
+
+		triangle = 1;
+		gotoxy(triangle, 26);
+		printf("▶");
+		while (1)
+		{
+			Sleep(300);
+			if (_kbhit())
+			{
+				ch = _getch();
+				if (ch == -32)
+				{
+					ch = _getch();
+					switch (ch)
+					{
+					case LEFT:
+						if (triangle > 1)
+						{
+							gotoxy(triangle, 26);
+							printf("  ");
+							triangle = triangle - 30;
+							gotoxy(triangle, 26);
+							printf("▶");
+						}
+						break;
+					case RIGHT:
+						if (triangle < 91)
+						{
+							gotoxy(triangle, 26);
+							printf("  ");
+							triangle = triangle + 30;
+							gotoxy(triangle, 26);
+							printf("▶");
+						}
+						break;
+					}
+				}
+				if (ch == 13)
+					break;
+			}
+		}
+
+
+		if (checkAdmin(&targetAccount, login_id_num)) { // check
+			break;
+		}
+
+		if (triangle == 1) {
+			if (pageNum == 1) {
+				system("cls");
+				printf("더 이상 표시할 계정이 없습니다.");
+				system("pause");
+			}
+			else {
+				pageNum--;
+			}
+		}
+		if (triangle == 31) {
+			if (pageNum == endPage) {
+				system("cls");
+				printf("더 이상 표시할 계정이 없습니다.");
+				system("pause");
+			}
+			else {
+				pageNum++;
+			}
+		}
+		if (triangle == 61)
+			return;
+
+		if (triangle == 91) {
+			int manageAccount = 0;
+
+			int accountToManage = 0;
+			accountToManage = selectAccountToManage(num_account, pageNum, endPage);
+			if (checkAdmin(&targetAccount, login_id_num)) { // check
+				break;
+			}
+			if (accountToManage != -1) {
+
+				manageAccount = ((pageNum - 1) * 10) + (accountToManage + 1);
+
+				*targetAccount = readAccountInfo(manageAccount);
+				system("cls");
+				int menu = 0;
+				menu = selectManageFunction();
+				if (checkAdmin(&targetAccount, login_id_num)) { // check
+					break;
+				}
+				switch (menu) {
+				case 1:
+					strcpy(oldNick[manageAccount - 1], (*targetAccount).nick);
+
+					changeNick((*targetAccount).nick, &((*targetAccount).changed));
+					writeAccountInfo(manageAccount, targetAccount);
+					break;
+
+				case 2:
+					changeLock((*targetAccount).id, &((*targetAccount).lock));
+					writeAccountInfo(manageAccount, targetAccount);
+					break;
+				}
+			}
+
+		}
+		system("cls");
+	}
+
+}
