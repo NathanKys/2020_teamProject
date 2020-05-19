@@ -79,7 +79,7 @@ void writeAccountInfo(int line, Account* login) {
 		}
 		infoString[i++] = (*login).email[j++];
 	}
-	for (int j = 0; j < 6; j++) {
+	for (int j = 0; j < 8; j++) {
 		infoString[i++] = (*login).birth[j] + 48;
 	}
 	infoString[i++] = ',';

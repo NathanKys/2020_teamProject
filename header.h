@@ -23,7 +23,7 @@
 // 따라서, 최소 길이로 회원가입해도, DB 상에서 이에 필요한 여유 공간은 22byte 이상 빈칸으로 처리해둬야 함.
 // -> 120 byte + 22byte의 여유있는 값으로 150 설정
 
-enum { IDCHECK = 0, NICKNAMECHECK = 3, EMAILCHECK = 4, PHONENUMBERCHECK = 6, RETCHECK = 7 };
+enum { IDCHECK, PASSWORDCHECK, NAMECHECK, NICKNAMECHECK, EMAILCHECK, BIRTHDAYCHECK, PHONENUMBERCHECK, RETCHECK};
 
 // 계정 개수 구하는 함수
 int readAccountNum();
@@ -46,6 +46,11 @@ void editEmail(char* email);
 void editBirth(int* birth);
 void editPhone(int* phone);
 void writeAccountInfo(int, Account*);
+void recordHistory(char*, char*, int);
+//문자열 형태(비밀번호 등)의 내 정보 수정 시 수정 이전의 정보 breakdown 파일로 출력
+void writeBreakdownChar(int num, char* id, char* info);
+//숫자 형태(휴대폰 번호 등)의 내 정보 수정 시
+void writeBreakdownInt(int num, char* id, int* info);
 
 // 관리자 기능 관련 함수
 void checkSecondPw();

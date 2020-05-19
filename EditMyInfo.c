@@ -123,27 +123,88 @@ void selectEdit(Account* login, int login_id_num) {
 			switch (num) {
 				case 0:	//비밀번호
 					editPW(&((*login).pw));
+					writeBreakdownChar(num, &((*login).id), &((*login).pw));
+					//recordHistory((*login).id, (*login).pw, PASSWORDCHECK);
 					break;
 				case 1:	//이름
 					editName(&((*login).name));
+					writeBreakdownChar(num, &((*login).id), &((*login).name));
+					//recordHistory((*login).id, (*login).name, NAMECHECK);
 					break;
 				case 2:	//닉네임
 					editNick(&((*login).nick));
+					writeBreakdownChar(num, &((*login).id), &((*login).nick));
+					//recordHistory((*login).id, (*login).nick, NICKNAMECHECK);
 					break;
 				case 3:	//이메일 주소
 					editEmail(&((*login).email));
+					writeBreakdownChar(num, &((*login).id), &((*login).email));
+					//recordHistory((*login).id, (*login).email, EMAILCHECK);
 					break;
 				case 4:	//생년월일
 					editBirth(&((*login).birth));
+					writeBreakdownInt(num, &((*login).id), &((*login).birth));
+					//recordHistory((*login).id, (*login).birth, BIRTHDAYCHECK);
 					break;
 				case 5:	//휴대폰 번호
 					editPhone(&((*login).phone));
+					writeBreakdownInt(num, &((*login).id), &((*login).phone));
+					//recordHistory((*login).id, (*login).phone, PHONENUMBERCHECK);
 					break;
 			}
-			
+			writeAccountInfo(login_id_num, login);
 		}
 
 	}
+}
+
+void writeBreakdownChar(int num, char* id, char* info) {
+	FILE* fp;
+	fp = fopen("./breakdown.txt", "a");
+	char out[50];
+	char cnum[2];
+	strcpy(out, id);
+	strcat(out, ",");
+	sprintf(cnum, "%d", num);
+	strcat(out, cnum);
+	strcat(out, ",");
+	strcat(out, info);
+	strcat(out, "\n");
+	fputs(out, fp);
+	fclose(fp);
+}
+void writeBreakdownInt(int num, char* id, int* info) {
+	FILE* fp;
+	fp = fopen("./breakdown.txt", "a");
+	char out[50];
+	char cnum[2];
+	char temp[12];
+	strcpy(out, id);
+	strcat(out, ",");
+	sprintf(cnum, "%d", num);
+	strcat(out, cnum);
+	strcat(out, ",");
+
+	if (num == 4) {
+		for (int i = 0; i < 8; i++) {
+			temp[i] = info[i] + 48;
+		}
+		temp[8] = 0;
+	}
+	else {
+		int i = 0;
+		for (i = 0; i < 11; i++) {
+			if (info[i] == -1)
+				break;
+			temp[i] = info[i] + 48;
+		}
+		temp[i] = 0;
+	}
+
+	strcat(out, temp);
+	strcat(out, "\n");
+	fputs(out, fp);
+	fclose(fp);
 }
 
 void editPW(char* pw) {
