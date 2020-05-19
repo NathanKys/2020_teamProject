@@ -75,7 +75,6 @@ int main() {
 
 						case 4:
 							flag = 0;
-							writeAccountInfo(login_id_num, &login);
 							break; //로그아웃
 						case 5:
 							while (flag) {
