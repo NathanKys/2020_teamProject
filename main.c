@@ -77,12 +77,9 @@ int main() {
 							flag = 0;
 							break; //로그아웃
 						case 5:
-							while (flag) {
-								login = readAccountInfo(login_id_num);
-								flag = subAdminMenu(num_account, &targetAccount, oldNick, &login);
-								// 관리자 메뉴
-								break;
-							}
+							login = readAccountInfo(login_id_num);
+							subAdminMenu(num_account, &targetAccount, oldNick, login_id_num);
+							// 보조 관리자 메뉴
 						}
 					}
 				}
