@@ -41,7 +41,7 @@ int checkPW(char* pw) {
 
 }
 
-void selectEdit(Account* login) {
+void selectEdit(Account* login, int login_id_num) {
 
 	while (1) {
 		system("cls");
@@ -146,6 +146,7 @@ void selectEdit(Account* login) {
 					recordHistory((*login).id, (*login).phone), PHONENUMBERCHECK);
 					break;
 			}
+			writeAccountInfo(login_id_num, login);
 		}
 
 	}

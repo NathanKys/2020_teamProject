@@ -2,7 +2,7 @@
 
 
 
-int uiShowMyInfo(Account* login) {
+int uiShowMyInfo(Account* login, int login_id_num) {
 	int triangle;
 	char ch;
 	system("cls");
@@ -117,7 +117,7 @@ int uiShowMyInfo(Account* login) {
 	{
 		case 8:
 			if (checkPW((*login).pw) == 1) {
-				selectEdit(login);
+				selectEdit(login, login_id_num);
 			}
 			else {
 				break;

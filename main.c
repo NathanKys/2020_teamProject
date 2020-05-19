@@ -58,7 +58,7 @@ int main() {
 					while (flag) {
 						switch (uiAfterLogin(login.nick)) {
 						case 1:	// 내 정보 보기 함수
-							while (uiShowMyInfo(&login) != 2) {
+							while (uiShowMyInfo(&login, login_id_num) != 2) {
 
 							}
 							break;
