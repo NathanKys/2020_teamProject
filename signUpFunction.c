@@ -213,10 +213,6 @@ bool duplicateCheck(char* _string, int option) {
 				fclose(fp);
 				return false;
 			}
-			else if (string[i] == '/') {
-				string[i] = '\0';
-				i = -1;
-			}
 			i++;
 		}
 		//printf("%s\n", string);
@@ -625,15 +621,15 @@ void signUp() {
 				// 대문자 하나 이상
 				// 소문자 하나 이상
 				// 숫자 하나 이상
-				if (!isContainUpperCase(u1.pw)) {printf("알파벳 대문자를 하나 이상 포함해야 합니다.\n");}
-				if (!isContainLowerCase(u1.pw)) {printf("알파벳 소문자를 하나 이상 포함해야 합니다.\n");}
-				if (!isContainNumber(u1.pw)) {printf("인도-아라비아 숫자를 하나 이상 포함해야 합니다.\n");}
+				if (!isContainUpperCase(u1.pw)) { printf("알파벳 대문자를 하나 이상 포함해야 합니다.\n"); }
+				if (!isContainLowerCase(u1.pw)) { printf("알파벳 소문자를 하나 이상 포함해야 합니다.\n"); }
+				if (!isContainNumber(u1.pw)) { printf("인도-아라비아 숫자를 하나 이상 포함해야 합니다.\n"); }
 
 				// 위의 세 조건을 모두 만족할 때
 				if (isContainNumber(u1.pw) && isContainUpperCase(u1.pw) && isContainLowerCase(u1.pw)) {
 					// 반복된 문자 체크
-					if (isRepeat(u1.pw, strlen(u1.pw))) { 
-						printf("비밀번호에 반복된 문자가 있습니다.\n"); 
+					if (isRepeat(u1.pw, strlen(u1.pw))) {
+						printf("비밀번호에 반복된 문자가 있습니다.\n");
 						system("pause");
 						continue;
 					}
