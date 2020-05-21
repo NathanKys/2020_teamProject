@@ -38,15 +38,26 @@ int uiAfterLogin(char * nick) {
 	printf("|\t└------------------------------┘  \t|\n");
 	gotoxy(32, 23);
 	printf("|\t\t\t\t\t\t|\n");
+	
 	gotoxy(32, 24);
 	printf("|\t┌------------------------------┐  \t|\n");
 	gotoxy(32, 25);
-	printf("|\t│           로그 아웃          │ \t|\n");
+	printf("|\t│         관리자 메뉴          │ \t|\n");
 	gotoxy(32, 26);
 	printf("|\t└------------------------------┘  \t|\n");
 	gotoxy(32, 27);
 	printf("|\t\t\t\t\t\t|\n");
+	
+	
 	gotoxy(32, 28);
+	printf("|\t┌------------------------------┐  \t|\n");
+	gotoxy(32, 29);
+	printf("|\t│           로그 아웃          │ \t|\n");
+	gotoxy(32, 30);
+	printf("|\t└------------------------------┘  \t|\n");
+	gotoxy(32, 31);
+	printf("|\t\t\t\t\t\t|\n");
+	gotoxy(32, 32);
 	printf("--------------------------------------------------\n");
 
 
@@ -75,7 +86,7 @@ int uiAfterLogin(char * nick) {
 						}
 						break;
 					case DOWN:
-						if (triangle < 25)
+						if (triangle < 29)
 						{
 							gotoxy(37, triangle);
 							printf(" ");
@@ -97,7 +108,9 @@ int uiAfterLogin(char * nick) {
 		return 2;
 	if (triangle == 21)
 		return 3;
-	if (triangle == 25)
+	if (triangle == 29)
 		return 4;
+	if (triangle == 25)
+		return 5;
 	return 4;
 }
