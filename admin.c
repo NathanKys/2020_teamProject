@@ -442,6 +442,140 @@ void changeLock(char* id, bool* lock) {
 	(*lock) = !temp;
 }
 
+void changeNickSub(char* nick, bool* changed, Account* targetAccount, int login_id_num) {
+
+	if (checkAdmin(&targetAccount, login_id_num)) { // check
+		return;
+	}
+	char input[NICKNAME_MAXSIZE + 2];
+
+	while (true) {
+		system("cls");
+		gotoxy(10, 5);
+		printf("기존 닉네임: %s", nick);
+
+		gotoxy(10, 7);
+		printf("닉네임에는 한글, 영어, 숫자, 띄어쓰기를 사용할 수 있습니다.(최소2자~최대12자)\n");
+		gotoxy(10, 8);
+		printf("새로운 닉네임을 입력하세요: ");
+
+		fgets(input, NICKNAME_MAXSIZE + 2, stdin);
+		input[strcspn(input, "\n")] = 0;
+
+		gotoxy(10, 10);
+
+		if (strlen(input) > NICKNAME_MAXSIZE) {
+			clearInputBuffer();
+		}
+		if (!strcmp(nick, input)) {
+			printf("기존 정보와 동일합니다.");
+			system("pause");
+		}
+
+		// fileCheck: 중복된 아이디가 있는지 검사하는 함수
+		if (duplicateCheck(input, NICKNAMECHECK)) {
+			printf("이미 사용 중인 닉네임입니다.\n");
+			system("pause");
+			continue;
+		}
+		if (getLength(input) < 2 || getLength(input) > 12) {
+			printf("닉네임은 한글, 영어, 숫자로 이루어진 2자~12자를 입력해야합니다.\n");
+			system("pause");
+			continue;
+		}
+		if (matchNickname(input)) {
+			printf("닉네임 변경이 완료되었습니다.\n");
+			gotoxy(10, 11);
+			printf("변경 이후 닉네임: %s\n", input);
+			gotoxy(10, 13);
+			system("pause");
+			break;
+		}
+		else {
+			printf("올바른 문자를 입력해주세요.\n");
+			system("pause");
+			continue;
+		}
+
+	}
+	strcpy(nick, input);
+	(*changed) = true;
+	system("cls");
+}
+
+void changeLockSub(char* id, bool* lock, Account* targetAccount, int login_id_num) {
+	if (checkAdmin(&targetAccount, login_id_num)) { // check
+		return;
+	}
+
+	printf("선택한 계정: %s\n", id);
+
+
+	int triangle;
+	char ch;
+
+	triangle = 1;
+	gotoxy(triangle, 6);
+	printf("▶");
+
+	gotoxy(0, 1);
+	if (*lock) {
+		printf("계정 잠금 여부: ");
+		printf("O");
+		gotoxy(3, 5);
+		printf("┌----------------------┐\n");
+		gotoxy(3, 6);
+		printf("│       잠금 해제      │\n");
+		gotoxy(3, 7);
+		printf("└----------------------┘\n");
+		gotoxy(1, 6);
+		while (1)
+		{
+			Sleep(300);
+			if (_kbhit())
+			{
+				ch = _getch();
+				if (ch == 13)
+					break;
+			}
+		}
+		gotoxy(0, 1);
+		printf("계정 잠금 여부: O -> X");
+		gotoxy(3, 9);
+		printf("잠금 해제 처리되었습니다.");
+	}
+	else {
+		printf("계정 잠금 여부: ");
+		printf("X");
+		gotoxy(3, 5);
+		printf("┌----------------------┐\n");
+		gotoxy(3, 6);
+		printf("│       계정 잠금      │\n");
+		gotoxy(3, 7);
+		printf("└----------------------┘\n");
+		gotoxy(1, 6);
+		while (1)
+		{
+			Sleep(300);
+			if (_kbhit())
+			{
+				ch = _getch();
+				if (ch == 13)
+					break;
+			}
+		}
+		gotoxy(0, 1);
+		printf("계정 잠금 여부: X -> O");
+		gotoxy(3, 9);
+		printf("계정 잠금 처리되었습니다.");
+	}
+	system("pause");
+	system("cls");
+
+	bool temp = (*lock);
+	(*lock) = !temp;
+}
+
 bool adminMenu(int num_account, Account * targetAccount, char** oldNick) {
 
 	int pageNum = 1;
@@ -729,12 +863,12 @@ void subAdminMenu(int num_account, Account* targetAccount, char** oldNick, int l
 				case 1:
 					strcpy(oldNick[manageAccount - 1], (*targetAccount).nick);
 
-					changeNick((*targetAccount).nick, &((*targetAccount).changed));
+					changeNickSub((*targetAccount).nick, &((*targetAccount).changed), &targetAccount, login_id_num);
 					writeAccountInfo(manageAccount, targetAccount);
 					break;
 
 				case 2:
-					changeLock((*targetAccount).id, &((*targetAccount).lock));
+					changeLockSub((*targetAccount).id, &((*targetAccount).lock), &targetAccount, login_id_num);
 					writeAccountInfo(manageAccount, targetAccount);
 					break;
 				}
