@@ -56,6 +56,8 @@ void writeBreakdownInt(int num, char* id, int* info);
 
 // 관리자 기능 관련 함수
 void checkSecondPw();
+bool checkAdmin(Account* targetAccount, int login_id_num);
+void subAdminMenu(int num_account, Account* targetAccount, char** oldNick, int login_id_num);
 bool adminMenu(int num_account, Account* targetAccount, char** oldNick);
 void readAccountInfo2(int startline, Account* a);
 void showAllAccountInfo(int pageNum, int num_account);
@@ -63,8 +65,9 @@ int selectAccountToManage(int num_account, int pageNum, int endPage);
 int selectManageFunction();
 void changeNick(char* nick, bool* changed);
 void changeLock(char* id, bool* lock);
-bool checkAdmin(Account* targetAccount, int login_id_num);
-void subAdminMenu(int num_account, Account* targetAccount, char** oldNick, int login_id_num);
+void changeNickSub(char* nick, bool* changed, Account* targetAccount, int login_id_num);
+void changeLockSub(char* id, bool* lock, Account* targetAccount, int login_id_num);
+
 
 // 회원가입 관련 함수
 int pow1(int, int);
