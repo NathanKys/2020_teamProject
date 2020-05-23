@@ -217,7 +217,7 @@ int selectAccountToManage(int num_account, int pageNum, int endPage) {
 
 		in = input - 48;
 		if (test != '\n' || !(0 <= in && in <= 9)) {
-		//if (!(0 <= in && in <= 9)) {
+			//if (!(0 <= in && in <= 9)) {
 			gotoxy(3, 26);
 			printf("잘못된 입력입니다. 숫자 하나만을 입력하세요.\n");
 			gotoxy(3, 27);
@@ -228,7 +228,7 @@ int selectAccountToManage(int num_account, int pageNum, int endPage) {
 			printf("                                              ");
 			flag = 1;
 		}
-		else if (pageNum == endPage && num_account % 10 <= in ) {
+		else if (pageNum == endPage && num_account % 10 <= in) {
 			gotoxy(3, 26);
 			printf("존재하지 않는 아이디 번호입니다.\n");
 			gotoxy(3, 27);
@@ -585,13 +585,13 @@ void changeLockSub(char* id, bool* lock, Account* targetAccount, int login_id_nu
 	(*lock) = !temp;
 }
 
-bool adminMenu(int num_account, Account * targetAccount, char** oldNick) {
+bool adminMenu(int num_account, Account* targetAccount) {
 
 	int pageNum = 1;
-	int endPage = ((num_account-1) / 10) + 1;
+	int endPage = ((num_account - 1) / 10) + 1;
 
 	while (true) {
-		
+
 		showAllAccountInfo(pageNum, num_account);
 
 		gotoxy(3, 25);
@@ -705,7 +705,6 @@ bool adminMenu(int num_account, Account * targetAccount, char** oldNick) {
 				menu = selectManageFunction();
 				switch (menu) {
 					case 1:
-						strcpy(oldNick[manageAccount - 1], (*targetAccount).nick);
 						writeBreakdownChar(9, &((*targetAccount).id), &((*targetAccount).nick));
 						changeNick((*targetAccount).nick, &((*targetAccount).changed));
 						writeAccountInfo(manageAccount, targetAccount);
@@ -716,7 +715,7 @@ bool adminMenu(int num_account, Account * targetAccount, char** oldNick) {
 						writeAccountInfo(manageAccount, targetAccount);
 						break;
 					case 3:
-					function;
+						//function;
 						break;
 				}
 			}
@@ -726,6 +725,9 @@ bool adminMenu(int num_account, Account * targetAccount, char** oldNick) {
 	}
 
 }
+
+//--
+
 bool checkAdmin(Account* targetAccount, int login_id_num) {
 	Account login;
 	system("cls");
@@ -743,7 +745,7 @@ bool checkAdmin(Account* targetAccount, int login_id_num) {
 		return false;
 }
 
-void subAdminMenu(int num_account, Account* targetAccount, char** oldNick, int login_id_num) {
+void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, char* my_id) {
 	int pageNum = 1;
 	int endPage = ((num_account - 1) / 10) + 1;
 
@@ -769,7 +771,7 @@ void subAdminMenu(int num_account, Account* targetAccount, char** oldNick, int l
 		gotoxy(63, 25);
 		printf("┌------------------┐\n");
 		gotoxy(63, 26);
-		printf("│     뒤로 가기     │\n");
+		printf("│     뒤로 가기    │\n");
 		gotoxy(63, 27);
 		printf("└------------------┘\n");
 		gotoxy(93, 25);
@@ -797,26 +799,26 @@ void subAdminMenu(int num_account, Account* targetAccount, char** oldNick, int l
 					ch = _getch();
 					switch (ch)
 					{
-					case LEFT:
-						if (triangle > 1)
-						{
-							gotoxy(triangle, 26);
-							printf("  ");
-							triangle = triangle - 30;
-							gotoxy(triangle, 26);
-							printf("▶");
-						}
-						break;
-					case RIGHT:
-						if (triangle < 91)
-						{
-							gotoxy(triangle, 26);
-							printf("  ");
-							triangle = triangle + 30;
-							gotoxy(triangle, 26);
-							printf("▶");
-						}
-						break;
+						case LEFT:
+							if (triangle > 1)
+							{
+								gotoxy(triangle, 26);
+								printf("  ");
+								triangle = triangle - 30;
+								gotoxy(triangle, 26);
+								printf("▶");
+							}
+							break;
+						case RIGHT:
+							if (triangle < 91)
+							{
+								gotoxy(triangle, 26);
+								printf("  ");
+								triangle = triangle + 30;
+								gotoxy(triangle, 26);
+								printf("▶");
+							}
+							break;
 					}
 				}
 				if (ch == 13)
@@ -872,17 +874,17 @@ void subAdminMenu(int num_account, Account* targetAccount, char** oldNick, int l
 					break;
 				}
 				switch (menu) {
-				case 1:
-					strcpy(oldNick[manageAccount - 1], (*targetAccount).nick);
+					case 1:
+						writeNickSub(8, (*targetAccount).id, (*targetAccount).nick, my_id);
 
-					changeNickSub((*targetAccount).nick, &((*targetAccount).changed), &targetAccount, login_id_num);
-					writeAccountInfo(manageAccount, targetAccount);
-					break;
+						changeNickSub((*targetAccount).nick, &((*targetAccount).changed), &targetAccount, login_id_num);
+						writeAccountInfo(manageAccount, targetAccount);
+						break;
 
-				case 2:
-					changeLockSub((*targetAccount).id, &((*targetAccount).lock), &targetAccount, login_id_num);
-					writeAccountInfo(manageAccount, targetAccount);
-					break;
+					case 2:
+						changeLockSub((*targetAccount).id, &((*targetAccount).lock), &targetAccount, login_id_num);
+						writeAccountInfo(manageAccount, targetAccount);
+						break;
 				}
 			}
 
@@ -890,4 +892,22 @@ void subAdminMenu(int num_account, Account* targetAccount, char** oldNick, int l
 		system("cls");
 	}
 
+}
+
+void writeNickSub(int num, char* target_id, char* oldNick, char* my_id) {
+	FILE* fp;
+	fp = fopen("./breakdown.txt", "a");
+	char out[70];
+	char cnum[2];
+	strcpy(out, target_id);
+	strcat(out, ",");
+	sprintf(cnum, "%d", num);
+	strcat(out, cnum);
+	strcat(out, ",");
+	strcat(out, oldNick);
+	strcat(out, ",");
+	strcat(out, my_id);
+	strcat(out, "\n");
+	fputs(out, fp);
+	fclose(fp);
 }

@@ -1,4 +1,5 @@
-﻿#include "header.h"
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include "header.h"
 
 
 
@@ -133,7 +134,7 @@ int uiShowMyInfo(Account* login, int login_id_num) {
 			break;
 
 		case 33:
-			return 3;
+			uiOldInfo(login);
 			break;
 			
 		case 58:

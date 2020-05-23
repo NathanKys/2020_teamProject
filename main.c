@@ -17,9 +17,8 @@ int main() {
 	//로그인한 아이디 번호(= 로그인한 계정이 DB 상 몇번째 줄인지. 1번부터 시작)
 	//이 값을 내 정보 보기 함수에서 인자로 받아, DB 상 해당 줄에 정보 출력
 	bool flag = 0;	//로그인 상태
-	int num_account = 0;	//DB에 등록된 계정의 총 개수
+	int num_account = 17;	//DB에 등록된 계정의 총 개수
 	num_account = readAccountNum();
-	char** oldNick = (char**)malloc(sizeof(char*) * num_account);			//닉네임 변경된 계정의 기존 닉네임 목록
 
 	bool programFlag = 1;
 	do {
@@ -32,10 +31,10 @@ int main() {
 
 		case 2:
 
-			login_id_num = loginFunction(&num_account); // return 값을 login_id_num에 복사
+			//***login_id_num = loginFunction(&num_account); // return 값을 login_id_num에 복사
+			login_id_num = 2;	//(임시)테스트를 위해 로그인 과정을 거치시 않도록 설정
 			system("cls");
 			// 관리자 로그인의 경우 -1을 리턴
-			//login_id_num = 1;
 			flag = 1;
 
 			if (login_id_num != -1) {	//관리자가 아닌 일반 회원 로그인일 경우
@@ -47,14 +46,6 @@ int main() {
 					system("cls");
 				}
 				else {
-					if (login.changed) {
-						printf("닉네임이 변경되었습니다.\n");
-						printf("기존 닉네임: %s\n", oldNick[login_id_num - 1]);
-						printf("새로운 닉네임: %s\n", login.nick);
-						login.changed = 0;
-						system("pause");
-						system("cls");
-					}
 					while (flag) {
 						switch (uiAfterLogin(login.nick)) {
 						case 1:	// 내 정보 보기 함수
@@ -78,7 +69,7 @@ int main() {
 							break; //로그아웃
 						case 5:
 							login = readAccountInfo(login_id_num);
-							subAdminMenu(num_account, &targetAccount, oldNick, login_id_num);
+							subAdminMenu(num_account, &targetAccount, login_id_num, login.id);
 							// 보조 관리자 메뉴
 						}
 					}
@@ -86,18 +77,11 @@ int main() {
 			}
 			else {	//관리자 로그인
 				checkSecondPw();
-				oldNick = (char**)malloc(sizeof(char*) * num_account);
-				for (int i = 0; i < num_account; i++) {
-					oldNick[i] = (char*)malloc(sizeof(char) * (NICKNAME_MAXSIZE + 2));
-				}
+				
 				while (flag) {
-					flag = adminMenu(num_account, &targetAccount, oldNick);
+					flag = adminMenu(num_account, &targetAccount);
 				}
-				for (int i = 0; i < num_account; i++) {
-					free(oldNick[i]);
-				}
-
-				free(oldNick);
+				
 			}
 
 			break;

@@ -48,7 +48,7 @@ void editPhone(int* phone);
 void writeAccountInfo(int, Account*);
 void recordHistory(char*, char*, int);
 //문자열 형태(비밀번호 등)의 내 정보 수정 시 수정 이전의 정보 breakdown 파일로 출력
-//보조 또는 최고 관리자에 의해 닉네임 수정 시에도 이 함수 사용
+//최고 관리자에 의해 닉네임 수정 시에도 이 함수 사용
 void writeBreakdownChar(int num, char* id, char* info);
 //숫자 형태(휴대폰 번호 등)의 내 정보 수정 시
 void writeBreakdownInt(int num, char* id, int* info);
@@ -57,8 +57,8 @@ void writeBreakdownInt(int num, char* id, int* info);
 // 관리자 기능 관련 함수
 void checkSecondPw();
 bool checkAdmin(Account* targetAccount, int login_id_num);
-void subAdminMenu(int num_account, Account* targetAccount, char** oldNick, int login_id_num);
-bool adminMenu(int num_account, Account* targetAccount, char** oldNick);
+void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, char* my_id);
+bool adminMenu(int num_account, Account* targetAccount);
 void readAccountInfo2(int startline, Account* a);
 void showAllAccountInfo(int pageNum, int num_account);
 int selectAccountToManage(int num_account, int pageNum, int endPage);
@@ -67,6 +67,8 @@ void changeNick(char* nick, bool* changed);
 void changeLock(char* id, bool* lock);
 void changeNickSub(char* nick, bool* changed, Account* targetAccount, int login_id_num);
 void changeLockSub(char* id, bool* lock, Account* targetAccount, int login_id_num);
+//보조 관리자가 다른 사용자 닉네임 수정 시 수정내역과 자신의 아이디 출력하는 함수
+void writeNickSub(int num, char* target_id, char* oldNick, char* my_id);
 
 
 // 회원가입 관련 함수
