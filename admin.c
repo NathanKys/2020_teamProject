@@ -325,11 +325,11 @@ int selectManageFunction() {
 void subAdminToogle(int subAdmin){
 	if (subAdmin == 1) {
 		subAdmin = 0;
-		printf("This account has been demoted to a normal user");
+		printf("This account has been promoted to a sub administrator");
 	}
 	else if (subAdmin == 0) {
 		subAdmin = 1;
-		printf("This account has been promoted to a sub administrator");
+		printf("This account has been demoted to a normal user");
 	}
 }
 
