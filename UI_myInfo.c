@@ -192,18 +192,6 @@ void uiOldInfo(Account* login) {
 					}
 					else if (number == 2 || number == 8 || number == 9) {
 						printf("과거 닉네임\t");
-						/*int k = 0;
-						char change_ID[20] = { 0, };
-						while (true) {
-							change_ID[k] = fgetc(list);
-							if (change_ID[k] == ',') {
-								change_ID[k] = '\0';
-								break;
-							}
-							k++;
-						}
-						printf("변경자 아이디\t: %s\t\t과거 닉네임  ", change_ID);
-						*/
 					}
 					else if (number == 3) {
 						printf("과거 이메일\t");
