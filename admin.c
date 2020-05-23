@@ -260,7 +260,7 @@ int selectManageFunction() {
 	gotoxy(93, 10);
 	printf("┌----------------------┐\n");
 	gotoxy(93, 11);
-	printf("│   보조관리자 임명해임  │\n");
+	printf("│   보조관리자 임명&해임  │\n");
 	gotoxy(93, 12);
 	printf("└----------------------┘\n");
 
@@ -319,6 +319,17 @@ int selectManageFunction() {
 		case 91:
 			return 3;
 			break;
+	}
+}
+
+void subAdminToogle(int subAdmin){
+	if (subAdmin == 1) {
+		subAdmin = 0;
+		printf("This account has been demoted to a normal user");
+	}
+	else if (subAdmin == 0) {
+		subAdmin = 1;
+		printf("This account has been promoted to a sub administrator");
 	}
 }
 
@@ -723,7 +734,7 @@ bool adminMenu(int num_account, Account* targetAccount) {
 						writeAccountInfo(manageAccount, targetAccount);
 						break;
 					case 3:
-						//function;
+						subAdminToogle(int subAdmin);
 						break;
 				}
 			}
