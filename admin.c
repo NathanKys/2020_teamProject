@@ -241,15 +241,15 @@ int selectAccountToManage(int num_account, int pageNum, int endPage) {
 	return in;
 }
 
-int selectManageFunction(int subAdmin) {
+int selectManageFunction() {
 
 	gotoxy(35, 5);
 	printf("선택한 계정에 대해 수행할 관리 기능을 선택하세요.");
 	gotoxy(35,7);
-	if(subAdmin==0){
+	if(Account.SubAdmin==0){
 		printf("accountinfo: normal user");
 	}
-	else if(subAdmin==1){
+	else if(Account.SubAdmin==1){
 		printf("accountinfo: subadministrator");
 	}
 	gotoxy(33, 10);
@@ -329,7 +329,7 @@ int selectManageFunction(int subAdmin) {
 	}
 }
 
-void subAdminToogle(int subAdmin){
+void subAdminToogle(bool subAdmin){
 	if (subAdmin == 1) {
 		subAdmin = 0;
 		printf("This account has been promoted to a sub administrator");
@@ -741,13 +741,13 @@ bool adminMenu(int num_account, Account* targetAccount) {
 						writeAccountInfo(manageAccount, targetAccount);
 						break;
 					case 3:
-						subAdminToogle(int subAdmin);
-						if(subAdmin==0){
-							subAdmin=1;
+						subAdminToogle(Account.SubAdmin);
+						if(Account.SubAdmin==0){
+							Account.SubAdmin=1;
 							printf("This account has been promoted to a sub administrator");
 						}
-						else if(subAdmin==1){
-							subAdmin=0;
+						else if(Account.SubAdmin==1){
+							Account.SubAdmin=0;
 							printf("This account has been demoted to a normal user");
 						}
 						break;
