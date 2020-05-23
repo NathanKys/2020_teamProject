@@ -472,7 +472,9 @@ void changeNickSub(char* nick, bool* changed, Account* targetAccount, int login_
 		input[strcspn(input, "\n")] = 0;
 
 		gotoxy(10, 10);
-
+		if (checkAdmin(&targetAccount, login_id_num)) { // check
+			break;
+		}
 		if (strlen(input) > NICKNAME_MAXSIZE) {
 			clearInputBuffer();
 		}
@@ -548,6 +550,9 @@ void changeLockSub(char* id, bool* lock, Account* targetAccount, int login_id_nu
 					break;
 			}
 		}
+		if (checkAdmin(&targetAccount, login_id_num)) { // check
+			return;
+		}
 		gotoxy(0, 1);
 		printf("계정 잠금 여부: O -> X");
 		gotoxy(3, 9);
@@ -572,6 +577,9 @@ void changeLockSub(char* id, bool* lock, Account* targetAccount, int login_id_nu
 				if (ch == 13)
 					break;
 			}
+		}
+		if (checkAdmin(&targetAccount, login_id_num)) { // check
+			return;
 		}
 		gotoxy(0, 1);
 		printf("계정 잠금 여부: X -> O");
@@ -745,9 +753,11 @@ bool checkAdmin(Account* targetAccount, int login_id_num) {
 		return false;
 }
 
-void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, char* my_id) {
+void subAdminMenu(int num_account, Account* targetAccount, char** oldNick, int login_id_num) {
 	int pageNum = 1;
 	int endPage = ((num_account - 1) / 10) + 1;
+	Account login;
+	login = readAccountInfo(login_id_num);
 
 	while (true) {
 		if (checkAdmin(&targetAccount, login_id_num)) { // check
@@ -771,7 +781,7 @@ void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, cha
 		gotoxy(63, 25);
 		printf("┌------------------┐\n");
 		gotoxy(63, 26);
-		printf("│     뒤로 가기    │\n");
+		printf("│     뒤로 가기     │\n");
 		gotoxy(63, 27);
 		printf("└------------------┘\n");
 		gotoxy(93, 25);
@@ -799,26 +809,26 @@ void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, cha
 					ch = _getch();
 					switch (ch)
 					{
-						case LEFT:
-							if (triangle > 1)
-							{
-								gotoxy(triangle, 26);
-								printf("  ");
-								triangle = triangle - 30;
-								gotoxy(triangle, 26);
-								printf("▶");
-							}
-							break;
-						case RIGHT:
-							if (triangle < 91)
-							{
-								gotoxy(triangle, 26);
-								printf("  ");
-								triangle = triangle + 30;
-								gotoxy(triangle, 26);
-								printf("▶");
-							}
-							break;
+					case LEFT:
+						if (triangle > 1)
+						{
+							gotoxy(triangle, 26);
+							printf("  ");
+							triangle = triangle - 30;
+							gotoxy(triangle, 26);
+							printf("▶");
+						}
+						break;
+					case RIGHT:
+						if (triangle < 91)
+						{
+							gotoxy(triangle, 26);
+							printf("  ");
+							triangle = triangle + 30;
+							gotoxy(triangle, 26);
+							printf("▶");
+						}
+						break;
 					}
 				}
 				if (ch == 13)
@@ -874,17 +884,23 @@ void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, cha
 					break;
 				}
 				switch (menu) {
-					case 1:
-						writeNickSub(8, (*targetAccount).id, (*targetAccount).nick, my_id);
+				case 1:
+					strcpy(oldNick[manageAccount - 1], (*targetAccount).nick);
 
-						changeNickSub((*targetAccount).nick, &((*targetAccount).changed), &targetAccount, login_id_num);
-						writeAccountInfo(manageAccount, targetAccount);
-						break;
+					changeNickSub((*targetAccount).nick, &((*targetAccount).changed), &targetAccount, login_id_num);
+					if (!login.subAdmin) { // check
+						return;
+					}
+					writeAccountInfo(manageAccount, targetAccount);
+					break;
 
-					case 2:
-						changeLockSub((*targetAccount).id, &((*targetAccount).lock), &targetAccount, login_id_num);
-						writeAccountInfo(manageAccount, targetAccount);
-						break;
+				case 2:
+					changeLockSub((*targetAccount).id, &((*targetAccount).lock), &targetAccount, login_id_num);
+					if (!login.subAdmin) { // check
+						return;
+					}
+					writeAccountInfo(manageAccount, targetAccount);
+					break;
 				}
 			}
 
