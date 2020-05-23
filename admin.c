@@ -257,6 +257,12 @@ int selectManageFunction() {
 	printf("│    계정 잠금 및 해제   │\n");
 	gotoxy(63, 12);
 	printf("└------------------------┘\n");
+	gotoxy(93, 10);
+	printf("┌----------------------┐\n");
+	gotoxy(93, 11);
+	printf("│   보조관리자 임명해임  │\n");
+	gotoxy(93, 12);
+	printf("└----------------------┘\n");
 
 	int triangle;
 	char ch;
@@ -286,7 +292,7 @@ int selectManageFunction() {
 						}
 						break;
 					case RIGHT:
-						if (triangle < 61)
+						if (triangle < 91)
 						{
 							gotoxy(triangle, 11);
 							printf("  ");
@@ -309,6 +315,9 @@ int selectManageFunction() {
 			break;
 		case 61:
 			return 2;
+			break;
+		case 91:
+			return 3;
 			break;
 	}
 }
@@ -705,6 +714,9 @@ bool adminMenu(int num_account, Account * targetAccount, char** oldNick) {
 					case 2:
 						changeLock((*targetAccount).id, &((*targetAccount).lock));
 						writeAccountInfo(manageAccount, targetAccount);
+						break;
+					case 3:
+					function;
 						break;
 				}
 			}
