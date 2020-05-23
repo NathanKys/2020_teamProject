@@ -108,3 +108,4 @@ void userSearch(Account* login, int num_account);
 //int writeMessage(Account tt,char *s_Nickname);
 //
 void findaccount(int num_account);
+void uiOldInfo(Account* login);
