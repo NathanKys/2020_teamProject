@@ -245,7 +245,7 @@ void uiOldInfo(Account* login) {
 						
 					}
 					if (number == 9) { // 최종 관리자
-						printf("\t\t변경자\t: 최고 관리자");
+						printf("\t\t변경자\t: admin");
 					}
 					printf("\n");
 				}
