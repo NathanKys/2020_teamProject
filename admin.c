@@ -757,7 +757,6 @@ void subAdminMenu(int num_account, Account* targetAccount, char** oldNick, int l
 	int pageNum = 1;
 	int endPage = ((num_account - 1) / 10) + 1;
 	Account login;
-	login = readAccountInfo(login_id_num);
 
 	while (true) {
 		if (checkAdmin(&targetAccount, login_id_num)) { // check
@@ -888,6 +887,7 @@ void subAdminMenu(int num_account, Account* targetAccount, char** oldNick, int l
 					strcpy(oldNick[manageAccount - 1], (*targetAccount).nick);
 
 					changeNickSub((*targetAccount).nick, &((*targetAccount).changed), &targetAccount, login_id_num);
+					login = readAccountInfo(login_id_num);
 					if (!login.subAdmin) { // check
 						return;
 					}
@@ -896,6 +896,7 @@ void subAdminMenu(int num_account, Account* targetAccount, char** oldNick, int l
 
 				case 2:
 					changeLockSub((*targetAccount).id, &((*targetAccount).lock), &targetAccount, login_id_num);
+					login = readAccountInfo(login_id_num);
 					if (!login.subAdmin) { // check
 						return;
 					}
