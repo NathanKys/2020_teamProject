@@ -239,8 +239,13 @@ void uiOldInfo(Account* login) {
 					printf("\n");
 				}
 				else {
-					char buffer[70];
-					fgets(buffer, 70, list);
+					char buffe;
+					while (true) {
+						buffe = fgetc(list);
+						if (buffe == '\n' || buffe == EOF) {
+							break;
+						}
+					}
 				}
 
 				break;
