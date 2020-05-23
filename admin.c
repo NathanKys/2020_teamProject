@@ -241,10 +241,17 @@ int selectAccountToManage(int num_account, int pageNum, int endPage) {
 	return in;
 }
 
-int selectManageFunction() {
+int selectManageFunction(int subAdmin) {
 
 	gotoxy(35, 5);
 	printf("선택한 계정에 대해 수행할 관리 기능을 선택하세요.");
+	gotoxy(35,7);
+	if(subAdmin==0){
+		printf("accountinfo: normal user");
+	}
+	else if(subAdmin==1){
+		printf("accountinfo: subadministrator");
+	}
 	gotoxy(33, 10);
 	printf("┌----------------------┐\n");
 	gotoxy(33, 11);
