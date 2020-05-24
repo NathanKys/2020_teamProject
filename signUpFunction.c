@@ -54,17 +54,18 @@ bool matchEngName(const char* string) {
 bool matchNickname(const char* string) {
 	regex_t state;
 	const char* pattern = "^(([[:blank:]]?[a-zA-Z0-9][[:blank:]]?))*$";
-	int reti;
-	bool check;
-	int string_size = strlen(string);
-	check = matchKorean(string, string_size);
+	//int reti;
+	//bool check;
+	//int string_size = strlen(string);
+	//check = matchKorean(string, string_size);
 
 	regcomp(&state, pattern, REG_EXTENDED);
-	reti = regexec(&state, string, 0, NULL, 0) ? false : true;
-	if (!isCompleteKorean(string, string_size)) {
-		return false;
-	}
-	return reti || check;
+	return regexec(&state, string, 0, NULL, 0) ? false : true;
+	//reti = regexec(&state, string, 0, NULL, 0) ? false : true;
+	//if (!isCompleteKorean(string, string_size)) {
+	//	return false;
+	//}
+	//return reti || check;
 }
 
 bool matchPhoneNumber(const char* string) {
@@ -557,7 +558,7 @@ void signUp() {
 
 		// 메뉴로 이동
 		if (u1.id[0] == '~' && strlen(u1.id) == 1) {
-			printf("메뉴로 돌아갑니다.\n");
+			printf("Click any key to go back to menu.\n");
 			system("pause");
 			return;
 		}
@@ -603,7 +604,7 @@ void signUp() {
 
 		// 메뉴로 이동
 		if (u1.pw[0] == '~' && strlen(u1.pw) == 1) {
-			printf("메뉴로 돌아갑니다.\n");
+			printf("Click any key to go back to menu.\n");
 			system("pause");
 			return;
 		}
@@ -671,7 +672,7 @@ void signUp() {
 
 		// 메뉴로 이동
 		if (checkPassword[0] == '~' && strlen(checkPassword) == 1) {
-			printf("메뉴로 돌아갑니다.\n");
+			printf("Click any key to go back to menu.\n");
 			system("pause");
 			return;
 		}
@@ -700,82 +701,49 @@ void signUp() {
 	// 이름 입력
 	while (true) {
 		system("cls");
-		printf("이름을 입력합니다.\n");
-		printf("이름은 한글(최소 2자~최대 5자) 또는 영어 대소문자(최소 3자~최대 20자)로 구성됩니다.\n");
-		printf("한글와 영어는 혼용하여 사용할 수 없습니다. 영어의 경우 띄어쓰기가 가능합니다.\n");
+		printf("Name contains blank space and alphabetic upper and lower case characters.(3-20)\n");
 		fgets(u1.name, NAME_MAXSIZE + 2, stdin);
 		u1.name[strcspn(u1.name, "\n")] = 0;
 
 		// 메뉴로 이동
 		if (u1.name[0] == '~' && strlen(u1.name) == 1) {
-			printf("메뉴로 돌아갑니다.\n");
+			printf("Click any key to go back to menu.\n");
 			system("pause");
 			return;
 		}
 		if (strlen(u1.name) > NAME_MAXSIZE) {
 			clearInputBuffer();
 		}
-
-		if (kreng(u1.name, strlen(u1.name))) {
-			if (isContainEng(u1.name)) {
-				printf("한글과 영어는 함께 사용할 수 없습니다.\n");
-			}
-			else {
-				printf("올바른 문자를 입력해주세요.\n");
-			}
-			system("pause");
-			continue;
-		}
-		if (matchKorean(u1.name, strlen(u1.name))) {
-			if (!isCompleteKorean(u1.name, strlen(u1.name))) {
-				printf("올바른 문자를 입력해주세요.\n");
-				system("pause");
-				continue;
-			}
-			if (getLength(u1.name) >= 2 && getLength(u1.name) <= 5) {
-				printf("이름 입력이 완료되었습니다.\n");
+		if (matchEngName(u1.name)) {
+			if (getLength(u1.name) >= 3 && getLength(u1.name) <= 20) {
+				printf("Success.\n");
 				system("pause");
 				break;
 			}
 			else {
-				printf("한글은 공백을 포함하지 않고 2~5자를 입력해야 합니다.\n");
+				printf("You must enter 3 to 20 characters, include blank spaces.\n");
 				system("pause");
 				continue;
 			}
 		}
 		else {
-			if (matchEngName(u1.name)) {
-				if (getLength(u1.name) >= 3 && getLength(u1.name) <= 20) {
-					printf("이름 입력이 완료되었습니다.\n");
-					system("pause");
-					break;
-				}
-				else {
-					printf("영어는 공백을 포함하여 3~20자를 입력해야 합니다.\n");
-					system("pause");
-					continue;
-				}
-			}
-			else {
-				printf("올바른 문자를 입력해주세요.\n");
-				system("pause");
-				continue;
-			}
+			printf("Please enter a validated character.\n");
+			system("pause");
+			continue;
 		}
 	}
 
 	// 닉네임 입력
 	while (true) {
 		system("cls");
-		printf("생성할 계정의 닉네임을 입력합니다.\n");
-		printf("닉네임에는 한글, 영어, 숫자, 띄어쓰기를 사용할 수 있습니다.(최소2자~최대12자)\n");
+		printf("Nickname can include English, numbers and blank spaces.(2-12)\n");
 
 		fgets(u1.nick, NICKNAME_MAXSIZE + 2, stdin);
 		u1.nick[strcspn(u1.nick, "\n")] = 0;
 
 		if (u1.nick[0] == '~' && strlen(u1.nick) == 1) {
 			// 메뉴로 이동
-			printf("메뉴로 돌아갑니다.\n");
+			printf("Click any key to go back to menu.\n");
 			system("pause");
 			return;
 		}
@@ -785,22 +753,22 @@ void signUp() {
 
 		// fileCheck: 중복된 아이디가 있는지 검사하는 함수
 		if (duplicateCheck(u1.nick, NICKNAMECHECK)) {
-			printf("입력하신 닉네임는 이미 사용 중인 닉네임입니다.\n");
+			printf("Overlapped nickname, Please check again.\n");
 			system("pause");
 			continue;
 		}
 		if (getLength(u1.nick) < 2 || getLength(u1.nick) > 12) {
-			printf("닉네임은 한글, 영어, 숫자로 이루어진 2자~12자를 입력해야합니다.\n");
+			printf("Nickname must be 2 to 12 characters with English and numeric characters.\n");
 			system("pause");
 			continue;
 		}
 		if (matchNickname(u1.nick)) {
-			printf("닉네임 입력이 완료되었습니다.\n");
+			printf("Success.\n");
 			system("pause");
 			break;
 		}
 		else {
-			printf("올바른 문자를 입력해주세요.\n");
+			printf("Please enter a validated character.\n");
 			system("pause");
 			continue;
 		}
@@ -817,7 +785,7 @@ void signUp() {
 
 		// 메뉴로 이동
 		if (u1.email[0] == '~' && strlen(u1.email) == 1) {
-			printf("메뉴로 돌아갑니다.\n");
+			printf("Click any key to go back to menu.\n");
 			system("pause");
 			return;
 		}
@@ -860,7 +828,7 @@ void signUp() {
 
 		// 메뉴로 이동
 		if (tempBirthNumber[0] == '~' && strlen(tempBirthNumber) == 1) {
-			printf("메뉴로 돌아갑니다.\n");
+			printf("Click any key to go back to menu.\n");
 			system("pause");
 			return;
 		}
@@ -919,7 +887,7 @@ void signUp() {
 
 		// 메뉴로 이동
 		if (tempPhoneNumber[0] == '~' && strlen(tempPhoneNumber) == 1) {
-			printf("메뉴로 돌아갑니다.\n");
+			printf("Click any key to go back to menu.\n");
 			system("pause");
 			return;
 		}
@@ -965,7 +933,7 @@ void signUp() {
 
 		// 메뉴로 이동
 		if (retId[0] == '~' && strlen(retId) == 1) {
-			printf("메뉴로 돌아갑니다.\n");
+			printf("Click any key to go back to menu.\n");
 			system("pause");
 			return;
 		}
