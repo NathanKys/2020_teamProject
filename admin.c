@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #include "header.h"
 #include "ReadAccount.h"
@@ -241,15 +241,15 @@ int selectAccountToManage(int num_account, int pageNum, int endPage) {
 	return in;
 }
 
-int selectManageFunction() {
+int selectManageFunction(bool subAdmin) {
 
 	gotoxy(35, 5);
 	printf("선택한 계정에 대해 수행할 관리 기능을 선택하세요.");
-	gotoxy(35,7);
-	if(Account.SubAdmin==0){
+	gotoxy(35, 7);
+	if (subAdmin == 0) {
 		printf("accountinfo: normal user");
 	}
-	else if(Account.SubAdmin==1){
+	else if (subAdmin == 1) {
 		printf("accountinfo: subadministrator");
 	}
 	gotoxy(33, 10);
@@ -288,26 +288,26 @@ int selectManageFunction() {
 				ch = _getch();
 				switch (ch)
 				{
-					case LEFT:
-						if (triangle > 31)
-						{
-							gotoxy(triangle, 11);
-							printf("  ");
-							triangle = triangle - 30;
-							gotoxy(triangle, 11);
-							printf("▶");
-						}
-						break;
-					case RIGHT:
-						if (triangle < 91)
-						{
-							gotoxy(triangle, 11);
-							printf("  ");
-							triangle = triangle + 30;
-							gotoxy(triangle, 11);
-							printf("▶");
-						}
-						break;
+				case LEFT:
+					if (triangle > 31)
+					{
+						gotoxy(triangle, 11);
+						printf("  ");
+						triangle = triangle - 30;
+						gotoxy(triangle, 11);
+						printf("▶");
+					}
+					break;
+				case RIGHT:
+					if (triangle < 91)
+					{
+						gotoxy(triangle, 11);
+						printf("  ");
+						triangle = triangle + 30;
+						gotoxy(triangle, 11);
+						printf("▶");
+					}
+					break;
 				}
 			}
 			if (ch == 13)
@@ -317,28 +317,106 @@ int selectManageFunction() {
 
 	system("cls");
 	switch (triangle) {
-		case 31:
-			return 1;
-			break;
-		case 61:
-			return 2;
-			break;
-		case 91:
-			return 3;
-			break;
+	case 31:
+		return 1;
+		break;
+	case 61:
+		return 2;
+		break;
+	case 91:
+		return 3;
+		break;
 	}
 }
 
-void subAdminToogle(bool subAdmin){
-	if (subAdmin == 1) {
-		subAdmin = 0;
-		printf("This account has been promoted to a sub administrator");
+int selectManageFunctionSub(bool subAdmin) {
+	gotoxy(35, 5);
+	printf("선택한 계정에 대해 수행할 관리 기능을 선택하세요.");
+	gotoxy(35, 7);
+	if (subAdmin == 0) {
+		printf("accountinfo: normal user");
 	}
-	else if (subAdmin == 0) {
-		subAdmin = 1;
-		printf("This account has been demoted to a normal user");
+	else if (subAdmin == 1) {
+		printf("accountinfo: subadministrator");
+	}
+	gotoxy(33, 10);
+	printf("┌----------------------┐\n");
+	gotoxy(33, 11);
+	printf("│      닉네임 수정     │\n");
+	gotoxy(33, 12);
+	printf("└----------------------┘\n");
+	gotoxy(63, 10);
+	printf("┌------------------------┐\n");
+	gotoxy(63, 11);
+	printf("│    계정 잠금 및 해제   │\n");
+	gotoxy(63, 12);
+	printf("└------------------------┘\n");
+
+	int triangle;
+	char ch;
+
+	triangle = 31;
+	gotoxy(triangle, 11);
+	printf("▶");
+	while (1)
+	{
+		Sleep(300);
+		if (_kbhit())
+		{
+			ch = _getch();
+			if (ch == -32)
+			{
+				ch = _getch();
+				switch (ch)
+				{
+				case LEFT:
+					if (triangle > 31)
+					{
+						gotoxy(triangle, 11);
+						printf("  ");
+						triangle = triangle - 30;
+						gotoxy(triangle, 11);
+						printf("▶");
+					}
+					break;
+				case RIGHT:
+					if (triangle < 61)
+					{
+						gotoxy(triangle, 11);
+						printf("  ");
+						triangle = triangle + 30;
+						gotoxy(triangle, 11);
+						printf("▶");
+					}
+					break;
+				}
+			}
+			if (ch == 13)
+				break;
+		}
+	}
+
+	system("cls");
+	switch (triangle) {
+	case 31:
+		return 1;
+		break;
+	case 61:
+		return 2;
+		break;
 	}
 }
+
+//void subAdminToogle(bool subAdmin) {
+//	if (subAdmin == 1) {
+//		subAdmin = 0;
+//		printf("This account has been promoted to a sub administrator");
+//	}
+//	else if (subAdmin == 0) {
+//		subAdmin = 1;
+//		printf("This account has been demoted to a normal user");
+//	}
+//}
 
 void changeNick(char* nick, bool* changed) {
 
@@ -612,7 +690,6 @@ void changeLockSub(char* id, bool* lock, Account* targetAccount, int login_id_nu
 }
 
 bool adminMenu(int num_account, Account* targetAccount) {
-
 	int pageNum = 1;
 	int endPage = ((num_account - 1) / 10) + 1;
 
@@ -663,26 +740,26 @@ bool adminMenu(int num_account, Account* targetAccount) {
 					ch = _getch();
 					switch (ch)
 					{
-						case LEFT:
-							if (triangle > 1)
-							{
-								gotoxy(triangle, 26);
-								printf("  ");
-								triangle = triangle - 30;
-								gotoxy(triangle, 26);
-								printf("▶");
-							}
-							break;
-						case RIGHT:
-							if (triangle < 91)
-							{
-								gotoxy(triangle, 26);
-								printf("  ");
-								triangle = triangle + 30;
-								gotoxy(triangle, 26);
-								printf("▶");
-							}
-							break;
+					case LEFT:
+						if (triangle > 1)
+						{
+							gotoxy(triangle, 26);
+							printf("  ");
+							triangle = triangle - 30;
+							gotoxy(triangle, 26);
+							printf("▶");
+						}
+						break;
+					case RIGHT:
+						if (triangle < 91)
+						{
+							gotoxy(triangle, 26);
+							printf("  ");
+							triangle = triangle + 30;
+							gotoxy(triangle, 26);
+							printf("▶");
+						}
+						break;
 					}
 				}
 				if (ch == 13)
@@ -728,29 +805,33 @@ bool adminMenu(int num_account, Account* targetAccount) {
 				*targetAccount = readAccountInfo(manageAccount);
 				system("cls");
 				int menu = 0;
-				menu = selectManageFunction();
+				menu = selectManageFunction((*targetAccount).subAdmin);
 				switch (menu) {
-					case 1:
-						writeBreakdownChar(9, &((*targetAccount).id), &((*targetAccount).nick));
-						changeNick((*targetAccount).nick, &((*targetAccount).changed));
-						writeAccountInfo(manageAccount, targetAccount);
-						break;
+				case 1:
+					writeBreakdownChar(9, &((*targetAccount).id), &((*targetAccount).nick));
+					changeNick((*targetAccount).nick, &((*targetAccount).changed));
+					writeAccountInfo(manageAccount, targetAccount);
+					break;
 
-					case 2:
-						changeLock((*targetAccount).id, &((*targetAccount).lock));
+				case 2:
+					changeLock((*targetAccount).id, &((*targetAccount).lock));
+					writeAccountInfo(manageAccount, targetAccount);
+					break;
+				case 3:
+					//subAdminToogle((*targetAccount).subAdmin);
+					if ((*targetAccount).subAdmin == 0) {
+						(*targetAccount).subAdmin = 1;
+						printf("This account has been promoted to a sub administrator");
 						writeAccountInfo(manageAccount, targetAccount);
-						break;
-					case 3:
-						subAdminToogle(Account.SubAdmin);
-						if(Account.SubAdmin==0){
-							Account.SubAdmin=1;
-							printf("This account has been promoted to a sub administrator");
-						}
-						else if(Account.SubAdmin==1){
-							Account.SubAdmin=0;
-							printf("This account has been demoted to a normal user");
-						}
-						break;
+						system("pause");
+					}
+					else if ((*targetAccount).subAdmin == 1) {
+						(*targetAccount).subAdmin = 0;
+						printf("This account has been demoted to a normal user");
+						writeAccountInfo(manageAccount, targetAccount);
+						system("pause");
+					}
+					break;
 				}
 			}
 
@@ -903,7 +984,7 @@ void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, cha
 				*targetAccount = readAccountInfo(manageAccount);
 				system("cls");
 				int menu = 0;
-				menu = selectManageFunction();
+				menu = selectManageFunctionSub((*targetAccount).subAdmin);
 				if (checkAdmin(&targetAccount, login_id_num)) { // check
 					break;
 				}
@@ -925,6 +1006,9 @@ void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, cha
 						return;
 					}
 					writeAccountInfo(manageAccount, targetAccount);
+					break;
+				case 3:
+					printf("Unauthorized to subadministrator.");
 					break;
 				}
 			}
