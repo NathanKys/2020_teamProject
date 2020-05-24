@@ -1007,9 +1007,6 @@ void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, cha
 					}
 					writeAccountInfo(manageAccount, targetAccount);
 					break;
-				case 3:
-					printf("Unauthorized to subadministrator.");
-					break;
 				}
 			}
 
