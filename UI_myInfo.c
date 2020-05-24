@@ -141,7 +141,7 @@ int uiShowMyInfo(Account* login, int login_id_num) {
 			return 2;
 			break;	
 	}
-
+	return 0;
 }
 
 
