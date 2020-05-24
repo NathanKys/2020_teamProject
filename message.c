@@ -140,7 +140,7 @@ int sendMessage(char* sender, char* receiver) {
 	printf("▶");
 
 	gotoxy(0, y);
-	printf("쪽지 -> ");
+	printf("Message -> ");
 	gotoxy(10, 3);
 	for (int j = 0; j <= 85; j++) {
 		printf("-");
@@ -162,7 +162,7 @@ int sendMessage(char* sender, char* receiver) {
 	gotoxy(35, 25);
 	printf("┌-------------------------------┐\n");
 	gotoxy(35, 26);
-	printf("│           뒤로 가기           │\n");
+	printf("│             Back              │\n");
 	gotoxy(35, 27);
 	printf("└-------------------------------┘\n");
 
@@ -188,7 +188,7 @@ int sendMessage(char* sender, char* receiver) {
 				gotoxy(x, y);
 				printf("~");
 				gotoxy(30, 30);
-				printf("메뉴로 돌아갑니다.");
+				printf("Back to User Search.");
 				gotoxy(30, 31);
 				system("pause");
 				return 0;  // 합칠때 리턴값을 통하여 돌아갈 위치 정하기 #######################################################################
@@ -210,25 +210,23 @@ int sendMessage(char* sender, char* receiver) {
 				printf("\b");
 				i--;
 				k--;
-				if (input[i] & 0x80) { // 한글일 경우 배열 2칸을 지워야함.
+				/*if (input[i] & 0x80) { // 한글일 경우 배열 2칸을 지워야함.
 					input[i--] = 0;
 					input[i] = 0;
 					gotoxy(--x, y);
 					printf(" ");
 					printf("\b");
 					gotoxy(x, y);
-				}
-				else {
-					input[i] = 0;
-					gotoxy(x, y);
-				}
+				}*/
+				input[i] = 0;
+				gotoxy(x, y);
 			}
 			else if (i >= 400 || k >= 200) { // -> 최대 입력 갯수 제한
 				while (_kbhit()) {
 					_getch();
 				}
 				gotoxy(40, 24);
-				printf("쪽지는 최대 200자까지 작성할 수 있습니다.");
+				printf("Maximum is 200.");
 				checkk = true;
 				gotoxy(x, y);
 				continue;
@@ -268,21 +266,23 @@ int sendMessage(char* sender, char* receiver) {
 						}
 						continue;
 					}
-					gotoxy(10, 29);
-					printf("허용되지 않는 문자가 포함되었습니다..");
-					gotoxy(30, 30);
-					printf("허용하는 문자: 한글, 영어, 숫자, ‘?’, ‘!’, ‘.’, ‘,’, ‘(‘, ‘)’, 띄어쓰기");
+					gotoxy(30, 29);
+					printf("Character that is not allowed is included.");
+					gotoxy(10, 30);
+					printf("Allowed Characters: English, Number, ‘?’, ‘!’, ‘.’, ‘,’, ‘(‘, ‘)’, Spaceing Word");
 					gotoxy(30, 31);
 					system("pause");
+					gotoxy(30, 29);
+					printf("                                                  ");
 					gotoxy(30, 30);
-					printf("                                       ");
+					printf("                                                                                        ");
 					gotoxy(30, 31);
-					printf("                                       ");
+					printf("                                        ");
 					gotoxy(x, y);
 					continue;
 				}
 			}
-			else if (ch & 0x80) { // 한글 ;
+			/*else if (ch & 0x80) { // 한글 ;
 				input[i++] = ch;
 				if (_kbhit()) {
 					ch = _getch();
@@ -295,7 +295,7 @@ int sendMessage(char* sender, char* receiver) {
 					x += 2;
 					gotoxy(x, y);
 				}
-			}
+			}*/
 			else if (isalnum(ch) || (ch == '.') || (ch == ',') || (ch == '?') || (ch == '(') || (ch == ')') || (ch == '!') || (ch == 32)) { // 한글 이외이 것
 
 				input[i] = ch;
@@ -310,15 +310,17 @@ int sendMessage(char* sender, char* receiver) {
 					_getch();
 				}
 				gotoxy(30, 29);
-				printf("허용되지 않는 문자가 포함되었습니다..");
+				printf("Character that is not allowed is included.");
 				gotoxy(10, 30);
-				printf("허용하는 문자: 한글, 영어, 숫자, ‘?’, ‘!’, ‘.’, ‘,’, ‘(‘, ‘)’, 띄어쓰기");
+				printf("Allowed Characters: English, Number, ‘?’, ‘!’, ‘.’, ‘,’, ‘(‘, ‘)’, Spaceing Word");
 				gotoxy(30, 31);
 				system("pause");
+				gotoxy(30, 29);
+				printf("                                                  ");
 				gotoxy(30, 30);
-				printf("                                       ");
+				printf("                                                                                        ");
 				gotoxy(30, 31);
-				printf("                                       ");
+				printf("                                        ");
 				gotoxy(x, y);
 			}
 
@@ -334,12 +336,11 @@ int sendMessage(char* sender, char* receiver) {
 
 
 	gotoxy(30, 30);
-	printf("쪽지를 성공적으로 보냈습니다.");
+	printf("The message was sent successfully.");
 	gotoxy(30, 31);
 	system("pause");
 
 
-	//fputs(tt.nick, fp);
 	fputs(receiver, fp); // 쪽지 보내는 사람 즉 지금 로그인 한 사람 닉네임
 	fputs(",", fp);
 	fputs(sender, fp); // 쪽지 받는 사람 닉네임
@@ -348,66 +349,6 @@ int sendMessage(char* sender, char* receiver) {
 	fputs("\n", fp);
 	fclose(fp);
 	return 0;  // ############################################################## 수정
-
-	
-	/*FILE* fp;
-	fp = fopen("./message.txt", "a+");
-	if (fp == NULL)
-	{
-		printf("파일 입출력 실패.\n");
-		exit(1);
-	}
-	char* input = malloc(sizeof(char) * 201);
-	while (true) {
-		system("cls");
-		gotoxy(10, 10);
-		printf("쪽지는 최대 200자까지 작성할 수 있습니다.");
-		gotoxy(10, 11);
-		printf(">");
-		fgets(input, TEXT_MAXSIZE + 2, stdin);
-		input[strcspn(input, "\n")] = 0;
-
-		if (input[0] == '~' && strlen(input) == 1) {
-			system("cls");
-			gotoxy(45, 10);
-			printf("메뉴로 돌아갑니다.");
-			gotoxy(41, 11);
-			system("pause");
-			return input;
-		}
-		if (strlen(input) > NICKNAME_MAXSIZE) {
-			clearInputBuffer();
-		}
-		if (getLength(input) > 200) {
-			gotoxy(10, 15);
-			printf("쪽지는 최대 200자까지 작성할 수 있습니다.");
-			gotoxy(10, 16);
-			system("pause");
-			continue;
-		}
-		if (matchMessage(input)) {
-			system("cls");
-			gotoxy(45, 10);
-			printf("쪽지를 성공적으로 보냈습니다.");
-			gotoxy(41, 12);
-			system("pause");
-			break;
-		}
-		else {
-			gotoxy(10, 15);
-			printf("허용되지 않은 문자가 포함되었습니다.");
-			gotoxy(10, 16);
-			printf("허용하는 문자 : 한글, 영어, 숫자, '?', '!', '.', '(', ')', 띄어쓰기 ");
-			gotoxy(10, 17);
-			system("pause");
-			continue;
-		}
-	}
-	if (input[0] != '~') {
-		fprintf(fp, "%s,%s,%d,%s\n", receiver, sender, 1, input);
-		fclose(fp);
-	}
-	*/
 }
 void showMessage(Message* m, char* id, int count, int index) {
 	int flag = count - index - 1;
