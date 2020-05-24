@@ -211,7 +211,7 @@ void uiOldInfo(Account* login) {
 					while (true) {
 						temp[j] = fgetc(list);
 						if (temp[j] == EOF || temp[j] == '\n' || temp[j] == ',') {
-							if (temp[j] == ',') {
+							if (temp[j] == ',' || temp[j] == '\n') {
 								temp[j] = '\0';
 							}
 							break;
@@ -247,13 +247,12 @@ void uiOldInfo(Account* login) {
 						}
 					}
 				}
-
+				
 				break;
 			}
-			//else if (tempID[i] == EOF) {
-			//	fclose(list);
-			//	return 0;
-			//}
+			if (tempID[i] == EOF) {
+				break;
+			}
 			i++;
 		}
 
