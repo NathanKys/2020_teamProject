@@ -779,7 +779,7 @@ bool checkAdmin(Account* targetAccount, int login_id_num) {
 		return false;
 }
 
-void subAdminMenu(int num_account, Account* targetAccount, char** oldNick, int login_id_num) {
+void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, char* my_id) {
 	int pageNum = 1;
 	int endPage = ((num_account - 1) / 10) + 1;
 	Account login;
@@ -891,7 +891,6 @@ void subAdminMenu(int num_account, Account* targetAccount, char** oldNick, int l
 
 		if (triangle == 91) {
 			int manageAccount = 0;
-
 			int accountToManage = 0;
 			accountToManage = selectAccountToManage(num_account, pageNum, endPage);
 			if (checkAdmin(&targetAccount, login_id_num)) { // check
@@ -910,8 +909,7 @@ void subAdminMenu(int num_account, Account* targetAccount, char** oldNick, int l
 				}
 				switch (menu) {
 				case 1:
-					strcpy(oldNick[manageAccount - 1], (*targetAccount).nick);
-
+					writeNickSub(8, (*targetAccount).id, (*targetAccount).nick, my_id);
 					changeNickSub((*targetAccount).nick, &((*targetAccount).changed), &targetAccount, login_id_num);
 					login = readAccountInfo(login_id_num);
 					if (!login.subAdmin) { // check
