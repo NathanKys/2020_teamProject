@@ -282,20 +282,25 @@ int sendMessage(char* sender, char* receiver) {
 					continue;
 				}
 			}
-			/*else if (ch & 0x80) { // 한글 ;
-				input[i++] = ch;
-				if (_kbhit()) {
-					ch = _getch();
-					input[i++] = ch;
-					int g = i - 2;
-					gotoxy(x, y);
-
-					printf("%c%c", input[g], input[g + 1]);
-					k++;
-					x += 2;
-					gotoxy(x, y);
+			else if (ch & 0x80) { // 한글 ;
+				while(kbhit(){
+					getch();
 				}
-			}*/
+				gotoxy(30, 29);
+					printf("Character that is not allowed is included.");
+					gotoxy(10, 30);
+					printf("Allowed Characters: English, Number, ‘?’, ‘!’, ‘.’, ‘,’, ‘(‘, ‘)’, Spaceing Word");
+					gotoxy(30, 31);
+					system("pause");
+					gotoxy(30, 29);
+					printf("                                                  ");
+					gotoxy(30, 30);
+					printf("                                                                                        ");
+					gotoxy(30, 31);
+					printf("                                        ");
+					gotoxy(x, y);
+					continue;
+			}
 			else if (isalnum(ch) || (ch == '.') || (ch == ',') || (ch == '?') || (ch == '(') || (ch == ')') || (ch == '!') || (ch == 32)) { // 한글 이외이 것
 
 				input[i] = ch;
