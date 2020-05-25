@@ -528,7 +528,7 @@ Message* showMessageList(char* id) {
 }
 int findLine(char* id, int count, int flag) {
 	FILE* fp;
-	char temp[MAX_LINE_LENGTH];
+	char temp[TEXT_MAXSIZE];
 	int i = 0;
 	int counter = 0;
 	int line = 1;
@@ -558,11 +558,11 @@ int findLine(char* id, int count, int flag) {
 				return line;
 			}
 			else {
-				fgets(temp, MAX_LINE_LENGTH, fp);
+				fgets(temp, TEXT_MAXSIZE, fp);
 			}
 		}
 		else {
-			fgets(temp, MAX_LINE_LENGTH, fp);
+			fgets(temp, TEXT_MAXSIZE, fp);
 		}
 		line++;
 	}
@@ -614,7 +614,7 @@ void deleteMessage(char* id, int count, int flag) {
 }
 void readMessage(char* id, int count, int index) {
 	FILE* fp;
-	char temp[MAX_LINE_LENGTH];
+	char temp[TEXT_MAXSIZE];
 	int i = 0;
 	int flag = count - index - 1;
 	int counter = 0;
@@ -660,12 +660,12 @@ void readMessage(char* id, int count, int index) {
 				return;
 			}
 			else{
-				fgets(temp, MAX_LINE_LENGTH, fp);
+				fgets(temp, TEXT_MAXSIZE, fp);
 			}
 			counter++;
 		}
 		else {
-			fgets(temp, MAX_LINE_LENGTH, fp);
+			fgets(temp, TEXT_MAXSIZE, fp);
 		}
 	}
 	fclose(fp);
