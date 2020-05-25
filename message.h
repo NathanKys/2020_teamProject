@@ -1,6 +1,6 @@
 ﻿#pragma once
-#define ID_MAXSIZE 12
-#define TEXT_MAXSIZE 200
+#define ID_MAXSIZE 13
+#define TEXT_MAXSIZE 250
 
 typedef struct Message {
 	char receiverId[ID_MAXSIZE + 2];
