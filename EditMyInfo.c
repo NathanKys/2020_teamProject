@@ -8,7 +8,7 @@ int checkPW(char* pw) {
 		system("cls");
 
 		gotoxy(5, 5);
-		printf("본인 여부를 확인하기 위해 비밀번호를 다시 입력해주세요");
+		printf("For your security, you must re-enter your password to continue.");
 		gotoxy(7, 8);
 		printf("-----------------------------------------------");
 		gotoxy(6, 9);
@@ -34,7 +34,7 @@ int checkPW(char* pw) {
 		}
 		else {
 			gotoxy(7, 11);
-			printf("비밀번호가 틀립니다.");
+			printf("Password is incorrect.");
 			system("pause");
 		}
 	}
@@ -49,37 +49,37 @@ void selectEdit(Account* login, int login_id_num) {
 		gotoxy(5, 3);
 		printf("===================================================================================");
 		gotoxy(5, 4);
-		printf("\t\t\t\t\t수정할 정보 선택"); // 텝 5개
+		printf("\t\t\t\t\tChange My Info"); // 텝 5개
 		gotoxy(5, 5);
 		printf("===================================================================================");
 
 		gotoxy(40, 7);
-		printf("비밀번호(0)");
+		printf("Password(0)");
 
 		gotoxy(20, 9);
-		printf("아이디");
+		printf("ID");
 		gotoxy(20, 10);
 		printf("%s\t", (*login).id);
 
 		gotoxy(40, 9);
-		printf("이름(1)");
+		printf("Name(1)");
 		gotoxy(40, 10);
 		printf("%s\t", (*login).name);
 
 		gotoxy(61, 9);
-		printf("닉네임(2)");
+		printf("Nickname(2)");
 		gotoxy(61, 10);
 		printf("%s\t", (*login).nick);
 
 		gotoxy(20, 12);
-		printf("생년월일(4)");
+		printf("Date of Birth(4)");
 		gotoxy(20, 13);
 		for (int i = 0; i < 8; i++) {
 			printf("%d", (*login).birth[i]);
 		}
 
 		gotoxy(40, 12);
-		printf("휴대폰 번호(5)");
+		printf("Phone Number(5)");
 		gotoxy(40, 13);
 		if ((*login).phone[10] == -1) {
 			for (int i = 0; i < 10; i++) {
@@ -93,12 +93,12 @@ void selectEdit(Account* login, int login_id_num) {
 		}
 
 		gotoxy(61, 12);
-		printf("이메일 주소(3)");
+		printf("Email Address(3)");
 		gotoxy(61, 13);
 		printf("%s\t", (*login).email);
 
 		gotoxy(10, 16);
-		printf("수정을 원하는 항목의 번호를 입력하세요: ");
+		printf("Enter the item number you want to change.: ");
 
 		char num;
 		scanf("%c", &num);
@@ -115,7 +115,7 @@ void selectEdit(Account* login, int login_id_num) {
 		num = num - 48;
 		if (!(0 <= num && num <= 5) || test != '\n') {
 			gotoxy(10, 17);
-			printf("존재하지 않는 항목 번호입니다.\n");
+			printf("Item number entered doesn't exist.\n");
 			gotoxy(10, 18);
 			system("pause");
 		}
@@ -208,7 +208,7 @@ void editPW(char* pw) {
 	// 비밀번호 입력
 	while (true) {
 		system("cls");
-		printf("새로운 비밀번호를 입력하세요: ");
+		printf("Please enter a new Password.: ");
 		fgets(t_pw, PASSWORD_MAXSIZE + 2, stdin);
 
 		t_pw[strcspn(t_pw, "\n")] = 0;
@@ -292,7 +292,7 @@ void editPW(char* pw) {
 
 		if (!strcmp(checkPassword, t_pw)) {
 			strcpy(pw, t_pw);
-			printf("비밀번호 확인&수정이 완료되었습니다.\n");
+			printf("Password has been changed successfully.\n");
 			system("pause");
 			break;
 		}
@@ -315,7 +315,7 @@ void editName(char* name) {
 		printf("이름은 한글(최소 2자~최대 5자) 또는 영어 대소문자(최소 3자~최대 20자)로 구성됩니다.\n");
 		printf("한글와 영어는 혼용하여 사용할 수 없습니다. 영어의 경우 띄어쓰기가 가능합니다.\n");
 		gotoxy(0, 0);
-		printf("새로운 이름을 입력하세요: ");
+		printf("Please enter a new Name.: ");
 		fgets(t_name, NAME_MAXSIZE + 2, stdin);
 		t_name[strcspn(t_name, "\n")] = 0;
 
@@ -353,7 +353,7 @@ void editName(char* name) {
 			}
 			if (getLength(t_name) >= 2 && getLength(t_name) <= 5) {
 				strcpy(name, t_name);
-				printf("이름 수정이 완료되었습니다.\n");
+				printf("Name has been changed successfully.\n");
 				system("pause");
 				break;
 			}
@@ -367,7 +367,7 @@ void editName(char* name) {
 			if (matchEngName(t_name)) {
 				if (getLength(t_name) >= 3 && getLength(t_name) <= 20) {
 					strcpy(name, t_name);
-					printf("이름 수정이 완료되었습니다.\n");
+					printf("Name has been changed successfully.\n");
 					system("pause");
 					break;
 				}
@@ -397,7 +397,7 @@ void editNick(char* nick) {
 		gotoxy(0, 1);
 		printf("닉네임에는 한글, 영어, 숫자, 띄어쓰기를 사용할 수 있습니다.(최소2자~최대12자)\n");
 		gotoxy(0, 0);
-		printf("새로운 닉네임을 입력하세요: ");
+		printf("Please enter a new Nickname.: ");
 
 		fgets(t_nick, NICKNAME_MAXSIZE + 2, stdin);
 		t_nick[strcspn(t_nick, "\n")] = 0;
@@ -429,7 +429,7 @@ void editNick(char* nick) {
 		}
 		if (matchNickname(t_nick)) {
 			strcpy(nick, t_nick);
-			printf("닉네임 수정이 완료되었습니다.\n");
+			printf("Nickname has been changed successfully.\n");
 			system("pause");
 			break;
 		}
@@ -449,7 +449,7 @@ void editEmail(char* email) {
 	// 이메일 주소 입력
 	while (true) {
 		system("cls");
-		printf("새로운 이메일 주소를 입력하세요: ");
+		printf("Please enter a new Eamil Address.: ");
 
 		fgets(t_email, EMAILADDRESS_MAXSIZE + 2, stdin);
 		t_email[strcspn(t_email, "\n")] = 0;
@@ -482,7 +482,7 @@ void editEmail(char* email) {
 
 		if (matchEmail(t_email)) {
 			strcpy(email, t_email);
-			printf("이메일 주소 수정이 완료되었습니다.\n");
+			printf("Email Address has been changed successfully.\n");
 			system("pause");
 			break;
 		}
@@ -501,7 +501,7 @@ void editBirth(int* birth) {
 	//생년월일 입력
 	while (true) {
 		system("cls");
-		printf("새로운 생년월일을 입력하세요: ");
+		printf("Please enter a new Date of Birth.: ");
 
 		fgets(tempBirthNumber, BIRTHDAY_MAXSIZE + 2, stdin);
 		tempBirthNumber[strcspn(tempBirthNumber, "\n")] = 0;
@@ -559,7 +559,7 @@ void editBirth(int* birth) {
 			for (int i = 0; i < BIRTHDAY_MAXSIZE; i++) {
 				birth[i] = tempBirthNumber[i] - 48;
 			}
-			printf("생년월일 수정이 완료되었습니다.\n");
+			printf("Date of Birth has been changed successfully.\n");
 			system("pause");
 			break;
 		}
@@ -580,7 +580,7 @@ void editPhone(int* phone) {
 	// 휴대폰 번호 입력
 	while (true) {
 		system("cls");
-		printf("새로운 휴대폰 번호를 입력하세요: ");
+		printf("Please enter a new Phone Number.: ");
 		tempPhoneNumber[10] = '\0';
 		fgets(tempPhoneNumber, PHONENUMBER_MAXSIZE + 4, stdin);
 		tempPhoneNumber[strcspn(tempPhoneNumber, "\n")] = 0;
@@ -644,7 +644,7 @@ void editPhone(int* phone) {
 				}
 			}
 			
-			printf("전화번호 수정이 완료되었습니다.\n");
+			printf("Phone Number has been modified successfully.\n");
 			system("pause");
 			break;
 		}

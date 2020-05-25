@@ -31,7 +31,7 @@ int selectAccountToShow(int num_account, int pageNum, int endPage) {
 		gotoxy(3, 28);
 		printf("                                                                                                       ");
 		gotoxy(3, 25);
-		printf("열람할 계정의 아이디 번호를 선택하세요.");
+		printf("Enter the ID number of the account you want to view.(0-9)");
 		char input = ' ';
 		char temp = ' ';
 		scanf("%c", &input);
@@ -45,7 +45,7 @@ int selectAccountToShow(int num_account, int pageNum, int endPage) {
 		in = input - 48;
 		if (temp != '\n' || !(0 <= in && in <= 9)) {
 			gotoxy(3, 26);
-			printf("잘못된 입력입니다. 숫자 하나만을 입력하세요.\n");
+			printf("Invalid input. Please enter only one number.\n");
 			system("pause");
 			gotoxy(3, 26);
 			printf("                                              ");
@@ -55,7 +55,7 @@ int selectAccountToShow(int num_account, int pageNum, int endPage) {
 		}
 		if (pageNum == endPage && num_account % 10 <= in) {
 			gotoxy(3, 26);
-			printf("존재하지 않는 아이디 번호입니다.\n");
+			printf("This ID number doesn’t exist.\n");
 			system("pause");
 			flag = 1;
 		}
@@ -65,17 +65,17 @@ int selectAccountToShow(int num_account, int pageNum, int endPage) {
 }
 int accountInfo_Menu(Account* a) {
 	gotoxy(50, 4);
-	printf("사용자 정보 조회");
+	printf("View User Information");
 	gotoxy(19, 6);
 	printf("==============================================================================");
 	gotoxy(25, 8);
-	printf("아이디");
+	printf("ID");
 	gotoxy(37, 8);
-	printf("닉네임");
+	printf("Nickname");
 	gotoxy(52, 8);
-	printf("생년월일");
+	printf("Date of Birth");
 	gotoxy(65, 8);
-	printf("이메일");
+	printf("Email Address");
 	gotoxy(19, 10);
 	printf("==============================================================================");
 	gotoxy(23, 12);
@@ -91,15 +91,15 @@ int accountInfo_Menu(Account* a) {
 	gotoxy(33, 25);
 	printf("┌----------------------┐");
 	gotoxy(33, 26);
-	printf("│      쪽지 보내기     │");
+	printf("│     Send Message     │");
 	gotoxy(33, 27);
 	printf("└----------------------┘");
 	gotoxy(63, 25);
-	printf("┌------------------------┐");
+	printf("┌-----------┐");
 	gotoxy(63, 26);
-	printf("│    뒤로가기   │");
+	printf("│    Back   │");
 	gotoxy(63, 27);
-	printf("└------------------------┘");
+	printf("└-----------┘");
 
 	int triangle;
 	char ch;
@@ -159,40 +159,40 @@ void userSearch(Account* login, int num_account) {
 	while (true) {
 		system("cls");
 		gotoxy(55, 1);
-		printf("사용자 검색");
+		printf("User Search");
 		gotoxy(35, 3);
-		printf("번호");
+		printf("Number");
 		gotoxy(44, 3);
-		printf("아이디");
+		printf("ID");
 		gotoxy(68, 3);
-		printf("추천 횟수");
+		printf("recommendation");
 		showAllAccountInfo2(pageNum, num_account);
 		gotoxy(3, 25);
 		printf("┌--------------------┐");
 		gotoxy(3, 26);
-		printf("│     이전 페이지    │");
+		printf("│      Prev Page     │");
 		gotoxy(3, 27);
 		printf("└--------------------┘");
 		gotoxy(33, 25);
 		printf("┌--------------------┐");
 		gotoxy(33, 26);
-		printf("│     다음 페이지    │");
+		printf("│      Next Page     │");
 		gotoxy(33, 27);
 		printf("└--------------------┘");
 		gotoxy(63, 25);
 		printf("┌------------------┐");
 		gotoxy(63, 26);
-		printf("│     뒤로가기     │");
+		printf("│       Back       │");
 		gotoxy(63, 27);
 		printf("└------------------┘");
 		gotoxy(93, 25);
 		printf("┌------------------┐");
 		gotoxy(93, 26);
-		printf("│     번호 선택    │");
+		printf("│   Select Number  │");
 		gotoxy(93, 27);
 		printf("└------------------┘");
 		gotoxy(36, 28);
-		printf("계정 정보를 열람하려면 번호 입력을 선택하세요.");
+		printf("Please Select 'Select Number' if you want to view account information.");
 
 		int triangle;
 		char ch;
@@ -238,7 +238,7 @@ void userSearch(Account* login, int num_account) {
 		if (triangle == 1) {
 			if (pageNum == 1) {
 				system("cls");
-				printf("더 이상 표시할 계정이 없습니다.");
+				printf("There is no more ID to display.");
 				system("pause");
 			}
 			else {
@@ -248,7 +248,7 @@ void userSearch(Account* login, int num_account) {
 		if (triangle == 31) {
 			if (pageNum == endPage) {
 				system("cls");
-				printf("더 이상 표시할 계정이 없습니다.");
+				printf("There is no more ID to display.");
 				system("pause");
 			}
 			else {

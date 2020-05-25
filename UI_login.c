@@ -8,7 +8,7 @@ int uiAfterLogin(char * nick) {
 
 	system("cls");
 	gotoxy(40, 5);
-	printf("%s님 안녕하세요!\n", nick);
+	printf("Welcome, %s!\n", nick);
 
 	gotoxy(32, 10);
 	printf("-------------------------------------------------\n");
@@ -17,7 +17,7 @@ int uiAfterLogin(char * nick) {
 	gotoxy(32, 12);
 	printf("|\t┌------------------------------┐  \t|\n");
 	gotoxy(32, 13);
-	printf("|\t│         내정보  보기         │ \t|\n");
+	printf("|\t│         View My Info         │ \t|\n");
 	gotoxy(32, 14);
 	printf("|\t└------------------------------┘  \t|\n");
 	gotoxy(32, 15);
@@ -25,7 +25,7 @@ int uiAfterLogin(char * nick) {
 	gotoxy(32, 16);
 	printf("|\t┌------------------------------┐  \t|\n");
 	gotoxy(32, 17);
-	printf("|\t│         사용자  검색         │ \t|\n");
+	printf("|\t│          User Search         │ \t|\n");
 	gotoxy(32, 18);
 	printf("|\t└------------------------------┘  \t|\n");
 	gotoxy(32, 19);
@@ -33,7 +33,7 @@ int uiAfterLogin(char * nick) {
 	gotoxy(32, 20);
 	printf("|\t┌------------------------------┐  \t|\n");
 	gotoxy(32, 21);
-	printf("|\t│            쪽지함            │ \t|\n");
+	printf("|\t│          Message Box         │ \t|\n");
 	gotoxy(32, 22);
 	printf("|\t└------------------------------┘  \t|\n");
 	gotoxy(32, 23);
@@ -42,7 +42,7 @@ int uiAfterLogin(char * nick) {
 	gotoxy(32, 24);
 	printf("|\t┌------------------------------┐  \t|\n");
 	gotoxy(32, 25);
-	printf("|\t│         관리자 메뉴          │ \t|\n");
+	printf("|\t│          Admin Menu          │ \t|\n");
 	gotoxy(32, 26);
 	printf("|\t└------------------------------┘  \t|\n");
 	gotoxy(32, 27);
@@ -52,7 +52,7 @@ int uiAfterLogin(char * nick) {
 	gotoxy(32, 28);
 	printf("|\t┌------------------------------┐  \t|\n");
 	gotoxy(32, 29);
-	printf("|\t│           로그 아웃          │ \t|\n");
+	printf("|\t│            Log Out           │ \t|\n");
 	gotoxy(32, 30);
 	printf("|\t└------------------------------┘  \t|\n");
 	gotoxy(32, 31);

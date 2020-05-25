@@ -360,11 +360,11 @@ void showMessage(Message* m, char* id, int count, int index) {
 	while (true) {
 		system("cls");
 		gotoxy(40, 1);
-		printf("쪽지 확인");
+		printf("Check Message");
 		gotoxy(10, 3);
-		printf("발신자 : %s", m[flag].senderId);
+		printf("Sender : %s", m[flag].senderId);
 		gotoxy(10, 5);
-		printf("쪽지 내용 : ");
+		printf("Content : ");
 		if (strlen(m[flag].text) > 160) {
 			for (int i = 0; i < 80; i++) {
 				printf("%c", m[flag].text[i]);
@@ -391,21 +391,21 @@ void showMessage(Message* m, char* id, int count, int index) {
 			printf("%s", m[flag].text);
 		}
 		gotoxy(3, 25);
-		printf("┌-----------------┐");
+		printf("┌------------------┐");
 		gotoxy(3, 26);
-		printf("│       답장      │");
+		printf("│       Reply      │");
 		gotoxy(3, 27);
-		printf("└-----------------┘");
+		printf("└------------------┘");
 		gotoxy(33, 25);
-		printf("┌-----------------┐");
+		printf("┌------------------┐");
 		gotoxy(33, 26);
-		printf("│       삭제      │");
+		printf("│  Delete Message  │");
 		gotoxy(33, 27);
-		printf("└-----------------┘");
+		printf("└------------------┘");
 		gotoxy(63, 25);
 		printf("┌------------------┐");
 		gotoxy(63, 26);
-		printf("│     뒤로가기     │");
+		printf("│       Back       │");
 		gotoxy(63, 27);
 		printf("└------------------┘");
 
@@ -473,11 +473,11 @@ Message* showMessageList(char* id) {
 		for (int i = count - 1; i >= 0; i--) {
 			if (m[i].read) {
 				gotoxy(34, 5 + (line * 2));
-				printf("안읽음");
+				printf("Unread");
 			}
 			else {
 				gotoxy(35, 5 + (line * 2));
-				printf("읽음");
+				printf("Read");
 			}
 			gotoxy(50, 5 + (line * 2));
 			printf("%s", m[i].senderId);
@@ -500,11 +500,11 @@ Message* showMessageList(char* id) {
 			line = count - i - 1;
 			if (m[i].read) {
 				gotoxy(34, 5 + (line * 2));
-				printf("안읽음");
+				printf("Unread");
 			}
 			else {
 				gotoxy(35, 5 + (line * 2));
-				printf("읽음");
+				printf("Read");
 			}
 			gotoxy(50, 5 + (line * 2));
 			printf("%s", m[i].senderId);
@@ -522,7 +522,7 @@ Message* showMessageList(char* id) {
 	}
 	else {
 		gotoxy(48, 13);
-		printf("쪽지함이 비어있습니다!");
+		printf("Message Box is empty!");
 	}
 	return m;
 }
@@ -676,19 +676,19 @@ void messageBox(char* id) {
 		Message* m = showMessageList(id);
 		gotoxy(1, 1);
 		gotoxy(57, 1);
-		printf("쪽지함");
+		printf("Message Box");
 		gotoxy(35, 3);
-		printf("상태");
+		printf("Status");
 		gotoxy(50, 3);
-		printf("발신자");
+		printf("Sender");
 		gotoxy(70, 3);
-		printf("쪽지 내용");
+		printf("Content");
 		gotoxy(48, 25);
-		printf("┌------------------┐");
+		printf("┌------------┐");
 		gotoxy(48, 26);
-		printf("│     뒤로가기     │");
+		printf("│    Back    │");
 		gotoxy(48, 27);
-		printf("└------------------┘");
+		printf("└------------┘");
 
 		int triangleX = 30;
 		int triangleY = 5;

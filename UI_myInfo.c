@@ -11,34 +11,34 @@ int uiShowMyInfo(Account* login, int login_id_num) {
 	gotoxy(5, 3);
 	printf("=====================================================================================\n");
 	gotoxy(5, 4);
-	printf("\t\t\t\t\t  내 정보"); // 텝 5개 스페이스바 2개
+	printf("\t\t\t\t\t  My Info"); // 텝 5개 스페이스바 2개
 	gotoxy(5, 5);
 	printf("=====================================================================================\n");
 
 	gotoxy(20, 7);
-	printf("아이디");
+	printf("ID");
 	gotoxy(20, 8);
 	printf("%s\t", (*login).id);
 
 	gotoxy(40, 7);
-	printf("이름");
+	printf("Name");
 	gotoxy(40, 8);
 	printf("%s\t", (*login).name);
 
 	gotoxy(61, 7);
-	printf("닉네임");
+	printf("Nickname");
 	gotoxy(61, 8);
 	printf("%s\t", (*login).nick);
 
 	gotoxy(20, 10);
-	printf("생년월일");
+	printf("Date of Birth");
 	gotoxy(20, 11);
 	for (int i = 0; i < 8; i++) {
 		printf("%d", (*login).birth[i]);
 	}
 
 	gotoxy(40, 10);
-	printf("휴대폰 번호");
+	printf("Phone Number");
 	gotoxy(40, 11);
 	if ((*login).phone[10] == -1) {
 		for (int i = 0; i < 10; i++) {
@@ -53,30 +53,30 @@ int uiShowMyInfo(Account* login, int login_id_num) {
 	
 
 	gotoxy(61, 10);
-	printf("이메일 주소");
+	printf("Email Address");
 	gotoxy(61, 11);
 	printf("%s\t", (*login).email);
 
 	gotoxy(10, 16);
-	printf("┌------------------┐\n");
+	printf("┌------------------------┐\n");
 	gotoxy(10, 17);
-	printf("│   내 정보 수정   │\n");
+	printf("│    Change My Info      │\n");
 	gotoxy(10, 18);
-	printf("└------------------┘\n");
+	printf("└------------------------┘\n");
 
 	gotoxy(35, 16);
-	printf("┌------------------┐\n");
+	printf("┌------------------------┐\n");
 	gotoxy(35, 17);
-	printf("│     과거 이력    │\n");
+	printf("│     Change History     │\n");
 	gotoxy(35, 18);
-	printf("└------------------┘\n");
+	printf("└------------------------┘\n");
 
 	gotoxy(60, 16);
-	printf("┌------------------┐\n");
+	printf("┌------------------------┐\n");
 	gotoxy(60, 17);
-	printf("│     뒤로 가기    │\n");
+	printf("│          Back          │\n");
 	gotoxy(60, 18);
-	printf("└------------------┘\n");
+	printf("└------------------------┘\n");
 
 
 	triangle = 8;
@@ -155,7 +155,7 @@ void uiOldInfo(Account* login) {
 	gotoxy(5, 3);
 	printf("=====================================================================================\n");
 	gotoxy(5, 4);
-	printf("\t\t\t\t\t  변경된 정보"); // 텝 5개 스페이스바 2개
+	printf("\t\t\t\t\t  Change History"); // 텝 5개 스페이스바 2개
 	gotoxy(5, 5);
 	printf("=====================================================================================\n");
 
