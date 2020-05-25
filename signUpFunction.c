@@ -551,7 +551,7 @@ void signUp() {
 	// 아이디 입력
 	while (true) {
 		system("cls");
-		printf("생성할 계정의 아이디를 입력합니다.");
+		printf("Enter your ID.");
 		fgets(u1.id, ID_MAXSIZE + 2, stdin);
 
 		u1.id[strcspn(u1.id, "\n")] = 0;
@@ -569,25 +569,25 @@ void signUp() {
 
 		// fileCheck: 중복된 아이디가 있는지 검사하는 함수
 		if (duplicateCheck(u1.id, IDCHECK)) {
-			printf("입력하신 아이디는 이미 사용 중인 아이디입니다.\n");
+			printf("Overlapped ID, Please try another one.\n");
 			system("pause");
 			continue;
 		}
 
 		if (matchId(u1.id)) {
 			if (getLength(u1.id) > ID_MAXSIZE || getLength(u1.id) < 6) {
-				printf("글자수 범위(최소6자 ~ 최대 12자)초과입니다.\n");
+				printf("String has been out of range.(6-12)\n");
 				system("pause");
 				continue;
 			}
 			else {
-				printf("아이디 입력이 완료되었습니다.\n");
+				printf("Success.\n");
 				system("pause");
 				break;
 			}
 		}
 		else {
-			printf("올바른 문자를 입력해주세요.\n");
+			printf("Invalidated character. Upper- and Lower-case alphabet or number only.\n");
 			system("pause");
 			continue;
 		}
@@ -597,7 +597,9 @@ void signUp() {
 	// 비밀번호 입력
 	while (true) {
 		system("cls");
-		printf("생성할 계정의 비밀번호를 입력합니다.");
+		printf("Password must contain at least one uppercase letter, one lowercase letter and one number.(8-16)\n");
+		printf("Do not allow special characters except for the following characters : !@#$%^&*\n");
+		printf("Enter your password.");
 		fgets(u1.pw, PASSWORD_MAXSIZE + 2, stdin);
 
 		u1.pw[strcspn(u1.pw, "\n")] = 0;
@@ -614,7 +616,7 @@ void signUp() {
 
 		if (matchPassword(u1.pw)) {
 			if (strlen(u1.pw) < 8 || strlen(u1.pw) > 16) {
-				printf("글자수 범위(최소 8자~최대 16자) 초과입니다.\n");
+				printf("String has been out of range.(8-16)\n");
 				system("pause");
 				continue;
 			}
@@ -622,26 +624,26 @@ void signUp() {
 				// 대문자 하나 이상
 				// 소문자 하나 이상
 				// 숫자 하나 이상
-				if (!isContainUpperCase(u1.pw)) { printf("알파벳 대문자를 하나 이상 포함해야 합니다.\n"); }
-				if (!isContainLowerCase(u1.pw)) { printf("알파벳 소문자를 하나 이상 포함해야 합니다.\n"); }
-				if (!isContainNumber(u1.pw)) { printf("인도-아라비아 숫자를 하나 이상 포함해야 합니다.\n"); }
+				if (!isContainUpperCase(u1.pw)) { printf("You must include at least one alphabetic uppercase letter.\n"); }
+				if (!isContainLowerCase(u1.pw)) { printf("You must include at least one alphabetic lowercase letter.\n"); }
+				if (!isContainNumber(u1.pw)) { printf("You must include at least one Hindu - Arabic number.\n"); }
 
 				// 위의 세 조건을 모두 만족할 때
 				if (isContainNumber(u1.pw) && isContainUpperCase(u1.pw) && isContainLowerCase(u1.pw)) {
 					// 반복된 문자 체크
 					if (isRepeat(u1.pw, strlen(u1.pw))) {
-						printf("비밀번호에 반복된 문자가 있습니다.\n");
+						printf("String contains repeated characters.\n");
 						system("pause");
 						continue;
 					}
 					// 연속된 문자 체크
 					if (isConti(u1.pw, strlen(u1.pw))) {
-						printf("비밀번호에 연속된 문자가 있습니다.\n");
+						printf("String contains consecutive characters.\n");
 						system("pause");
 						continue;
 					}
 
-					printf("비밀번호 입력이 완료되었습니다.\n");
+					printf("Success.\n");
 					system("pause");
 					break;
 				}
@@ -651,7 +653,7 @@ void signUp() {
 
 		}
 		else {
-			printf("다음의 문자를 제외한 특수문자는 허용하지 않습니다.!@#$%^&*\n");
+			printf("Inconsistent password, please check again\n");
 			system("pause");
 			continue;
 		}
@@ -663,7 +665,7 @@ void signUp() {
 	while (true) {
 		system("cls");
 		char checkPassword[PASSWORD_MAXSIZE + 2] = { 0, };
-		printf("비밀번호 확인을 위해 다시 입력해주세요.");
+		printf("Reenter your Password.");
 		fgets(checkPassword, PASSWORD_MAXSIZE + 2, stdin);
 		checkPassword[strcspn(checkPassword, "\n")] = 0;
 		if (strlen(checkPassword) > PASSWORD_MAXSIZE) {
@@ -687,12 +689,12 @@ void signUp() {
 
 
 		if (!strcmp(checkPassword, u1.pw)) {
-			printf("비밀번호 확인이 완료되었습니다.\n");
+			printf("Success.\n");
 			system("pause");
 			break;
 		}
 		else {
-			printf("비밀번호와 일치하지 않습니다.\n");
+			printf("Password confirmation doesn't match Password. Please try again.\n");
 			system("pause");
 			continue;
 		}
@@ -778,7 +780,7 @@ void signUp() {
 	// 이메일 주소 입력
 	while (true) {
 		system("cls");
-		printf("생성할 계정의 이메일 주소를 입력합니다.");
+		printf("Enter your email address.");
 
 		fgets(u1.email, EMAILADDRESS_MAXSIZE + 2, stdin);
 		u1.email[strcspn(u1.email, "\n")] = 0;
@@ -795,24 +797,24 @@ void signUp() {
 
 		// fileCheck: 중복된 아이디가 있는지 검사하는 함수
 		if (duplicateCheck(u1.email, EMAILCHECK)) {
-			printf("이미 등록된 이메일입니다.\n");
+			printf("Overlapped Email, please check again.\n");
 			system("pause");
 			continue;
 		}
 
 		if (getLength(u1.email) > 30) {
-			printf("이메일은 30자를 초과할 수 없습니다.\n");
+			printf("The maximum total length of a email address is 30 characters.\n");
 			system("pause");
 			continue;
 		}
 
 		if (matchEmail(u1.email)) {
-			printf("이메일이 등록되었습니다.\n");
+			printf("Success.\n");
 			system("pause");
 			break;
 		}
 		else {
-			printf("올바른 형식의 이메일 주소를 입력해주세요.\n");
+			printf("Please enter a validated email address.\n");
 			system("pause");
 			continue;
 		}
@@ -821,7 +823,7 @@ void signUp() {
 	//생년월일 입력
 	while (true) {
 		system("cls");
-		printf("생성할 계정의 생년월일을 입력합니다.");
+		printf("Enter your birthday.");
 
 		fgets(tempBirthNumber, BIRTHDAY_MAXSIZE + 2, stdin);
 		tempBirthNumber[strcspn(tempBirthNumber, "\n")] = 0;
@@ -837,13 +839,13 @@ void signUp() {
 		}
 		if (isOnlyNumber(tempBirthNumber)) {
 			if (strlen(tempBirthNumber) > 8) {
-				printf("글자수 범위(숫자 8자) 초과입니다.\n");
+				printf("String has out of range(8).\n");
 				system("pause");
 				continue;
 			}
 			else if (strlen(tempBirthNumber) == 8) {
 				if (!isRightDate(tempBirthNumber)) {
-					printf("존재하지 않는 날짜입니다.\n");
+					printf("Inexistent form of date, please check again.\n");
 					system("pause");
 					continue;
 				}
@@ -852,23 +854,23 @@ void signUp() {
 		if (matchBirthday(tempBirthNumber)) {
 			// 윤년 고려해서 없는 날짜 판단
 			if (isInTheFuture(tempBirthNumber)) {
-				printf("잘못된 생년월일입니다.\n");
+				printf("Invalidated date of birth, please check again.\n");
 				system("pause");
 				continue;
 			}
 			// 프로그램 실행 이후 날짜 판단
 			if (!isRightDate(tempBirthNumber)) {
-				printf("존재하지 않는 날짜입니다.\n");
+				printf("Inexistent form of date, please check again.\n");
 				system("pause");
 				continue;
 			}
-			printf("생년월일이 등록되었습니다.\n");
+			printf("Success\n");
 			strcpy_s(u1.birth, BIRTHDAY_MAXSIZE + 2, tempBirthNumber);
 			system("pause");
 			break;
 		}
 		else {
-			printf("숫자로만 이루어진 8자를 입력해주세요.\n");
+			printf("The only validated character is number, maximum string size of 8.\n");
 			system("pause");
 			continue;
 		}
@@ -880,7 +882,7 @@ void signUp() {
 	// 휴대폰 번호 입력
 	while (true) {
 		system("cls");
-		printf("생성할 계정의 휴대폰 번호를 입력합니다.");
+		printf("Enter your phone number.");
 
 		fgets(tempPhoneNumber, PHONENUMBER_MAXSIZE + 4, stdin);
 		tempPhoneNumber[strcspn(tempPhoneNumber, "\n")] = 0;
@@ -896,7 +898,7 @@ void signUp() {
 		}
 		// fileCheck: 중복된 번호가 있는지 검사하는 함수
 		if (duplicateCheck(tempPhoneNumber, PHONENUMBERCHECK)) {
-			printf("입력하신 휴대폰 번호는 이미 사용 중인 번호입니다.\n");
+			printf("Overlapped phone number, please try another one.\n");
 			continue;
 		}
 
@@ -904,16 +906,16 @@ void signUp() {
 		if (matchPhoneNumber(tempPhoneNumber)) {
 			Eliminate(tempPhoneNumber, '-');
 			strcpy_s(u1.phone, PHONENUMBER_MAXSIZE + 2, tempPhoneNumber);
-			printf("전화번호 등록이 완료되었습니다.\n");
+			printf("Success.\n");
 			system("pause");
 			break;
 		}
 		else {
 			if (isOnlyNumber(tempPhoneNumber) && strchr(tempPhoneNumber, '-') || isOnlyNumber(tempPhoneNumber)) {
-				printf("전화번호는 10자리 또는 11자리로 입력해주세요.\n");
+				printf("Please enter the phone number in 10 or 11 digits.\n");
 			}
 			else {
-				printf("올바르지 않은 문자가 포함되어 있습니다.\n");
+				printf("Invalidated form of character has contained, please check again.\n");
 			}
 			system("pause");
 			continue;
@@ -926,7 +928,7 @@ void signUp() {
 		system("cls");
 		// 파일에 
 		char* retId = malloc(sizeof(char) * ID_MAXSIZE + 2);
-		printf("추천인 아이디를 입력합니다.");
+		printf("Enter the id you want to recommend.");
 		fgets(retId, ID_MAXSIZE + 2, stdin);
 
 		retId[strcspn(retId, "\n")] = 0;
@@ -943,7 +945,7 @@ void signUp() {
 		}
 		if (matchId(retId) && getLength(retId) >= 6 && getLength(retId) <= 12 && duplicateCheck(retId, IDCHECK)) {
 			// 해당 아이디의 추천 횟수 증가
-			printf("추천인 입력이 완료되었습니다.\n");
+			printf("Recommendation has done successfully.\n");
 			system("pause");
 			ret(retId);
 			break;
@@ -951,7 +953,7 @@ void signUp() {
 		break;
 	}
 	system("cls");
-	printf("회원가입이 완료되었습니다.\n");
+	printf("Registration has done successfully.\n");
 	//showUserInformation(u1);
 	writeAccount(u1);
 	system("pause");
