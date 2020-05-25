@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ID_MAXSIZE 13
+#define ID_MAXSIZE 12
 #define TEXT_MAXSIZE 250
 
 typedef struct Message {
