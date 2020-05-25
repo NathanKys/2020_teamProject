@@ -283,7 +283,7 @@ int sendMessage(char* sender, char* receiver) {
 				}
 			}
 			else if (ch & 0x80) { // 한글 ;
-				while(_kbhit(){
+				while(_kbhit()) {
 					_getch();
 				}
 				gotoxy(30, 29);
