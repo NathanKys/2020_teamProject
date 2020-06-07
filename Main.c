@@ -17,7 +17,7 @@ int main() {
 	//로그인한 아이디 번호(= 로그인한 계정이 DB 상 몇번째 줄인지. 1번부터 시작)
 	//이 값을 내 정보 보기 함수에서 인자로 받아, DB 상 해당 줄에 정보 출력
 	bool flag = 0;	//로그인 상태
-	int num_account = 4;	//DB에 등록된 계정의 총 개수
+	int num_account = 0;	//DB에 등록된 계정의 총 개수
 	num_account = readAccountNum();
 
 	bool programFlag = 1;
