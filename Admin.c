@@ -887,7 +887,7 @@ void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, cha
 		gotoxy(63, 25);
 		printf("┌------------------┐\n");
 		gotoxy(63, 26);
-		printf("│      Log Out     │\n");
+		printf("│       Back       │");
 		gotoxy(63, 27);
 		printf("└------------------┘\n");
 		gotoxy(93, 25);
