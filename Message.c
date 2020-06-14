@@ -546,14 +546,18 @@ int findLine(char* id, int count, int flag) {
 	}
 	while (true) {
 		char temp_id[ID_MAXSIZE + 2] = "";
+		temp_id[i] = fgetc(fp);
+		if (temp_id[i] == '\0') {
+			continue;
+		}
 		while (true) {
-			temp_id[i] = fgetc(fp);
 			if (temp_id[i] == ',') {
 				temp_id[i] = '\0';
 				i = 0;
 				break;
 			}
 			i++;
+			temp_id[i] = fgetc(fp);
 		}
 		if (!strcmp(temp_id, id)) {
 			counter++;
