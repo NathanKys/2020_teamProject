@@ -68,14 +68,18 @@ Message* readMessageFile(char* id, int count) {
 
 	while (!feof(fp)) {
 		Message temp = { "", "", 0, "" };
+		temp.receiverId[i] = fgetc(fp);
+		if (temp.receiverId[i] == '\0') {
+			continue;
+		}
 		while (true) {
-			temp.receiverId[i] = fgetc(fp);
 			if (temp.receiverId[i] == ',') { temp.receiverId[i] = '\0'; i = 0; break; }
 			else if (temp.receiverId[i] == EOF) {
 				fclose(fp);
 				return m_arr;
 			}
 			i++;
+			temp.receiverId[i] = fgetc(fp);
 		}
 		while (true) {
 			temp.senderId[i] = fgetc(fp);
@@ -570,46 +574,37 @@ int findLine(char* id, int count, int flag) {
 }
 void deleteMessage(char* id, int count, int flag) {
 	FILE* fp;
-	int line = 1;
-	int i = 0;
-	int fline = findLine(id, count, flag);
-	char temp[10000] = "";
+
 	fp = fopen("./message.txt", "r+");
 	if (fp == NULL)
 	{
 		printf("파일 불러오기 실패\n");
 		exit(1);
 	}
+	int lineCounter = 1;
+	int line = findLine(id, count, flag);
+	char temp[MAX_LINE_LENGTH_MSG];
+	fpos_t position = 0;
+
+	while (lineCounter != line) {
+		fgets(temp, MAX_LINE_LENGTH_MSG, fp);
+		lineCounter++;
+	}
+	fgetpos(fp, &position);
+
+	char temp1[MAX_LINE_LENGTH] = "";
+	int counter = 0;
 	while (true) {
-		if (line == fline) {
-			temp[i] = fgetc(fp);
-			if (temp[i] == '\n') {
-				line++;
-			}
+		temp1[counter] = fgetc(fp);
+		if (temp1[counter] == EOF || temp1[counter] == '\n') {
+			break;
 		}
-		else {
-			temp[i] = fgetc(fp);
-			if (temp[i] == '\n') {
-				line++;
-			}
-			if (temp[i] == EOF) {
-				temp[i] = '\0';
-				fclose(fp);
-				break;
-			}
-			i++;
-		}
+		temp1[counter] = ' ';
+		counter++;
 	}
-	fp = fopen("./message.txt", "w");
-	if (fp == NULL)
-	{
-		printf("파일 불러오기 실패\n");
-		exit(1);
-	}
-	for (int j = 0; j < 1000; j++) {
-		if (temp[j] != '\0')
-			fprintf(fp, "%c", temp[j]);
-	}
+	fseek(fp, position, SEEK_SET);
+	fwrite(temp1, counter, 1, fp);
+
 	fclose(fp);
 }
 void readMessage(char* id, int count, int index) {
@@ -628,8 +623,11 @@ void readMessage(char* id, int count, int index) {
 	}
 	while (true) {
 		char temp_id[ID_MAXSIZE + 2] = "";
+		temp_id[i] = fgetc(fp);
+		if (temp_id[i] == '\0') {
+			continue;
+		}
 		while (true) {
-			temp_id[i] = fgetc(fp);
 			if (temp_id[i] == ',') {
 				temp_id[i] = '\0';
 				i = 0;
@@ -640,6 +638,7 @@ void readMessage(char* id, int count, int index) {
 				return;
 			}
 			i++;
+			temp_id[i] = fgetc(fp);
 		}
 		if (!strcmp(temp_id, id)) {
 			if (counter == flag) {
