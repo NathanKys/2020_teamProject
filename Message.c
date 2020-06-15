@@ -575,7 +575,7 @@ void deleteMessage(char* id, int count, int flag) {
 		printf("파일 불러오기 실패\n");
 		exit(1);
 	}
-	for (int j = 0; j < 1000; j++) {
+	for (int j = 0; j < 10000; j++) {
 		if (temp[j] != '\0')
 			fprintf(fp, "%c", temp[j]);
 	}
