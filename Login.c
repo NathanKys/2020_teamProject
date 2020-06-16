@@ -15,7 +15,7 @@ int loginFunction(int* num_account) {
 	memlist = fopen("./accountlist.txt", "r");
 	if (memlist == NULL)
 	{
-		printf("파일 읽기 실패\n");
+		printf("Error opening file\n");
 		exit(1);
 	}
 
@@ -60,7 +60,7 @@ int loginFunction(int* num_account) {
 
 	while (row == 0) {
 		system("cls");
-		printf("아이디를 입력하세요:");
+		printf("ID:");
 		fgets(stdid, 14, stdin);
 
 		// 배열 크기가 넘어가면 입력 버퍼를 비움.
@@ -72,7 +72,7 @@ int loginFunction(int* num_account) {
 			if (strcmp(account_id[i], stdid) == 0) {
 			pass:system("cls");
 				char stdpassword[18] = "";
-				printf("비밀번호를 입력하세요:");
+				printf("PASSWORD:");
 				fgets(stdpassword, 18, stdin);
 
 				char c = ' ';
@@ -85,13 +85,13 @@ int loginFunction(int* num_account) {
 				
 				if (strcmp(account_password[i], stdpassword) == 0) {
 					
-					printf("로그인 성공\n");
+					printf("Loged in sucessfully\n");
 					system("pause");
 					row = i + 1;
 					break;
 				}
 				else {
-					printf("비밀번호가 틀립니다.\n");
+					printf("Wrong password.\n");
 					system("pause");
 					goto pass;
 				}
@@ -99,7 +99,7 @@ int loginFunction(int* num_account) {
 			}
 			else if (strcmp(admin_id, stdid) == 0) {
 			pass_admin: system("cls"); 
-				printf("관리자 비밀번호를 입력해주세요:");
+				printf("Please enter a secondary password.(6 digits)");
 				char stdpassword[18] = "";
 				fgets(stdpassword, 18, stdin);
 
@@ -115,7 +115,7 @@ int loginFunction(int* num_account) {
 					break;
 				}
 				else {
-					printf("비밀번호가 틀립니다.");
+					printf("Password is incorrect.");
 					system("pause");
 					goto pass_admin;
 				}
@@ -123,7 +123,7 @@ int loginFunction(int* num_account) {
 
 			if (i == (*num_account - 1))
 			{
-				printf("존재하지 않는 아이디 입니다\n");
+				printf("Invalidated form of ID\n");
 				system("pause");
 			}
 		}
