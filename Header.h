@@ -63,6 +63,7 @@ void readAccountInfo2(int startline, Account* a);
 void showAllAccountInfo(int pageNum, int num_account);
 int selectAccountToManage(int num_account, int pageNum, int endPage);
 int selectManageFunction(bool subAdmin);
+int selectManageFunctionSub(bool subAdmin);
 void changeNick(char* nick, bool* changed);
 void changeLock(char* id, bool* lock);
 void changeNickSub(char* nick, bool* changed, Account* targetAccount, int login_id_num);
