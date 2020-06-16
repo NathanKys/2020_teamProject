@@ -7,7 +7,7 @@ int readAccountNum() {
 	fp = fopen("./accountlist.txt", "r");
 	if (fp == NULL)
 	{
-		printf("파일 읽기 실패\n");
+		printf("Error opening file\n");
 		exit(1);
 	}
 	int lineCounter = 0;
@@ -30,7 +30,7 @@ Account readAccountInfo(int line) {
 	fp = fopen("./accountlist.txt", "r");
 	if (fp == NULL)
 	{
-		printf("파일 읽기 실패\n");
+		printf("Error opening file\n");
 		exit(1);
 	}
 	char temp[MAX_LINE_LENGTH];
