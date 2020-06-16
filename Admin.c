@@ -141,9 +141,9 @@ void showAllAccountInfo(int pageNum, int num_account) {
 	printf("Eamil Address");
 	gotoxy(93, 3);
 	printf("Date of Birth");
-	gotoxy(102, 3);
+	gotoxy(108, 3);
 	printf("Phone Number");
-	gotoxy(114, 3);
+	gotoxy(122, 3);
 	printf("Locked");
 
 	for (int i = 1; i <= 10; i++) {
@@ -161,16 +161,16 @@ void showAllAccountInfo(int pageNum, int num_account) {
 			gotoxy(62, 3 + (i * 2));	//이메일
 			printf("%s", a.email);
 			gotoxy(93, 3 + (i * 2));	//생년월일
-			for (int j = 0; j < 6; j++) {
+			for (int j = 0; j < 8; j++) {
 				printf("%d", a.birth[j]);
 			}
-			gotoxy(102, 3 + (i * 2));	//휴대폰 번호
+			gotoxy(108, 3 + (i * 2));	//휴대폰 번호
 			for (int j = 0; j < 11; j++) {
 				if (a.phone[j] != -1) {
 					printf("%d", a.phone[j]);
 				}
 			}
-			gotoxy(114, 3 + (i * 2));	//이메일
+			gotoxy(121, 3 + (i * 2));	//잠금 여부
 			if (a.lock == 0) {
 				printf("   X");
 			}
