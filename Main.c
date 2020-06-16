@@ -37,7 +37,11 @@ int main() {
 			// 관리자 로그인의 경우 -1을 리턴
 			flag = 1;
 
-			if (login_id_num != -1) {	//관리자가 아닌 일반 회원 로그인일 경우
+			if (login_id_num == 0) {            
+				break;
+			}
+				
+				if (login_id_num != -1) {	//관리자가 아닌 일반 회원 로그인일 경우
 
 				login = readAccountInfo(login_id_num); //로그인한 계정 정보 구조체에 저장
 				if (login.lock) {
