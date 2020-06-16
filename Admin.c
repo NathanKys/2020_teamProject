@@ -121,6 +121,8 @@ void readAccountInfo2(int startline, Account* a) {
 	(*a).lock = (fgetc(fp) - 48);
 	fgetc(fp);
 	(*a).changed = (fgetc(fp) - 48);
+	fgetc(fp);
+	(*a).subAdmin = (fgetc(fp) - 48);
 
 
 	fclose(fp);
@@ -267,7 +269,7 @@ int selectManageFunction(bool subAdmin) {
 	gotoxy(93, 10);
 	printf("┌-------------------------┐\n");
 	gotoxy(93, 11);
-	printf("│   SubAdmin management   │\n");
+	printf("│   SubAdmin Management   │\n");
 	gotoxy(93, 12);
 	printf("└-------------------------┘\n");
 
