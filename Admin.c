@@ -998,12 +998,19 @@ void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, cha
 					break;
 
 				case 2:
-					changeLockSub((*targetAccount).id, &((*targetAccount).lock), &targetAccount, login_id_num);
-					login = readAccountInfo(login_id_num);
-					if (!login.subAdmin) { // check
-						return;
+					if (strcmp(my_id, (*targetAccount).id)) {
+						changeLockSub((*targetAccount).id, &((*targetAccount).lock), &targetAccount, login_id_num);
+						login = readAccountInfo(login_id_num);
+						if (!login.subAdmin) { // check
+							return;
+						}
+						writeAccountInfo(manageAccount, targetAccount);
 					}
-					writeAccountInfo(manageAccount, targetAccount);
+					else {
+						printf("You can't lock yourself.\n");
+						system("pause");
+					}
+
 					break;
 				}
 			}
