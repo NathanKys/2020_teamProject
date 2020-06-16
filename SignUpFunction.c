@@ -186,7 +186,7 @@ bool duplicateCheck(char* _string, int option) {
 	fp = fopen("accountlist.txt", "r");
 	if (fp == NULL)
 	{
-		printf("파일 불러오기 실패\n");
+		printf("Error opening file.\n");
 		exit(1);
 	}
 	while (true) {
@@ -394,7 +394,7 @@ void ret(char* _string) {
 	tempfp = fopen("accountlist.txt", "r");
 	if (fp == NULL)
 	{
-		printf("파일 불러오기 실패\n");
+		printf("Error opening file.\n");
 		exit(1);
 	}
 	while (true) {
@@ -497,7 +497,7 @@ void writeAccount(Account user) {
 	FILE* fp;
 	fp = fopen("accountlist.txt", "a+");
 	if (fp == NULL) {
-		printf("파일지정 경로를 확인해주세요.\n");
+		printf("Error opening file.\n");
 		exit(1);
 	}
 	else {
