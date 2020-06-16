@@ -63,10 +63,6 @@ int loginFunction(int* num_account) {
 		printf("ID:");
 		fgets(stdid, 14, stdin);
 		
-		if(strcmp(stdid,"~")==0){
-			
-			break;
-		}
 
 		// 배열 크기가 넘어가면 입력 버퍼를 비움.
 		stdid[strcspn(stdid, "\n")] = 0;
