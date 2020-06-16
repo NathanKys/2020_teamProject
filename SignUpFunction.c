@@ -445,35 +445,9 @@ void ret(char* _string) {
 				fseek(fp, -2, SEEK_CUR); // 다시 원래대로 안 돌려주면 원인 모를 오류 발생
 			}
 			else if (tempRet == 9) {
-
-				//tempRet += 1;
-				//snprintf(buf, 3, "%d", tempRet);
-				//strncat(buf, ",", 1);
-				//int count = 0;
-				//while (true) {
-				//	count++;
-				//	buf_temp[0] = fgetc(fp);
-				//	strncat(buf, buf_temp, 1);
-				//	if (buf_temp[0] == '\n') { break; }
-				//}
-				////for (int k = 0;k < 10;k++) {
-				////	printf("%d: %d\n", k, buf[k]);
-				////}
-				////printf("%s %d\n", buf, strlen(buf));
-				//fseek(fp, -strlen(buf), SEEK_CUR);
-				//fwrite(buf, strlen(buf), 1, fp);
-				//fseek(fp, -strlen(buf), SEEK_CUR);
 				fseek(fp, -2, SEEK_CUR);
 				fwrite("10,", 3, 1, fp);
 				fseek(fp, 2, SEEK_CUR);
-				//ch = fgetc(tempfp);
-				//printf("%c", ch);
-				//ch = fgetc(tempfp);
-				//printf("%c", ch);
-				//ch = fgetc(tempfp);
-				//printf("%c", ch);
-				//ch = fgetc(tempfp);
-				//printf("%c", ch);
 				fseek(fp, -2, SEEK_CUR);
 				// 10을 쓴 이후의 데이터를 tempfp에서 받아들여서 fp로 전부 복사
 				while (true) {
@@ -485,12 +459,8 @@ void ret(char* _string) {
 				}
 				fseek(fp, 2, SEEK_CUR);
 
-				/*fseek(fp, -rewindCount-4, SEEK_CUR);
-				fwrite("Tlqkf", 5, 1, fp);
-				fseek(fp, rewindCount+4, SEEK_CUR);*/
 			}
 
-			//printf("%s의 추천횟수: %d\n", _string, tempRet);
 		}
 		else {
 			// 아이디가 일치하지 않으면 다음 줄로 넘어감.
@@ -542,7 +512,7 @@ void writeAccount(Account user) {
 	fclose(fp);
 }
 
-void signUp() {
+int signUp() {
 	Account u1 = { 0, };
 	u1.lock = false;
 	u1.subAdmin = false;
@@ -560,7 +530,7 @@ void signUp() {
 		if (u1.id[0] == '~' && strlen(u1.id) == 1) {
 			printf("Click any key to go back to menu.\n");
 			system("pause");
-			return;
+			return 0;
 		}
 
 		if (strlen(u1.id) > ID_MAXSIZE) {
@@ -608,7 +578,7 @@ void signUp() {
 		if (u1.pw[0] == '~' && strlen(u1.pw) == 1) {
 			printf("Click any key to go back to menu.\n");
 			system("pause");
-			return;
+			return 0;
 		}
 		if (strlen(u1.pw) > PASSWORD_MAXSIZE) {
 			clearInputBuffer();
@@ -676,7 +646,7 @@ void signUp() {
 		if (checkPassword[0] == '~' && strlen(checkPassword) == 1) {
 			printf("Click any key to go back to menu.\n");
 			system("pause");
-			return;
+			return 0;
 		}
 
 		/*
@@ -711,7 +681,7 @@ void signUp() {
 		if (u1.name[0] == '~' && strlen(u1.name) == 1) {
 			printf("Click any key to go back to menu.\n");
 			system("pause");
-			return;
+			return 0;
 		}
 		if (strlen(u1.name) > NAME_MAXSIZE) {
 			clearInputBuffer();
@@ -747,7 +717,7 @@ void signUp() {
 			// 메뉴로 이동
 			printf("Click any key to go back to menu.\n");
 			system("pause");
-			return;
+			return 0;
 		}
 		if (strlen(u1.nick) > NICKNAME_MAXSIZE) {
 			clearInputBuffer();
@@ -789,7 +759,7 @@ void signUp() {
 		if (u1.email[0] == '~' && strlen(u1.email) == 1) {
 			printf("Click any key to go back to menu.\n");
 			system("pause");
-			return;
+			return 0;
 		}
 		if (strlen(u1.email) > EMAILADDRESS_MAXSIZE) {
 			clearInputBuffer();
@@ -832,7 +802,7 @@ void signUp() {
 		if (tempBirthNumber[0] == '~' && strlen(tempBirthNumber) == 1) {
 			printf("Click any key to go back to menu.\n");
 			system("pause");
-			return;
+			return 0;
 		}
 		if (strlen(tempBirthNumber) > BIRTHDAY_MAXSIZE) {
 			clearInputBuffer();
@@ -891,21 +861,19 @@ void signUp() {
 		if (tempPhoneNumber[0] == '~' && strlen(tempPhoneNumber) == 1) {
 			printf("Click any key to go back to menu.\n");
 			system("pause");
-			return;
+			return 0;
 		}
 		if (strlen(tempPhoneNumber) > PHONENUMBER_MAXSIZE + 2) {
 			clearInputBuffer();
 		}
-		// fileCheck: 중복된 번호가 있는지 검사하는 함수
-		if (duplicateCheck(tempPhoneNumber, PHONENUMBERCHECK)) {
-			printf("Overlapped phone number, please try another one.\n");
-			system("pause");
-			continue;
-		}
-
 
 		if (matchPhoneNumber(tempPhoneNumber)) {
 			Eliminate(tempPhoneNumber, '-');
+			if (duplicateCheck(tempPhoneNumber, PHONENUMBERCHECK)) {
+				printf("Overlapped phone number, please try another one.\n");
+				system("pause");
+				continue;
+			}
 			strcpy_s(u1.phone, PHONENUMBER_MAXSIZE + 2, tempPhoneNumber);
 			printf("Success.\n");
 			system("pause");
@@ -938,7 +906,7 @@ void signUp() {
 		if (retId[0] == '~' && strlen(retId) == 1) {
 			printf("Click any key to go back to menu.\n");
 			system("pause");
-			return;
+			return 0;
 		}
 
 		if (strlen(retId) > ID_MAXSIZE) {
@@ -958,6 +926,6 @@ void signUp() {
 	//showUserInformation(u1);
 	writeAccount(u1);
 	system("pause");
-	return;
+	return 1;
 
 }

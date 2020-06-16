@@ -24,9 +24,9 @@ int main() {
 	do {
 		switch (uiMainMenu()) {
 		case 1:
-			signUp();
-
-			num_account++;	//회원가입 완료 시 계정 개수 증가
+			if (signUp() == 1) {
+				num_account++; //회원가입 완료 시 계정 개수 증가
+			}
 			break;
 
 		case 2:
