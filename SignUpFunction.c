@@ -531,7 +531,7 @@ void writeAccount(Account user) {
 		exit(1);
 	}
 	else {
-		fprintf(fp, "%s,%s,%s,%s,%s,%s,%s,%d,%d,%d,0",
+		fprintf(fp, "%s,%s,%s,%s,%s,%s,%s,0,0,0",
 			user.id, user.pw, user.name, user.nick, user.email, user.birth, user.phone, user.rec, user.lock, user.subAdmin);
 		fprintf(fp, "                                                                                \n");
 		//최소 길이의 닉네임(2byte)으로 회원가입 하고, 관리자에 의해 최대 길이의 닉네임(24byte)으로 수정될 경우를 대비하여
