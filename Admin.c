@@ -843,7 +843,6 @@ bool adminMenu(int num_account, Account* targetAccount) {
 
 bool checkSubAdmin(Account* targetAccount, int login_id_num) {
 	Account login;
-	system("cls");
 	login = readAccountInfo(login_id_num);
 	if (!login.subAdmin) {
 		system("cls");
@@ -862,7 +861,7 @@ void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, cha
 	int pageNum = 1;
 	int endPage = ((num_account - 1) / 10) + 1;
 	Account login;
-
+	system("cls");
 	while (true) {
 		if (checkSubAdmin(&targetAccount, login_id_num)) { // check
 			break;
