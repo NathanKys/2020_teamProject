@@ -57,12 +57,16 @@ int loginFunction(int* num_account) {
 	int row = 0;
 	char stdid[14];
 	char stdpassword[18];
-
+	
+	outerLoop:
 	while (row == 0) {
 		system("cls");
 		printf("ID:");
 		fgets(stdid, 14, stdin);
 		
+		if(strcmp(stdid,"~")==0){
+         		break;
+      		}
 
 		// 배열 크기가 넘어가면 입력 버퍼를 비움.
 		stdid[strcspn(stdid, "\n")] = 0;
@@ -75,7 +79,11 @@ int loginFunction(int* num_account) {
 				char stdpassword[18] = "";
 				printf("PASSWORD:");
 				fgets(stdpassword, 18, stdin);
-
+				
+				if(strcmp(stdid,"~")==0){
+         				break outerLoop;
+      				}		
+				
 				char c = ' ';
 				while (stdpassword[16]!= 0) {
 					scanf("%c", &c);
@@ -103,7 +111,11 @@ int loginFunction(int* num_account) {
 				printf("Please enter a secondary password.(6 digits)");
 				char stdpassword[18] = "";
 				fgets(stdpassword, 18, stdin);
-
+				
+				if(strcmp(stdid,"~")==0){
+         				break outerLoop;
+      				}
+				
 				char c = ' ';
 				while (stdpassword[16] != 0) {
 					scanf("%c", &c);
