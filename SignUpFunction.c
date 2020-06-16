@@ -899,6 +899,7 @@ void signUp() {
 		// fileCheck: 중복된 번호가 있는지 검사하는 함수
 		if (duplicateCheck(tempPhoneNumber, PHONENUMBERCHECK)) {
 			printf("Overlapped phone number, please try another one.\n");
+			system("pause");
 			continue;
 		}
 
