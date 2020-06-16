@@ -653,7 +653,7 @@ void signUp() {
 
 		}
 		else {
-			printf("Inconsistent password, please check again\n");
+			printf("Do not allow special characters except for the following characters : !@#$%^&*\n");
 			system("pause");
 			continue;
 		}
@@ -665,7 +665,7 @@ void signUp() {
 	while (true) {
 		system("cls");
 		char checkPassword[PASSWORD_MAXSIZE + 2] = { 0, };
-		printf("Reenter your Password.");
+		printf("Reenter your Password for Password confirmation.");
 		fgets(checkPassword, PASSWORD_MAXSIZE + 2, stdin);
 		checkPassword[strcspn(checkPassword, "\n")] = 0;
 		if (strlen(checkPassword) > PASSWORD_MAXSIZE) {
