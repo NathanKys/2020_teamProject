@@ -8,7 +8,7 @@ int countMessage(char* id) {
 	fp = fopen("./message.txt", "r");
 	if (fp == NULL)
 	{
-		printf("파일 읽기 실패\n");
+		printf("Error opening file\n");
 		exit(1);
 	}
 	int messageCounter = 0;
@@ -55,7 +55,7 @@ Message* readMessageFile(char* id, int count) {
 	FILE* fp;
 	fp = fopen("./message.txt", "r");
 	if (fp == NULL) {
-		printf("파일 읽기 실패\n");
+		printf("Error opening file\n");
 		exit(1);
 	}
 	Message* m_arr;
@@ -103,7 +103,7 @@ Message* readMessageFile(char* id, int count) {
 }
 bool matchMessage(const char* string) {
 	regex_t state;
-	const char* pattern = "^([A-Za-z0-9가-힣.?,()!]||[[:blank:]]){1,200}$";
+	const char* pattern = "^([A-Za-z0-9.?,()!]||[[:blank:]]){1,200}$";
 	regcomp(&state, pattern, REG_EXTENDED);
 	return regexec(&state, string, 0, NULL, 0) ? false : true;
 }
@@ -113,7 +113,7 @@ int sendMessage(char* sender, char* receiver) {
 	fp = fopen("./message.txt", "at"); // 같은 프로젝트 파일 내에 존재하면 쓸 필요X
 	if (fp == NULL)
 	{
-		printf("파일 입출력 실패.\n");
+		printf("Error opening file\n");
 		return;
 	}
 	system("cls");
@@ -506,7 +506,7 @@ int findLine(char* id, int count, int flag) {
 	fp = fopen("./message.txt", "r+");
 	if (fp == NULL)
 	{
-		printf("파일 불러오기 실패\n");
+		printf("Error opening file\n");
 		exit(1);
 	}
 	while (true) {
@@ -546,7 +546,7 @@ void deleteMessage(char* id, int count, int flag) {
 	fp = fopen("./message.txt", "r+");
 	if (fp == NULL)
 	{
-		printf("파일 불러오기 실패\n");
+		printf("Error opening file\n");
 		exit(1);
 	}
 	while (true) {
@@ -572,7 +572,7 @@ void deleteMessage(char* id, int count, int flag) {
 	fp = fopen("./message.txt", "w");
 	if (fp == NULL)
 	{
-		printf("파일 불러오기 실패\n");
+		printf("Error opening file\n");
 		exit(1);
 	}
 	for (int j = 0; j < 10000; j++) {
@@ -591,7 +591,7 @@ void readMessage(char* id, int count, int index) {
 	fp = fopen("./message.txt", "r+");
 	if (fp == NULL)
 	{
-		printf("파일 불러오기 실패\n");
+		printf("Error opening file\n");
 		exit(1);
 	}
 	while (true) {
