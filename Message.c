@@ -640,6 +640,7 @@ void readMessage(char* id, int count, int index) {
 }
 void messageBox(char* id) {
 	while (true) {
+		int count = countMessage(id);
 		system("cls");
 		Message* m = showMessageList(id);
 		gotoxy(1, 1);
@@ -657,8 +658,8 @@ void messageBox(char* id) {
 		printf("│    Back    │");
 		gotoxy(48, 27);
 		printf("└------------┘");
-		int triangleX = 30;
-		int triangleY = 5;
+		int triangleX = 45;
+		int triangleY = 26;
 		char ch;
 		gotoxy(triangleX, triangleY);
 		printf("▶");
@@ -669,45 +670,94 @@ void messageBox(char* id) {
 				ch = _getch();
 				if (ch == -32)
 				{
-					ch = _getch();
-					switch (ch)
-					{
-					case UP:
-						if (triangleY > 5 && triangleY < 26)
+					if (count == 0) {
+						ch = _getch();
+						if (ch == 13)
+							break;
+					}
+					else if (count < 10) {
+						ch = _getch();
+						switch (ch)
 						{
-							gotoxy(triangleX, triangleY);
-							printf("  ");
-							triangleY = triangleY - 2;
-							gotoxy(triangleX, triangleY);
-							printf("▶");
+						case UP:
+							if (triangleY > 5 && triangleY < 26)
+							{
+								gotoxy(triangleX, triangleY);
+								printf("  ");
+								triangleY = triangleY - 2;
+								gotoxy(triangleX, triangleY);
+								printf("▶");
+							}
+							else if (triangleY == 26) {
+								gotoxy(triangleX, triangleY);
+								printf("  ");
+								triangleX = 30;
+								triangleY = 23 - 2 * (10 - count);
+								gotoxy(triangleX, triangleY);
+								printf("▶");
+							}
+							break;
+						case DOWN:
+							if (triangleY < 23 - 2 * (10 - count))
+							{
+								gotoxy(triangleX, triangleY);
+								printf("  ");
+								triangleY = triangleY + 2;
+								gotoxy(triangleX, triangleY);
+								printf("▶");
+							}
+							else if (triangleY == 23 - 2 * (10 - count)) {
+								gotoxy(triangleX, triangleY);
+								printf("  ");
+								triangleX = 45;
+								triangleY = 26;
+								gotoxy(triangleX, triangleY);
+								printf("▶");
+							}
+							break;
 						}
-						else if (triangleY == 26) {
-							gotoxy(triangleX, triangleY);
-							printf("  ");
-							triangleX = 30;
-							triangleY = 23;
-							gotoxy(triangleX, triangleY);
-							printf("▶");
-						}
-						break;
-					case DOWN:
-						if (triangleY < 23)
+					}
+					else {
+						ch = _getch();
+						switch (ch)
 						{
-							gotoxy(triangleX, triangleY);
-							printf("  ");
-							triangleY = triangleY + 2;
-							gotoxy(triangleX, triangleY);
-							printf("▶");
+						case UP:
+							if (triangleY > 5 && triangleY < 26)
+							{
+								gotoxy(triangleX, triangleY);
+								printf("  ");
+								triangleY = triangleY - 2;
+								gotoxy(triangleX, triangleY);
+								printf("▶");
+							}
+							else if (triangleY == 26) {
+								gotoxy(triangleX, triangleY);
+								printf("  ");
+								triangleX = 30;
+								triangleY = 23;
+								gotoxy(triangleX, triangleY);
+								printf("▶");
+							}
+							break;
+						case DOWN:
+							if (triangleY < 23)
+							{
+								gotoxy(triangleX, triangleY);
+								printf("  ");
+								triangleY = triangleY + 2;
+								gotoxy(triangleX, triangleY);
+								printf("▶");
+							}
+							else if (triangleY == 23) {
+								gotoxy(triangleX, triangleY);
+								printf("  ");
+								triangleX = 45;
+								triangleY = 26;
+								gotoxy(triangleX, triangleY);
+								printf("▶");
+							}
+							break;
 						}
-						else if (triangleY == 23) {
-							gotoxy(triangleX, triangleY);
-							printf("  ");
-							triangleX = 45;
-							triangleY = 26;
-							gotoxy(triangleX, triangleY);
-							printf("▶");
-						}
-						break;
 					}
 				}
 				if (ch == 13)
@@ -715,7 +765,6 @@ void messageBox(char* id) {
 			}
 		}
 		int index = (triangleY - 5) / 2;
-		int count = countMessage(id);
 		if (triangleY < 26 && count>index) {
 			readMessage(id, count, index);
 			showMessage(m, id, count, index);
