@@ -101,7 +101,7 @@ void strAppend(char*, char);
 void clearInputBuffer();
 void showUserInformation(Account);
 void writeAccount(Account);
-void signUp();
+int signUp();
 
 void showAllAccountInfo2(int pageNum, int num_account);
 int selectAccountToShow(int num_account, int pageNum, int endPage);
