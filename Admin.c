@@ -120,8 +120,6 @@ void readAccountInfo2(int startline, Account* a) {
 	fgetc(fp);
 	(*a).lock = (fgetc(fp) - 48);
 	fgetc(fp);
-	(*a).changed = (fgetc(fp) - 48);
-	fgetc(fp);
 	(*a).subAdmin = (fgetc(fp) - 48);
 
 
@@ -420,7 +418,7 @@ int selectManageFunctionSub(bool subAdmin) {
 //	}
 //}
 
-void changeNick(char* nick, bool* changed) {
+void changeNick(char* nick) {
 
 
 	char input[NICKNAME_MAXSIZE + 2];
@@ -475,7 +473,6 @@ void changeNick(char* nick, bool* changed) {
 
 	}
 	strcpy(nick, input);
-	(*changed) = true;
 	system("cls");
 }
 
@@ -549,7 +546,7 @@ void changeLock(char* id, bool* lock) {
 	(*lock) = !temp;
 }
 
-void changeNickSub(char* nick, bool* changed, Account* targetAccount, int login_id_num) {
+void changeNickSub(char* nick, Account* targetAccount, int login_id_num) {
 
 	if (checkSubAdmin(&targetAccount, login_id_num)) { // check
 		return;
@@ -608,7 +605,6 @@ void changeNickSub(char* nick, bool* changed, Account* targetAccount, int login_
 
 	}
 	strcpy(nick, input);
-	(*changed) = true;
 	system("cls");
 }
 
@@ -811,7 +807,7 @@ bool adminMenu(int num_account, Account* targetAccount) {
 				switch (menu) {
 				case 1:
 					writeBreakdownChar(9, &((*targetAccount).id), &((*targetAccount).nick));
-					changeNick((*targetAccount).nick, &((*targetAccount).changed));
+					changeNick((*targetAccount).nick);
 					writeAccountInfo(manageAccount, targetAccount);
 					break;
 
@@ -993,7 +989,7 @@ void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, cha
 				switch (menu) {
 				case 1:
 					writeNickSub(8, (*targetAccount).id, (*targetAccount).nick, my_id);
-					changeNickSub((*targetAccount).nick, &((*targetAccount).changed), &targetAccount, login_id_num);
+					changeNickSub((*targetAccount).nick, &targetAccount, login_id_num);
 					login = readAccountInfo(login_id_num);
 					if (!login.subAdmin) { // check
 						return;

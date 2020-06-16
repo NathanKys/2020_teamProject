@@ -84,8 +84,6 @@ Account readAccountInfo(int line) {
 	fgetc(fp);
 	a.lock = (fgetc(fp) - 48);
 	fgetc(fp);
-	a.changed = (fgetc(fp) - 48);
-	fgetc(fp);
 	a.subAdmin = (fgetc(fp) - 48);
 
 	fclose(fp);

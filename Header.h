@@ -64,9 +64,9 @@ void showAllAccountInfo(int pageNum, int num_account);
 int selectAccountToManage(int num_account, int pageNum, int endPage);
 int selectManageFunction(bool subAdmin);
 int selectManageFunctionSub(bool subAdmin);
-void changeNick(char* nick, bool* changed);
+void changeNick(char* nick);
 void changeLock(char* id, bool* lock);
-void changeNickSub(char* nick, bool* changed, Account* targetAccount, int login_id_num);
+void changeNickSub(char* nick, Account* targetAccount, int login_id_num);
 void changeLockSub(char* id, bool* lock, Account* targetAccount, int login_id_num);
 //보조 관리자가 다른 사용자 닉네임 수정 시 수정내역과 자신의 아이디 출력하는 함수
 void writeNickSub(int num, char* target_id, char* oldNick, char* my_id);
