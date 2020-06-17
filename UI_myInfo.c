@@ -164,7 +164,7 @@ void uiOldInfo(Account* login) {
 	list = fopen("./breakdown.txt", "r");
 	if (list == NULL)
 	{
-		printf("파일 읽기 실패\n");
+		printf("Error opening file\n");
 		exit(1);
 	}
 	//char tempID[20] = {0, };
@@ -186,25 +186,26 @@ void uiOldInfo(Account* login) {
 					yyyy += 2;
 					gotoxy(xxxx, yyyy);
 					if (number == 0) {
-						printf("과거 비밀번호\t");
+						printf("Past Password\t");
 					}
 					else if (number == 1) {
-						printf("과거 이름\t");
+						printf("Past Name\t");
 					}
 					else if (number == 2 || number == 8 || number == 9) {
-						printf("과거 닉네임\t");
+						printf("Past Nickname\t");
 					}
 					else if (number == 3) {
-						printf("과거 이메일\t");
+						printf("Past Email\t");
 					}
 					else if (number == 4) {
-						printf("과거 생년월일\t");
+						printf("Past Birth\t");
 					}
 					else if (number == 5) {
-						printf("과거 전화번호\t");
+						printf("Past Phone umber\t");
 					}
 					else {
-						printf("과거  ??????\t");
+						printf("fail\t");
+						return;
 					}
 
 					int j = 0;
@@ -230,11 +231,11 @@ void uiOldInfo(Account* login) {
 							}
 							k++;
 						}
-						printf("\t\t변경자\t: %s  ", change_ID);
+						printf("\t\tChanger\t: %s  ", change_ID);
 						
 					}
 					if (number == 9) { // 최종 관리자
-						printf("\t\t변경자\t: admin");
+						printf("\t\tChanger\t: admin");
 					}
 					printf("\n");
 				}
