@@ -338,6 +338,7 @@ void editName(char* name) {
 				strcpy(name, t_name);
 				printf("Name has been changed successfully.\n");
 				system("pause");
+				break;
 			}
 			else {
 				printf("You must enter 3 to 20 characters, include blank spaces.\n");
