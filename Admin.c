@@ -846,7 +846,7 @@ bool checkSubAdmin(int login_id_num) {
 	login = readAccountInfo(login_id_num);
 	if (!login.subAdmin) {
 		system("cls");
-		gotoxy(50, 10);
+		gotoxy(35, 10);
 		printf("You don’t have permissions to access this menu!");
 		gotoxy(40, 12);
 		system("pause");
