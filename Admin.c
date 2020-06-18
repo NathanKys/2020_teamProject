@@ -548,7 +548,7 @@ void changeLock(char* id, bool* lock) {
 
 void changeNickSub(char* nick, Account* targetAccount, int login_id_num) {
 
-	if (checkSubAdmin(&targetAccount, login_id_num)) { // check
+	if (checkSubAdmin(login_id_num)) { // check
 		return;
 	}
 	char input[NICKNAME_MAXSIZE + 2];
@@ -567,7 +567,7 @@ void changeNickSub(char* nick, Account* targetAccount, int login_id_num) {
 		input[strcspn(input, "\n")] = 0;
 
 		gotoxy(10, 10);
-		if (checkSubAdmin(&targetAccount, login_id_num)) { // check
+		if (checkSubAdmin(login_id_num)) { // check
 			break;
 		}
 		if (strlen(input) > NICKNAME_MAXSIZE) {
@@ -609,7 +609,7 @@ void changeNickSub(char* nick, Account* targetAccount, int login_id_num) {
 }
 
 void changeLockSub(char* id, bool* lock, Account* targetAccount, int login_id_num) {
-	if (checkSubAdmin(&targetAccount, login_id_num)) { // check
+	if (checkSubAdmin(login_id_num)) { // check
 		return;
 	}
 
@@ -644,7 +644,7 @@ void changeLockSub(char* id, bool* lock, Account* targetAccount, int login_id_nu
 					break;
 			}
 		}
-		if (checkSubAdmin(&targetAccount, login_id_num)) { // check
+		if (checkSubAdmin(login_id_num)) { // check
 			return;
 		}
 		gotoxy(0, 1);
@@ -672,7 +672,7 @@ void changeLockSub(char* id, bool* lock, Account* targetAccount, int login_id_nu
 					break;
 			}
 		}
-		if (checkSubAdmin(&targetAccount, login_id_num)) { // check
+		if (checkSubAdmin(login_id_num)) { // check
 			return;
 		}
 		gotoxy(0, 1);
@@ -841,7 +841,7 @@ bool adminMenu(int num_account, Account* targetAccount) {
 
 //--
 
-bool checkSubAdmin(Account* targetAccount, int login_id_num) {
+bool checkSubAdmin(int login_id_num) {
 	Account login;
 	login = readAccountInfo(login_id_num);
 	if (!login.subAdmin) {
@@ -863,7 +863,7 @@ void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, cha
 	Account login;
 	system("cls");
 	while (true) {
-		if (checkSubAdmin(&targetAccount, login_id_num)) { // check
+		if (checkSubAdmin(login_id_num)) { // check
 			break;
 		}
 
@@ -940,7 +940,7 @@ void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, cha
 		}
 
 
-		if (checkSubAdmin(&targetAccount, login_id_num)) { // check
+		if (checkSubAdmin(login_id_num)) { // check
 			break;
 		}
 
@@ -971,7 +971,7 @@ void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, cha
 			int manageAccount = 0;
 			int accountToManage = 0;
 			accountToManage = selectAccountToManage(num_account, pageNum, endPage);
-			if (checkSubAdmin(&targetAccount, login_id_num)) { // check
+			if (checkSubAdmin(login_id_num)) { // check
 				break;
 			}
 			if (accountToManage != -1) {
@@ -982,7 +982,7 @@ void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, cha
 				system("cls");
 				int menu = 0;
 				menu = selectManageFunctionSub((*targetAccount).subAdmin);
-				if (checkSubAdmin(&targetAccount, login_id_num)) { // check
+				if (checkSubAdmin(login_id_num)) { // check
 					break;
 				}
 				switch (menu) {
