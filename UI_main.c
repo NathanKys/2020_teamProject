@@ -14,7 +14,7 @@ int uiMainMenu() {
 	gotoxy(32, 12);
 	printf("┃\t┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓  \t┃\n");
 	gotoxy(32, 13);
-	printf("┃\t┃           회원가입           ┃ \t┃\n");
+	printf("┃\t┃           Sign Up            ┃ \t┃\n");
 	gotoxy(32, 14);
 	printf("┃\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛  \t┃\n");
 	gotoxy(32, 15);
@@ -22,7 +22,7 @@ int uiMainMenu() {
 	gotoxy(32, 16);
 	printf("┃\t┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓  \t┃\n");
 	gotoxy(32, 17);
-	printf("┃\t┃            로그인            ┃ \t┃\n");
+	printf("┃\t┃            Login             ┃ \t┃\n");
 	gotoxy(32, 18);
 	printf("┃\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛  \t┃\n");
 	gotoxy(32, 19);
@@ -30,7 +30,7 @@ int uiMainMenu() {
 	gotoxy(32, 20);
 	printf("┃\t┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓  \t┃\n");
 	gotoxy(32, 21);
-	printf("┃\t┃       아이디 및 비번찾기     ┃  \t┃\n");
+	printf("┃\t┃      Find ID / Password      ┃  \t┃\n");
 	gotoxy(32, 22);
 	printf("┃\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛  \t┃\n");
 	gotoxy(32, 23);
@@ -38,7 +38,7 @@ int uiMainMenu() {
 	gotoxy(32, 24);
 	printf("┃\t┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓  \t┃\n");
 	gotoxy(32, 25);
-	printf("┃\t┃            끝내기            ┃  \t┃\n");
+	printf("┃\t┃             Exit             ┃  \t┃\n");
 	gotoxy(32, 26);
 	printf("┃\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛  \t┃\n");
 	gotoxy(32, 27);
