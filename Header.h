@@ -56,7 +56,7 @@ void writeBreakdownInt(int num, char* id, int* info);
 
 // 관리자 기능 관련 함수
 void checkSecondPw();
-bool checkSubAdmin(Account* targetAccount, int login_id_num);
+bool checkSubAdmin(int login_id_num);
 void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, char* my_id);
 bool adminMenu(int num_account, Account* targetAccount);
 void readAccountInfo2(int startline, Account* a);
