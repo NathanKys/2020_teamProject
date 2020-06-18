@@ -58,15 +58,17 @@ int loginFunction(int* num_account) {
 	char stdid[14];
 	char stdpassword[18];
 	
+	bool flag = 1;
 	outerLoop:
-	while (row == 0) {
+	while (flag) {
 		system("cls");
 		printf("ID:");
 		fgets(stdid, 14, stdin);
 		
-		if(strcmp(stdid,"~")==0){
-         		break;
-      		}
+		if(strcmp(stdid, "~\n") == 0){
+			flag = 0;
+         	break;
+      	}
 
 		// 배열 크기가 넘어가면 입력 버퍼를 비움.
 		stdid[strcspn(stdid, "\n")] = 0;
@@ -80,9 +82,10 @@ int loginFunction(int* num_account) {
 				printf("PASSWORD:");
 				fgets(stdpassword, 18, stdin);
 				
-				if(strcmp(stdid,"~")==0){
-         				break outerLoop;
-      				}		
+				if(strcmp(stdpassword, "~\n") == 0){
+					flag = 0;
+         			break;
+      			}		
 				
 				char c = ' ';
 				while (stdpassword[16]!= 0) {
@@ -96,6 +99,7 @@ int loginFunction(int* num_account) {
 					
 					printf("Loged in sucessfully\n");
 					system("pause");
+					flag = 0;
 					row = i + 1;
 					break;
 				}
@@ -112,9 +116,10 @@ int loginFunction(int* num_account) {
 				char stdpassword[18] = "";
 				fgets(stdpassword, 18, stdin);
 				
-				if(strcmp(stdid,"~")==0){
-         				break outerLoop;
-      				}
+				if(strcmp(stdpassword, "~\n") == 0){
+					flag = 0;
+         			break;
+      			}
 				
 				char c = ' ';
 				while (stdpassword[16] != 0) {
@@ -125,6 +130,7 @@ int loginFunction(int* num_account) {
 				stdpassword[strcspn(stdpassword, "\n")] = 0;
 				if (strcmp(admin_password, stdpassword) == 0) {
 					row = -1;
+					flag = 0;
 					break;
 				}
 				else {
