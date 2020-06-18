@@ -22,7 +22,7 @@ int uiMainMenu() {
 	gotoxy(32, 16);
 	printf("┃\t┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓  \t┃\n");
 	gotoxy(32, 17);
-	printf("┃\t┃            Login             ┃ \t┃\n");
+	printf("┃\t┃           Log In             ┃ \t┃\n");
 	gotoxy(32, 18);
 	printf("┃\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛  \t┃\n");
 	gotoxy(32, 19);
