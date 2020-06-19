@@ -1,4 +1,4 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,7 +15,7 @@ int interfaceFindAccount() {
     gotoxy(32, 12);
     printf("|\t -------------------------------  \t|\n");
     gotoxy(32, 13);
-    printf("|\t-            Find ID            - \t|\n");
+    printf("|\t-              Find ID          - \t|\n");
     gotoxy(32, 14);
     printf("|\t -------------------------------  \t|\n");
     gotoxy(32, 15);
@@ -160,7 +160,7 @@ void findaccount(int num_account) {
 
 
         while (fgetc(memlist) != '\n') {
-            
+
         }
     }
 
@@ -170,16 +170,21 @@ void findaccount(int num_account) {
     char stddate[9];
 
     int n = interfaceFindAccount();
-
+  
     int count = 0;
 
     switch (n) {
     case 1:
     {
-        while (count==0) {
+        while (count == 0) {
             system("cls");
             printf("Nickname:");
             gets(stdnickname);
+
+            if (strcmp(stdnickname, "~") == 0) {
+                count++;
+                break;
+            }
 
             int i;
             for (int i = 0; i < num_account; i++) {
@@ -187,6 +192,11 @@ void findaccount(int num_account) {
                 date: system("cls");
                     printf("Date of Birth:");
                     gets(stddate);
+
+                    if (strcmp(stddate, "~") == 0) {
+                        count++;
+                        break;
+                    }
 
                     if (strcmp(account_date[i], stddate) == 0) {
                         printf("Your Id is \'%s\' \n", account_id[i]);
@@ -206,7 +216,7 @@ void findaccount(int num_account) {
                 }
 
             }
-            
+
         }
     }
     case 2:
@@ -216,6 +226,11 @@ void findaccount(int num_account) {
             printf("ID:");
             gets(stdid);
 
+            if (strcmp(stdid, "~") == 0) {
+                count++;
+                break;
+            }
+
             int i;
             for (i = 0; i < num_account; i++) {
                 if (strcmp(account_id[i], stdid) == 0) {
@@ -223,10 +238,20 @@ void findaccount(int num_account) {
                     printf("Nickname:");
                     gets(stdnickname);
 
+                    if (strcmp(stdnickname, "~") == 0) {
+                        count++;
+                        break;
+                    }
+
                     if (strcmp(account_nickname[i], stdnickname) == 0) {
                     pass_date: system("cls");
                         printf("Date of Birth:");
                         gets(stddate);
+
+                        if (strcmp(stddate, "~") == 0) {
+                            count++;
+                            break;
+                        }
 
                         if (strcmp(account_date[i], stddate) == 0) {
                             system("cls");
