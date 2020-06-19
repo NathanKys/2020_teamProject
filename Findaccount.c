@@ -15,7 +15,7 @@ int interfaceFindAccount() {
     gotoxy(32, 12);
     printf("|\t -------------------------------  \t|\n");
     gotoxy(32, 13);
-    printf("|\t-          아이디 찾기          - \t|\n");
+    printf("|\t-              Find ID          - \t|\n");
     gotoxy(32, 14);
     printf("|\t -------------------------------  \t|\n");
     gotoxy(32, 15);
@@ -23,7 +23,7 @@ int interfaceFindAccount() {
     gotoxy(32, 16);
     printf("|\t -------------------------------  \t|\n");
     gotoxy(32, 17);
-    printf("|\t-         비밀번호 찾기          - \t|\n");
+    printf("|\t-         Find Password         - \t|\n");
     gotoxy(32, 18);
     printf("|\t -------------------------------  \t|\n");
     gotoxy(32, 19);
@@ -83,7 +83,7 @@ void findaccount(int num_account) {
     memlist = fopen("./accountlist.txt", "r");
     if (memlist == NULL)
     {
-        printf("파일 읽기 실패\n");
+        printf("Error opening file\n");
         exit(1);
     }
 
@@ -178,30 +178,30 @@ void findaccount(int num_account) {
     {
         while (count==0) {
             system("cls");
-            printf("닉네임을 입력하세요:");
+            printf("Nickname:");
             gets(stdnickname);
 
             int i;
             for (int i = 0; i < num_account; i++) {
                 if (strcmp(account_nickname[i], stdnickname) == 0) {
                 date: system("cls");
-                    printf("생년월일을 입력하세요:");
+                    printf("Date of Birth:");
                     gets(stddate);
 
                     if (strcmp(account_date[i], stddate) == 0) {
-                        printf("아이디는 %s 입니다\n", account_id[i]);
+                        printf("Your Id is \'%s\' \n", account_id[i]);
                         count++;
                         system("pause");
                         break;
                     }
                     else {
-                        printf("입력한 정보와 부합하지 않는 생년월일입니다.\n");
+                        printf("Wrong date of birth\n");
                         system("pause");
                         goto date;
                     }
                 }
                 else if (i == (num_account - 1)) {
-                    printf("존재하지 않는 닉네임입니다.\n");
+                    printf("Inexistent nickname\n");
                     system("pause");
                 }
 
@@ -213,42 +213,42 @@ void findaccount(int num_account) {
     {
         while (count == 0) {
             system("cls");
-            printf("아이디를 입력하세요:");
+            printf("ID:");
             gets(stdid);
 
             int i;
             for (i = 0; i < num_account; i++) {
                 if (strcmp(account_id[i], stdid) == 0) {
                 pass_nick: system("cls");
-                    printf("닉네임을 입력하세요:");
+                    printf("Nickname:");
                     gets(stdnickname);
 
                     if (strcmp(account_nickname[i], stdnickname) == 0) {
                     pass_date: system("cls");
-                        printf("생년월일을 입력하세요:");
+                        printf("Date of Birth:");
                         gets(stddate);
 
                         if (strcmp(account_date[i], stddate) == 0) {
                             system("cls");
-                            printf("비밀번호는 %s 입니다\n", account_password[i]);
+                            printf("Password is \'%s\' \n", account_password[i]);
                             count++;
                             system("pause");
                             break;
                         }
                         else {
-                            printf("입력한 정보와 부합하지 않는 생년월일입니다.\n");
+                            printf("Wrong date of birth\n");
                             system("pause");
                             goto pass_date;
                         }
                     }
                     else {
-                        printf("존재하지 않는 닉네임입니다.\n");
+                        printf("Wrong nickname\n");
                         system("pause");
                         goto pass_nick;
                     }
                 }
                 else if (i == (num_account - 1)) {
-                    printf("존재하지 않는 아이디입니다.\n");
+                    printf("Inexistent id\n");
                     system("pause");
                     break;
                 }
