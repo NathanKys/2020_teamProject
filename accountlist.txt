@@ -1,4 +1,4 @@
-abc189,temp,zyx,fy,1@n.co,20001010,0101234567,10,0,0                                                                                 
-abc289,temp,김김,기쁨,0@x.ko,20001010,01062346376,10,0,0                                                                                
+abc189,temp,zxc,py,1@n.co,20001010,01093824937,12,0,1                                                                                
 abc389abc789,temp,abcdeabcdeabcdeabcde,supersuperco,12345abcde@navernavernaver.com,20001010,0109876876,10,0,0                                                                                
-abc489abc789,temp,김날아올라,열두글자열두글자열두글자,abcde12345@navernavernaver.com,20001010,0104754476,10,1,0                                                                                
+black7321,Qq102938,jay,jaynick,black7321@naver.com,19990817,01012983476,0,0,1                                                                                
+black73,Qq102938,jayjay,jayjaynick,black7321@naver.comm,19990817,01012983487,0,0,0                                                                                

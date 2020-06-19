@@ -155,6 +155,11 @@ void selectEdit(Account* login, int login_id_num) {
 void writeBreakdownChar(int num, char* id, char* info) {
 	FILE* fp;
 	fp = fopen("./breakdown.txt", "a");
+	if (fp == NULL)
+	{
+		printf("Error opening file\n");
+		exit(1);
+	}
 	char out[50];
 	char cnum[2];
 	strcpy(out, id);
@@ -170,6 +175,11 @@ void writeBreakdownChar(int num, char* id, char* info) {
 void writeBreakdownInt(int num, char* id, int* info) {
 	FILE* fp;
 	fp = fopen("./breakdown.txt", "a");
+	if (fp == NULL)
+	{
+		printf("Error opening file\n");
+		exit(1);
+	}
 	char out[50];
 	char cnum[2];
 	char temp[12];

@@ -819,13 +819,13 @@ bool adminMenu(int num_account, Account* targetAccount) {
 					//subAdminToogle((*targetAccount).subAdmin);
 					if ((*targetAccount).subAdmin == 0) {
 						(*targetAccount).subAdmin = 1;
-						printf("This account has been promoted to a sub administrator");
+						printf("This account has been promoted to a sub administrator\n");
 						writeAccountInfo(manageAccount, targetAccount);
 						system("pause");
 					}
 					else if ((*targetAccount).subAdmin == 1) {
 						(*targetAccount).subAdmin = 0;
-						printf("This account has been demoted to a normal user");
+						printf("This account has been demoted to a normal user\n");
 						writeAccountInfo(manageAccount, targetAccount);
 						system("pause");
 					}
@@ -1023,6 +1023,11 @@ void subAdminMenu(int num_account, Account* targetAccount, int login_id_num, cha
 void writeNickSub(int num, char* target_id, char* oldNick, char* my_id) {
 	FILE* fp;
 	fp = fopen("./breakdown.txt", "a");
+	if (fp == NULL)
+	{
+		printf("Error opening file\n");
+		exit(1);
+	}
 	char out[70];
 	char cnum[2];
 	strcpy(out, target_id);
