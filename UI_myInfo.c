@@ -58,25 +58,25 @@ int uiShowMyInfo(Account* login, int login_id_num) {
 	printf("%s\t", (*login).email);
 
 	gotoxy(10, 16);
-	printf("┌------------------------┐\n");
+	printf("┌------------------┐\n");
 	gotoxy(10, 17);
-	printf("│    Change My Info      │\n");
+	printf("│  Change My Info  │\n");
 	gotoxy(10, 18);
-	printf("└------------------------┘\n");
+	printf("└------------------┘\n");
 
 	gotoxy(35, 16);
-	printf("┌------------------------┐\n");
+	printf("┌------------------┐\n");
 	gotoxy(35, 17);
-	printf("│     Change History     │\n");
+	printf("│  Change History  │\n");
 	gotoxy(35, 18);
-	printf("└------------------------┘\n");
+	printf("└------------------┘\n");
 
 	gotoxy(60, 16);
-	printf("┌------------------------┐\n");
+	printf("┌------------------┐\n");
 	gotoxy(60, 17);
-	printf("│          Back          │\n");
+	printf("│       Back       │\n");
 	gotoxy(60, 18);
-	printf("└------------------------┘\n");
+	printf("└------------------┘\n");
 
 
 	triangle = 8;
