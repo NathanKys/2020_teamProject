@@ -15,7 +15,7 @@ int interfaceFindAccount() {
     gotoxy(32, 12);
     printf("|\t -------------------------------  \t|\n");
     gotoxy(32, 13);
-    printf("|\t-              Find ID          - \t|\n");
+    printf("|\t-            Find ID            - \t|\n");
     gotoxy(32, 14);
     printf("|\t -------------------------------  \t|\n");
     gotoxy(32, 15);
