@@ -91,7 +91,7 @@ int main() {
 			break;
 		case 3:
 			if (num_account == 0) {
-				printf("계정 없음");
+				printf("No Account");
 				break;
 			}
 			findaccount(num_account);
