@@ -1,4 +1,4 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 
 #include "header.h"
 #include <windows.h>
@@ -75,75 +75,79 @@ int loginFunction(int* num_account) {
 		if (strlen(stdid) > 12) {
 			while (getchar() != '\n');
 		}
-		for (int i = 0; i < *num_account; i++) {       //i<num_account 로 수정
-			if (strcmp(account_id[i], stdid) == 0) {
-			pass:system("cls");
-				char stdpassword[18] = "";
-				printf("PASSWORD:");
-				fgets(stdpassword, 18, stdin);
-				
-				if(strcmp(stdpassword, "~\n") == 0){
-					flag = 0;
-         			break;
-      			}		
-				
-				char c = ' ';
-				while (stdpassword[16]!= 0) {
-					scanf("%c", &c);
-					if (c == '\n')
-						break;
-				}
-				stdpassword[strcspn(stdpassword, "\n")] = 0;
-				
-				if (strcmp(account_password[i], stdpassword) == 0) {
-					
-					printf("Loged in sucessfully\n");
-					system("pause");
-					flag = 0;
-					row = i + 1;
-					break;
-				}
-				else {
-					printf("Wrong password.\n");
-					system("pause");
-					goto pass;
-				}
+		if (*num_account == 0) {
+		if(strcmp(admin_id, stdid) == 0) {
+		pass_admin: system("cls");
+			printf("Please enter a password");
+			char stdpassword[18] = "";
+			fgets(stdpassword, 18, stdin);
 
-			}
-			else if (strcmp(admin_id, stdid) == 0) {
-			pass_admin: system("cls"); 
-				printf("Please enter a password");
-				char stdpassword[18] = "";
-				fgets(stdpassword, 18, stdin);
-				
-				if(strcmp(stdpassword, "~\n") == 0){
-					flag = 0;
-         			break;
-      			}
-				
-				char c = ' ';
-				while (stdpassword[16] != 0) {
-					scanf("%c", &c);
-					if (c == '\n')
-						break;
-				}
-				stdpassword[strcspn(stdpassword, "\n")] = 0;
-				if (strcmp(admin_password, stdpassword) == 0) {
-					row = -1;
-					flag = 0;
-					break;
-				}
-				else {
-					printf("Password is incorrect.");
-					system("pause");
-					goto pass_admin;
-				}
+			if (strcmp(stdpassword, "~\n") == 0) {
+				flag = 0;
+				break;
 			}
 
-			if (i == (*num_account - 1))
-			{
-				printf("Invalidated form of ID\n");
+			char c = ' ';
+			while (stdpassword[16] != 0) {
+				scanf("%c", &c);
+				if (c == '\n')
+					break;
+			}
+			stdpassword[strcspn(stdpassword, "\n")] = 0;
+			if (strcmp(admin_password, stdpassword) == 0) {
+				row = -1;
+				flag = 0;
+				break;
+			}
+			else {
+				printf("Password is incorrect.");
 				system("pause");
+				goto pass_admin;
+			}
+		}
+		}
+		else {
+			for (int i = 0; i < *num_account; i++) {       //i<num_account 로 수정
+				if (strcmp(account_id[i], stdid) == 0) {
+				pass:system("cls");
+					char stdpassword[18] = "";
+					printf("PASSWORD:");
+					fgets(stdpassword, 18, stdin);
+
+					if (strcmp(stdpassword, "~\n") == 0) {
+						flag = 0;
+						break;
+					}
+
+					char c = ' ';
+					while (stdpassword[16] != 0) {
+						scanf("%c", &c);
+						if (c == '\n')
+							break;
+					}
+					stdpassword[strcspn(stdpassword, "\n")] = 0;
+
+					if (strcmp(account_password[i], stdpassword) == 0) {
+
+						printf("Loged in sucessfully\n");
+						system("pause");
+						flag = 0;
+						row = i + 1;
+						break;
+					}
+					else {
+						printf("Wrong password.\n");
+						system("pause");
+						goto pass;
+					}
+
+				}
+
+				if (i == (*num_account - 1))
+				{
+					printf("Invalidated form of ID\n");
+					system("pause");
+				}
 			}
 		}
 	}
