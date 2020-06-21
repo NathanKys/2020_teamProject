@@ -407,17 +407,6 @@ int selectManageFunctionSub(bool subAdmin) {
 	}
 }
 
-//void subAdminToogle(bool subAdmin) {
-//	if (subAdmin == 1) {
-//		subAdmin = 0;
-//		printf("This account has been promoted to a sub administrator");
-//	}
-//	else if (subAdmin == 0) {
-//		subAdmin = 1;
-//		printf("This account has been demoted to a normal user");
-//	}
-//}
-
 void changeNick(char* nick) {
 
 
@@ -429,9 +418,9 @@ void changeNick(char* nick) {
 		printf("Current Nickname: %s", nick);
 
 		gotoxy(10, 7);
-		printf("닉네임에는 한글, 영어, 숫자, 띄어쓰기를 사용할 수 있습니다.(최소2자~최대12자)\n");
+		printf("Nickname can include English, numbers and blank spaces.(2-12)\n");
 		gotoxy(10, 8);
-		printf("Please enter new nickname.: ");
+		printf("Please enter a new Nickname.: ");
 
 		fgets(input, NICKNAME_MAXSIZE + 2, stdin);
 		input[strcspn(input, "\n")] = 0;
@@ -442,18 +431,19 @@ void changeNick(char* nick) {
 			clearInputBuffer();
 		}
 		if (!strcmp(nick, input)) {
-			printf("기존 정보와 동일합니다.");
+			printf("It same as current info.");
 			system("pause");
+			continue;
 		}
 
 		// fileCheck: 중복된 아이디가 있는지 검사하는 함수
 		if (duplicateCheck(input, NICKNAMECHECK)) {
-			printf("이미 사용 중인 닉네임입니다.\n");
+			printf("Overlapped nickname, Please check again.\n");
 			system("pause");
 			continue;
 		}
 		if (getLength(input) < 2 || getLength(input) > 12) {
-			printf("닉네임은 한글, 영어, 숫자로 이루어진 2자~12자를 입력해야합니다.\n");
+			printf("Nickname must be 2 to 12 characters with English and numeric characters.\n");
 			system("pause");
 			continue;
 		}
@@ -466,7 +456,7 @@ void changeNick(char* nick) {
 			break;
 		}
 		else {
-			printf("올바른 문자를 입력해주세요.\n");
+			printf("Please enter a validated character.\n");
 			system("pause");
 			continue;
 		}
@@ -816,7 +806,6 @@ bool adminMenu(int num_account, Account* targetAccount) {
 					writeAccountInfo(manageAccount, targetAccount);
 					break;
 				case 3:
-					//subAdminToogle((*targetAccount).subAdmin);
 					if ((*targetAccount).subAdmin == 0) {
 						(*targetAccount).subAdmin = 1;
 						printf("This account has been promoted to a sub administrator\n");
