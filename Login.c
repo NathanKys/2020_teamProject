@@ -142,7 +142,36 @@ int loginFunction(int* num_account) {
 					}
 
 				}
+				else if(strcmp(admin_id, stdid) == 0) {
+			pass_admin2: system("cls");
+			printf("Please enter a password");
+			char stdpassword[18] = "";
+			fgets(stdpassword, 18, stdin);
 
+			if (strcmp(stdpassword, "~\n") == 0) {
+				flag = 0;
+				break;
+			}
+
+			char c = ' ';
+			while (stdpassword[16] != 0) {
+				scanf("%c", &c);
+				if (c == '\n')
+					break;
+			}
+			stdpassword[strcspn(stdpassword, "\n")] = 0;
+			if (strcmp(admin_password, stdpassword) == 0) {
+				row = -1;
+				flag = 0;
+				break;
+			}
+			else {
+				printf("Password is incorrect.");
+				system("pause");
+				goto pass_admin2;
+			}
+		}
+				
 				if (i == (*num_account - 1))
 				{
 					printf("Invalidated form of ID\n");
