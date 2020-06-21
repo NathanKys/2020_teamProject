@@ -31,8 +31,8 @@ int main() {
 
 		case 2:
 
-			//***login_id_num = loginFunction(&num_account); // return 값을 login_id_num에 복사
-			login_id_num = 1;	//(임시)테스트를 위해 로그인 과정을 거치시 않도록 설정
+			login_id_num = loginFunction(&num_account); // return 값을 login_id_num에 복사
+			//login_id_num = 1;	//(임시)테스트를 위해 로그인 과정을 거치시 않도록 설정
 			system("cls");
 			// 관리자 로그인의 경우 -1을 리턴
 			flag = 1;

@@ -15,3 +15,7 @@ a0cdesh2,9876,윤길동,오잉,oiuro024@naver.com,19901231,01053957634,45,1,0
 b12fck21,5433,주길동,변경,szcbvc9@naver.com,19701231,01057652447,26,1,0                                                                                
 c2243l54,1234,사길동,으아그악,zxcoi@naver.com,19800117,0104426783,91,0,0                                                                                
 asdf1234,Qq102938,열여덟팀,가즈아,asdf1234@naver.com,19991231,01019283746,0,0,0                                                                                
+abc189,temp,zxc,py,1@n.co,20001010,01093824937,12,0,1                                                                                
+abc389abc789,temp,abcdeabcdeabcdeabcde,supersuperco,12345abcde@navernavernaver.com,20001010,0109876876,10,0,0                                                                                
+black7321,Qq102938,jay,jaynick,black7321@naver.com,19990817,01012983476,0,0,1                                                                                
+black73,Qq102938,jayjay,jayjaynick,black7321@naver.comm,19990817,01012983487,0,0,0                                                                                
