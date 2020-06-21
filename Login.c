@@ -173,11 +173,11 @@ outerLoop:
 					}
 				}
 			}
+		}
 
-			if (flag) {
-				printf("Invalidated form of ID\n");
-				system("pause");
-			}
+		if (flag) {
+			printf("Invalidated form of ID\n");
+			system("pause");
 		}
 	}
 
