@@ -112,7 +112,7 @@ int loginFunction(int* num_account) {
 			}
 			else if (strcmp(admin_id, stdid) == 0) {
 			pass_admin: system("cls"); 
-				printf("Please enter a secondary password.(6 digits)");
+				printf("Please enter a password");
 				char stdpassword[18] = "";
 				fgets(stdpassword, 18, stdin);
 				
