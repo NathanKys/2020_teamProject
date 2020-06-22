@@ -137,14 +137,16 @@ void showAllAccountInfo(int pageNum, int num_account) {
 	printf("Name");
 	gotoxy(37, 3);
 	printf("Nickname");
-	gotoxy(62, 3);
+	gotoxy(50, 3);
 	printf("Eamil Address");
-	gotoxy(93, 3);
+	gotoxy(81, 3);
 	printf("Date of Birth");
-	gotoxy(108, 3);
+	gotoxy(95, 3);
 	printf("Phone Number");
-	gotoxy(122, 3);
+	gotoxy(108, 3);
 	printf("Locked");
+	gotoxy(115, 3);
+	printf("SubAdmin");
 
 	for (int i = 1; i <= 10; i++) {
 		if ((pageNum - 1) * 10 + i <= num_account) {
@@ -158,26 +160,32 @@ void showAllAccountInfo(int pageNum, int num_account) {
 			printf("%s", a.name);
 			gotoxy(37, 3 + (i * 2));	//닉네임
 			printf("%s", a.nick);
-			gotoxy(62, 3 + (i * 2));	//이메일
+			gotoxy(50, 3 + (i * 2));	//이메일
 			printf("%s", a.email);
-			gotoxy(93, 3 + (i * 2));	//생년월일
+			gotoxy(81, 3 + (i * 2));	//생년월일
 			for (int j = 0; j < 8; j++) {
 				printf("%d", a.birth[j]);
 			}
-			gotoxy(108, 3 + (i * 2));	//휴대폰 번호
+			gotoxy(95, 3 + (i * 2));	//휴대폰 번호
 			for (int j = 0; j < 11; j++) {
 				if (a.phone[j] != -1) {
 					printf("%d", a.phone[j]);
 				}
 			}
-			gotoxy(121, 3 + (i * 2));	//잠금 여부
+			gotoxy(108, 3 + (i * 2));	//잠금 여부
 			if (a.lock == 0) {
+				printf("  X");
+			}
+			else {
+				printf("  O");
+			}
+			gotoxy(115, 3 + (i * 2));	//잠금 여부
+			if (a.subAdmin == 0) {
 				printf("   X");
 			}
 			else {
 				printf("   O");
 			}
-
 		}
 	}
 }
