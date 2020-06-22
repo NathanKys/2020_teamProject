@@ -74,7 +74,7 @@ int accountInfo_Menu(Account* a) {
 	printf("Nickname");
 	gotoxy(52, 8);
 	printf("Date of Birth");
-	gotoxy(65, 8);
+	gotoxy(66, 8);
 	printf("Email Address");
 	gotoxy(19, 10);
 	printf("==============================================================================");
@@ -83,10 +83,10 @@ int accountInfo_Menu(Account* a) {
 	gotoxy(37, 12);
 	printf("%s", a->nick);
 	gotoxy(52, 12);
-	for (int j = 0; j < 6; j++) {
+	for (int j = 0; j < 8; j++) {
 		printf("%d", a->birth[j]);
 	}
-	gotoxy(65, 12);
+	gotoxy(66, 12);
 	printf("%s", a->email);
 	gotoxy(33, 25);
 	printf("┌----------------------┐");
